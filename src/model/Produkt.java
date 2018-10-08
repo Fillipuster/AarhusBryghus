@@ -4,10 +4,12 @@ public class Produkt {
 	
 	private ProduktKategori produktKategori;
 	private String navn;
+	private String beskrivelse;
 	
-	public Produkt(ProduktKategori produktKategori, String navn) {
+	public Produkt(ProduktKategori produktKategori, String navn, String beskrivelse) {
 		this.setProduktKategori(produktKategori);
 		this.setNavn(navn);
+		this.setBeskrivelse(beskrivelse);
 	}
 
 	public ProduktKategori getProduktKategori() {
@@ -24,6 +26,19 @@ public class Produkt {
 
 	public void setNavn(String navn) {
 		this.navn = navn;
+	}
+	
+	@Override
+	public String toString() {
+		return navn;
+	}
+
+	public String getBeskrivelse() {
+		return beskrivelse;
+	}
+
+	public void setBeskrivelse(String beskrivelse) {
+		this.beskrivelse = beskrivelse;
 	}
 	
 }

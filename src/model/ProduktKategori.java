@@ -16,4 +16,9 @@ public class ProduktKategori {
 		this.navn = navn;
 	}
 	
+	@Override
+	public String toString() {
+		return navn;
+	}
+	
 }
