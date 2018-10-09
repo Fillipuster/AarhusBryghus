@@ -44,7 +44,7 @@ public class ProduktTab extends GridPane {
 
 		lvwProdukter = new ListView<Produkt>();
 		lvwProdukter.setOnMouseClicked(e -> lvwProdukterAction());
-		this.add(lvwProdukter, 0, 1, 1, 6);
+		this.add(lvwProdukter, 0, 1, 1, 9);
 
 		// Column 1
 		txfProduktNavn = new TextField("PRODUKT NAVN");
@@ -53,41 +53,49 @@ public class ProduktTab extends GridPane {
 
 		txaProduktBeskrivelse = new TextArea("BESKRIVELSE");
 		txaProduktBeskrivelse.setPrefWidth(200);
-		this.add(txaProduktBeskrivelse, 1, 2);
+		this.add(txaProduktBeskrivelse, 1, 2, 1, 3);
 
 		btnOpretProdukt = new Button("Opret");
 		btnOpretProdukt.setOnAction(e -> btnOpretProduktAction());
 		btnOpretProdukt.setDisable(true);
-		this.add(btnOpretProdukt, 1, 3);
+		this.add(btnOpretProdukt, 1, 6);
 
 		btnOpdaterProdukt = new Button("Opdater");
 		btnOpdaterProdukt.setOnAction(e -> btnOpdaterProduktAction());
 		btnOpdaterProdukt.setDisable(true);
-		this.add(btnOpdaterProdukt, 1, 4);
+		this.add(btnOpdaterProdukt, 1, 7);
 
 		btnSletProdukt = new Button("Slet");
 		btnSletProdukt.setOnAction(e -> btnSletProduktAction());
 		btnSletProdukt.setDisable(true);
-		this.add(btnSletProdukt, 1, 5);
+		this.add(btnSletProdukt, 1, 8);
 
 		// Column 2
 		lvwPrisKategorier = new ListView<ProduktTab.ProduktPrisKategoriFormat>();
-		this.add(lvwPrisKategorier, 2, 1, 1, 6);
+		lvwPrisKategorier.setDisable(true);
+		this.add(lvwPrisKategorier, 2, 1, 1, 7);
 		
 		// Column 3
 		cboxPrisKategorier = new ComboBox<>();
 		cboxPrisKategorier.getItems().addAll(Storage.getPrisKategorier());
+		cboxPrisKategorier.setDisable(true);
 		this.add(cboxPrisKategorier, 3, 1);
 		
 		txfPris = new TextField("PRIS");
+		txfPris.setDisable(true);
 		this.add(txfPris, 3, 2);
 		
 		btnTilføjPris = new Button("Tilføj");
 		btnTilføjPris.setOnAction(e -> btnTilføjPrisAction());
+		btnTilføjPris.setDisable(true);
 		this.add(btnTilføjPris, 3, 3);
 	}
 
 	private void updateLvwProdukter() {
+		if (cboxProduktKategorier.getSelectionModel().getSelectedItem() == null) {
+			cboxProduktKategorier.getSelectionModel().select(0);
+		}
+		
 		lvwProdukter.getItems().removeAll(lvwProdukter.getItems());
 		lvwProdukter.getItems().addAll(Controller.getProdukterIKategori(cboxProduktKategorier.getValue()));
 		btnOpdaterProdukt.setDisable(true);
@@ -95,6 +103,10 @@ public class ProduktTab extends GridPane {
 	}
 	
 	private void updateLvwPrisKategorier() {
+		if (cboxPrisKategorier.getSelectionModel().getSelectedItem() == null) {
+			cboxPrisKategorier.getSelectionModel().select(0);
+		}
+		
 		lvwPrisKategorier.getItems().removeAll(lvwPrisKategorier.getItems());
 		for (PrisKategori pk : cboxPrisKategorier.getItems()) {
 			lvwPrisKategorier.getItems()
@@ -107,17 +119,28 @@ public class ProduktTab extends GridPane {
 		if (selected != null) {
 			txfProduktNavn.setText(selected.getNavn());
 			txaProduktBeskrivelse.setText(selected.getBeskrivelse());
-			btnOpdaterProdukt.setDisable(false);
-			btnSletProdukt.setDisable(false);
+			updateLvwPrisKategorier();
+			
+			disableProductNodes(false);
 		} else {
-			btnOpdaterProdukt.setDisable(true);
-			btnSletProdukt.setDisable(true);
+			disableProductNodes(true);
 		}
+	}
+	
+	private void disableProductNodes(boolean disable) {
+		btnOpdaterProdukt.setDisable(disable);
+		btnSletProdukt.setDisable(disable);
+		
+		cboxPrisKategorier.setDisable(disable);
+		lvwPrisKategorier.setDisable(disable);
+		btnTilføjPris.setDisable(disable);
+		txfPris.setDisable(disable);
 	}
 
 	private void cboxProduktKategoriAction() {
 		updateLvwProdukter();
 		btnOpretProdukt.setDisable(false);
+		disableProductNodes(true);
 	}
 
 	private void btnOpretProduktAction() {
@@ -155,7 +178,7 @@ public class ProduktTab extends GridPane {
 		
 		@Override
 		public String toString() {
-			return prisKategori.getNavn() + " : " + produkt.getPris(prisKategori);
+			return prisKategori.getNavn() + "  :  " + produkt.getPris(prisKategori);
 		}
 	}
 	

@@ -44,11 +44,7 @@ public class Produkt {
 	}
 	
 	public double getPris(PrisKategori kategori) {
-		for (PrisKategori pk : priser.keySet()) {
-			System.out.println(priser.get(pk));
-		}
-		System.out.println(kategori);
-		return priser.get(kategori);
+		return (priser.containsKey(kategori)) ? priser.get(kategori) : Double.NaN;
 	}
 	
 	@Override
