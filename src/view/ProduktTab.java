@@ -6,6 +6,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
 import storage.Storage;
@@ -15,11 +16,13 @@ import javafx.geometry.Insets;
 public class ProduktTab extends GridPane {
 
 	ListView<Produkt> lvwProdukter;
+	ListView<ProduktPrisKategoriFormat> lvwPrisKategorier;
 	ComboBox<ProduktKategori> cboxProduktKategorier;
+	ComboBox<PrisKategori> cboxPrisKategorier;
 
-	private TextField txfProduktNavn;
+	private TextField txfProduktNavn, txfPris;
 	private TextArea txaProduktBeskrivelse;
-	private Button btnOpdaterProdukt, btnSletProdukt, btnOpretProdukt;
+	private Button btnOpdaterProdukt, btnSletProdukt, btnOpretProdukt, btnTilføjPris;
 
 	private void setUpPane() {
 		this.setPadding(new Insets(20));
@@ -41,13 +44,15 @@ public class ProduktTab extends GridPane {
 
 		lvwProdukter = new ListView<Produkt>();
 		lvwProdukter.setOnMouseClicked(e -> lvwProdukterAction());
-		this.add(lvwProdukter, 0, 1, 1, 5);
+		this.add(lvwProdukter, 0, 1, 1, 6);
 
 		// Column 1
 		txfProduktNavn = new TextField("PRODUKT NAVN");
+		txfProduktNavn.setPrefWidth(200);
 		this.add(txfProduktNavn, 1, 1);
 
 		txaProduktBeskrivelse = new TextArea("BESKRIVELSE");
+		txaProduktBeskrivelse.setPrefWidth(200);
 		this.add(txaProduktBeskrivelse, 1, 2);
 
 		btnOpretProdukt = new Button("Opret");
@@ -66,6 +71,20 @@ public class ProduktTab extends GridPane {
 		this.add(btnSletProdukt, 1, 5);
 
 		// Column 2
+		lvwPrisKategorier = new ListView<ProduktTab.ProduktPrisKategoriFormat>();
+		this.add(lvwPrisKategorier, 2, 1, 1, 6);
+		
+		// Column 3
+		cboxPrisKategorier = new ComboBox<>();
+		cboxPrisKategorier.getItems().addAll(Storage.getPrisKategorier());
+		this.add(cboxPrisKategorier, 3, 1);
+		
+		txfPris = new TextField("PRIS");
+		this.add(txfPris, 3, 2);
+		
+		btnTilføjPris = new Button("Tilføj");
+		btnTilføjPris.setOnAction(e -> btnTilføjPrisAction());
+		this.add(btnTilføjPris, 3, 3);
 	}
 
 	private void updateLvwProdukter() {
@@ -73,6 +92,14 @@ public class ProduktTab extends GridPane {
 		lvwProdukter.getItems().addAll(Controller.getProdukterIKategori(cboxProduktKategorier.getValue()));
 		btnOpdaterProdukt.setDisable(true);
 		btnSletProdukt.setDisable(true);
+	}
+	
+	private void updateLvwPrisKategorier() {
+		lvwPrisKategorier.getItems().removeAll(lvwPrisKategorier.getItems());
+		for (PrisKategori pk : cboxPrisKategorier.getItems()) {
+			lvwPrisKategorier.getItems()
+					.add(new ProduktPrisKategoriFormat(lvwProdukter.getSelectionModel().getSelectedItem(), pk));
+		}
 	}
 
 	private void lvwProdukterAction() {
@@ -109,5 +136,27 @@ public class ProduktTab extends GridPane {
 		Storage.removeProdukt(lvwProdukter.getSelectionModel().getSelectedItem());
 		updateLvwProdukter();
 	}
+	
+	private void btnTilføjPrisAction() {
+		Controller.addPrisToProdukt(lvwProdukter.getSelectionModel().getSelectedItem(),
+				cboxPrisKategorier.getSelectionModel().getSelectedItem(), Double.parseDouble(txfPris.getText()));
+		updateLvwPrisKategorier();
+	}
 
+	// ListView formatting classes;
+	private class ProduktPrisKategoriFormat {
+		public Produkt produkt;
+		public PrisKategori prisKategori;
+		
+		public ProduktPrisKategoriFormat(Produkt produkt, PrisKategori prisKategori) {
+			this.produkt = produkt;
+			this.prisKategori = prisKategori;
+		}
+		
+		@Override
+		public String toString() {
+			return prisKategori.getNavn() + " : " + produkt.getPris(prisKategori);
+		}
+	}
+	
 }

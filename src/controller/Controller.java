@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
 import storage.Storage;
@@ -31,6 +32,10 @@ public class Controller {
 		produkt.setProduktKategori(produktKategori);
 		produkt.setNavn(navn);
 		produkt.setBeskrivelse(beskrivelse);
+	}
+	
+	public static void addPrisToProdukt(Produkt produkt, PrisKategori kategori, double pris) {
+		produkt.setPris(kategori, pris);
 	}
 	
 }

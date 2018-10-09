@@ -25,6 +25,9 @@ public class Storage {
 		produkter.add(new Produkt(fadøl, "Pilsner", "Klassiker, fra fad."));
 		produkter.add(new Produkt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad."));
 		produkter.add(new Produkt(fadøl, "Blonde", "Frisk, fra fad."));
+		
+		prisKategorier.add(new PrisKategori("Bar"));
+		prisKategorier.add(new PrisKategori("Butik"));
 	}
 
 	public static ArrayList<Produkt> getProdukter() {

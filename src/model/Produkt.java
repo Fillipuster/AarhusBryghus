@@ -43,6 +43,14 @@ public class Produkt {
 		priser.put(kategori, pris);
 	}
 	
+	public double getPris(PrisKategori kategori) {
+		for (PrisKategori pk : priser.keySet()) {
+			System.out.println(priser.get(pk));
+		}
+		System.out.println(kategori);
+		return priser.get(kategori);
+	}
+	
 	@Override
 	public String toString() {
 		return getNavn();
