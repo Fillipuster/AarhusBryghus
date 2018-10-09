@@ -1,10 +1,13 @@
 package model;
 
+import java.util.HashMap;
+
 public class Produkt {
 	
 	private ProduktKategori produktKategori;
 	private String navn;
 	private String beskrivelse;
+	private HashMap<PrisKategori, Double> priser = new HashMap<>();
 	
 	public Produkt(ProduktKategori produktKategori, String navn, String beskrivelse) {
 		this.setProduktKategori(produktKategori);
@@ -27,11 +30,6 @@ public class Produkt {
 	public void setNavn(String navn) {
 		this.navn = navn;
 	}
-	
-	@Override
-	public String toString() {
-		return navn;
-	}
 
 	public String getBeskrivelse() {
 		return beskrivelse;
@@ -39,6 +37,15 @@ public class Produkt {
 
 	public void setBeskrivelse(String beskrivelse) {
 		this.beskrivelse = beskrivelse;
+	}
+	
+	public void setPris(PrisKategori kategori, double pris) {
+		priser.put(kategori, pris);
+	}
+	
+	@Override
+	public String toString() {
+		return getNavn();
 	}
 	
 }
