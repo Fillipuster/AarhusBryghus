@@ -49,10 +49,12 @@ public class ProduktTab extends GridPane {
 		// Column 1
 		txfProduktNavn = new TextField("PRODUKT NAVN");
 		txfProduktNavn.setPrefWidth(200);
+		txfProduktNavn.setDisable(true);
 		this.add(txfProduktNavn, 1, 1);
 
 		txaProduktBeskrivelse = new TextArea("BESKRIVELSE");
 		txaProduktBeskrivelse.setPrefWidth(200);
+		txaProduktBeskrivelse.setDisable(true);
 		this.add(txaProduktBeskrivelse, 1, 2, 1, 3);
 
 		btnOpretProdukt = new Button("Opret");
@@ -140,6 +142,8 @@ public class ProduktTab extends GridPane {
 	private void cboxProduktKategoriAction() {
 		updateLvwProdukter();
 		btnOpretProdukt.setDisable(false);
+		txaProduktBeskrivelse.setDisable(false);
+		txfProduktNavn.setDisable(false);
 		disableProductNodes(true);
 	}
 
