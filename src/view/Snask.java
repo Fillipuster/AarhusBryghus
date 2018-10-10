@@ -2,6 +2,6 @@ package view;
 
 public class Snask {
 
-	det er dejligt
+	det er dårligt
 	
 }
