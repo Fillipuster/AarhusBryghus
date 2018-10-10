@@ -61,4 +61,12 @@ public class Storage {
 		return new ArrayList<>(prisKategorier);
 	}
 
+	public static void addPrisKategori(PrisKategori pk) {
+		prisKategorier.add(pk);
+	}
+	
+	public static void removePrisKategori(PrisKategori pk) {
+		prisKategorier.remove(pk);
+	}
+
 }
