@@ -1,13 +1,12 @@
 package view;
 
 import javafx.application.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import storage.Storage;
 
@@ -36,6 +35,13 @@ public class MainApp extends Application {
 	private void initTabPane(TabPane tabPane) {
 		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 
+		tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+			@Override
+			public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+				((ReloadableTab) newValue.getContent()).reload();
+			}
+		});
+		
 		Tab tabProdukt = new Tab("Produkter");
 		Tab tabProduktKategori = new Tab("Produkt Kategorier");
 //		Tab tabKunde = new Tab("Kunder");

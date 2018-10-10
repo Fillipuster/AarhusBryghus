@@ -13,7 +13,7 @@ import storage.Storage;
 import controller.Controller;
 import javafx.geometry.Insets;
 
-public class ProduktTab extends GridPane {
+public class ProduktTab extends GridPane implements ReloadableTab {
 
 	private ListView<Produkt> lvwProdukter;
 	private ListView<ProduktPrisKategoriFormat> lvwPrisKategorier;
@@ -23,7 +23,12 @@ public class ProduktTab extends GridPane {
 	private TextField txfProduktNavn, txfPris;
 	private TextArea txaProduktBeskrivelse;
 	private Button btnOpdaterProdukt, btnSletProdukt, btnOpretProdukt, btnTilføjPris;
-
+	
+	public void reload() {
+		cboxProduktKategorier.getItems().removeAll(cboxProduktKategorier.getItems());
+		cboxProduktKategorier.getItems().addAll(Storage.getProduktKategorier());
+	}
+	
 	private void setUpPane() {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
@@ -42,7 +47,7 @@ public class ProduktTab extends GridPane {
 
 		lvwProdukter = new ListView<Produkt>();
 		lvwProdukter.setOnMouseClicked(e -> lvwProdukterAction());
-		this.add(lvwProdukter, 0, 1, 1, 9);
+		this.add(lvwProdukter, 0, 1, 1, 10);
 
 		// Column 1
 		txfProduktNavn = new TextField("PRODUKT NAVN");
@@ -73,7 +78,7 @@ public class ProduktTab extends GridPane {
 		// Column 2
 		lvwPrisKategorier = new ListView<ProduktTab.ProduktPrisKategoriFormat>();
 		lvwPrisKategorier.setDisable(true);
-		this.add(lvwPrisKategorier, 2, 1, 1, 7);
+		this.add(lvwPrisKategorier, 2, 1, 1, 10);
 		
 		// Column 3
 		cboxPrisKategorier = new ComboBox<>();
@@ -183,7 +188,7 @@ public class ProduktTab extends GridPane {
 		
 		@Override
 		public String toString() {
-			return String.format("%10s : %10.2f", prisKategori.getNavn(), produkt.getPris(prisKategori));
+			return String.format("%10s : %10.2f,-", prisKategori.getNavn(), produkt.getPris(prisKategori));
 		}
 	}
 	

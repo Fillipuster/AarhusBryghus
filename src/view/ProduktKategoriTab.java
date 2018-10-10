@@ -10,7 +10,7 @@ import storage.Storage;
 import controller.Controller;
 import javafx.geometry.Insets;
 
-public class ProduktKategoriTab extends GridPane {
+public class ProduktKategoriTab extends GridPane implements ReloadableTab {
 
 	private ListView<ProduktKategori> lvwKategorier;
 	private ListView<Produkt> lvwProdukter;
@@ -18,6 +18,10 @@ public class ProduktKategoriTab extends GridPane {
 	private TextField txfKategoriNavn;
 	private Button btnOpdaterKategori, btnSletKategori, btnOpretKategori;
 
+	public void reload() {
+		
+	}
+	
 	private void setUpPane() {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
