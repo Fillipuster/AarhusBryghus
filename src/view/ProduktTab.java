@@ -40,60 +40,66 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		setUpPane();
 
 		// Column 0
+		ViewHelper.label(this, 0, 0, "Vælg produktkategori for at se produkter:");
 		cboxProduktKategorier = new ComboBox<>();
 		cboxProduktKategorier.getItems().addAll(Storage.getProduktKategorier());
 		cboxProduktKategorier.setOnAction(e -> cboxProduktKategoriAction());
-		this.add(cboxProduktKategorier, 0, 0);
+		this.add(cboxProduktKategorier, 0, 1);
 
 		lvwProdukter = new ListView<Produkt>();
 		lvwProdukter.setOnMouseClicked(e -> lvwProdukterAction());
-		this.add(lvwProdukter, 0, 1, 1, 10);
+		this.add(lvwProdukter, 0, 2, 1, 10);
 
 		// Column 1
+		ViewHelper.label(this, 1, 1, "Produktnavn:");
 		txfProduktNavn = new TextField("PRODUKT NAVN");
 		txfProduktNavn.setPrefWidth(200);
 		txfProduktNavn.setDisable(true);
-		this.add(txfProduktNavn, 1, 1);
+		this.add(txfProduktNavn, 1, 2);
 
+		ViewHelper.label(this, 1, 3, "Produktbeskrivelse:");
 		txaProduktBeskrivelse = new TextArea("BESKRIVELSE");
 		txaProduktBeskrivelse.setPrefWidth(200);
 		txaProduktBeskrivelse.setDisable(true);
-		this.add(txaProduktBeskrivelse, 1, 2, 1, 3);
+		this.add(txaProduktBeskrivelse, 1, 4, 1, 3);
 
 		btnOpretProdukt = new Button("Opret");
 		btnOpretProdukt.setOnAction(e -> btnOpretProduktAction());
 		btnOpretProdukt.setDisable(true);
-		this.add(btnOpretProdukt, 1, 6);
+		this.add(btnOpretProdukt, 1, 7);
 
 		btnOpdaterProdukt = new Button("Opdater");
 		btnOpdaterProdukt.setOnAction(e -> btnOpdaterProduktAction());
 		btnOpdaterProdukt.setDisable(true);
-		this.add(btnOpdaterProdukt, 1, 7);
+		this.add(btnOpdaterProdukt, 1, 8);
 
 		btnSletProdukt = new Button("Slet");
 		btnSletProdukt.setOnAction(e -> btnSletProduktAction());
 		btnSletProdukt.setDisable(true);
-		this.add(btnSletProdukt, 1, 8);
+		this.add(btnSletProdukt, 1, 9);
 
 		// Column 2
+		ViewHelper.label(this, 2, 1, "Produktpriser:");
 		lvwPrisKategorier = new ListView<ProduktTab.ProduktPrisKategoriFormat>();
 		lvwPrisKategorier.setDisable(true);
-		this.add(lvwPrisKategorier, 2, 1, 1, 10);
+		this.add(lvwPrisKategorier, 2, 2, 1, 10);
 		
 		// Column 3
+		ViewHelper.label(this, 3, 1, "Vælg priskategori:");
 		cboxPrisKategorier = new ComboBox<>();
 		cboxPrisKategorier.getItems().addAll(Storage.getPrisKategorier());
 		cboxPrisKategorier.setDisable(true);
-		this.add(cboxPrisKategorier, 3, 1);
+		this.add(cboxPrisKategorier, 3, 2);
 		
+		ViewHelper.label(this, 3, 3, "Pris i valgte priskategori:");
 		txfPris = new TextField("PRIS");
 		txfPris.setDisable(true);
-		this.add(txfPris, 3, 2);
+		this.add(txfPris, 3, 4);
 		
 		btnTilføjPris = new Button("Tilføj");
 		btnTilføjPris.setOnAction(e -> btnTilføjPrisAction());
 		btnTilføjPris.setDisable(true);
-		this.add(btnTilføjPris, 3, 3);
+		this.add(btnTilføjPris, 3, 5);
 	}
 
 	// ListView updater methods;
