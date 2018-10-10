@@ -3,6 +3,7 @@ package view;
 import javafx.application.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
@@ -19,7 +20,7 @@ public class MainApp extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		stage.setTitle("Fredags Bar");
+		stage.setTitle("Aarhus Bryghus Salgssystem");
 		TabPane pane = new TabPane();
 
 		initTabPane(pane);
@@ -36,26 +37,23 @@ public class MainApp extends Application {
 		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 
 		Tab tabProdukt = new Tab("Produkter");
-		Tab tabKunde = new Tab("Kunder");
-		Tab tabSalg = new Tab("Salg");
-		Tab tabStatestik = new Tab("Statestik");
+		Tab tabProduktKategori = new Tab("Produkt Kategorier");
+//		Tab tabKunde = new Tab("Kunder");
+//		Tab tabSalg = new Tab("Salg");
+//		Tab tabStatestik = new Tab("Statestik");
 
 		tabProdukt.setContent(new ProduktTab());
+		tabProduktKategori.setContent(new ProduktKategoriTab());
 //		tabKunde.setContent(new KundeTab());
 //		tabSalg.setContent(new SalgTab());
 //		tabStatestik.setContent(new StatestikTab());
 
 		tabPane.getTabs().add(tabProdukt);
-		tabPane.getTabs().add(tabKunde);
-		tabPane.getTabs().add(tabSalg);
-		tabPane.getTabs().add(tabStatestik);
+		tabPane.getTabs().add(tabProduktKategori);
+//		tabPane.getTabs().add(tabKunde);
+//		tabPane.getTabs().add(tabSalg);
+//		tabPane.getTabs().add(tabStatestik);
 
 	}
-
-	public static Label label(GridPane pane, int x, int y, String text) {
-		Label label = new Label(text);
-		pane.add(label, x, y);
-
-		return label;
-	}
+	
 }

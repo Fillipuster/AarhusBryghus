@@ -30,6 +30,7 @@ public class Storage {
 		prisKategorier.add(new PrisKategori("Butik"));
 	}
 
+	// Produkt
 	public static ArrayList<Produkt> getProdukter() {
 		return new ArrayList<>(produkter);
 	}
@@ -42,10 +43,20 @@ public class Storage {
 		produkter.remove(produkt);
 	}
 	
+	// ProduktKategori
 	public static ArrayList<ProduktKategori> getProduktKategorier() {
 		return new ArrayList<>(produktKategorier);
 	}
+
+	public static void addProduktKategori(ProduktKategori pk) {
+		produktKategorier.add(pk);
+	}
 	
+	public static void removeProduktKategori(ProduktKategori pk) {
+		produktKategorier.remove(pk);
+	}
+	
+	// PrisKategori
 	public static ArrayList<PrisKategori> getPrisKategorier() {
 		return new ArrayList<>(prisKategorier);
 	}

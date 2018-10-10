@@ -15,10 +15,10 @@ import javafx.geometry.Insets;
 
 public class ProduktTab extends GridPane {
 
-	ListView<Produkt> lvwProdukter;
-	ListView<ProduktPrisKategoriFormat> lvwPrisKategorier;
-	ComboBox<ProduktKategori> cboxProduktKategorier;
-	ComboBox<PrisKategori> cboxPrisKategorier;
+	private ListView<Produkt> lvwProdukter;
+	private ListView<ProduktPrisKategoriFormat> lvwPrisKategorier;
+	private ComboBox<ProduktKategori> cboxProduktKategorier;
+	private ComboBox<PrisKategori> cboxPrisKategorier;
 
 	private TextField txfProduktNavn, txfPris;
 	private TextArea txaProduktBeskrivelse;
@@ -35,8 +35,6 @@ public class ProduktTab extends GridPane {
 		setUpPane();
 
 		// Column 0
-//		MainApp.label(this, 0, 0, "Produkter");
-
 		cboxProduktKategorier = new ComboBox<>();
 		cboxProduktKategorier.getItems().addAll(Storage.getProduktKategorier());
 		cboxProduktKategorier.setOnAction(e -> cboxProduktKategoriAction());
@@ -93,6 +91,7 @@ public class ProduktTab extends GridPane {
 		this.add(btnTilføjPris, 3, 3);
 	}
 
+	// ListView updater methods;
 	private void updateLvwProdukter() {
 		if (cboxProduktKategorier.getSelectionModel().getSelectedItem() == null) {
 			cboxProduktKategorier.getSelectionModel().select(0);
@@ -116,6 +115,7 @@ public class ProduktTab extends GridPane {
 		}
 	}
 
+	// Node action methods;
 	private void lvwProdukterAction() {
 		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
 		if (selected != null) {
@@ -127,16 +127,6 @@ public class ProduktTab extends GridPane {
 		} else {
 			disableProductNodes(true);
 		}
-	}
-	
-	private void disableProductNodes(boolean disable) {
-		btnOpdaterProdukt.setDisable(disable);
-		btnSletProdukt.setDisable(disable);
-		
-		cboxPrisKategorier.setDisable(disable);
-		lvwPrisKategorier.setDisable(disable);
-		btnTilføjPris.setDisable(disable);
-		txfPris.setDisable(disable);
 	}
 
 	private void cboxProduktKategoriAction() {
@@ -169,6 +159,17 @@ public class ProduktTab extends GridPane {
 				cboxPrisKategorier.getSelectionModel().getSelectedItem(), Double.parseDouble(txfPris.getText()));
 		updateLvwPrisKategorier();
 	}
+	
+	// Node disabling methods;
+	private void disableProductNodes(boolean disable) {
+		btnOpdaterProdukt.setDisable(disable);
+		btnSletProdukt.setDisable(disable);
+		
+		cboxPrisKategorier.setDisable(disable);
+		lvwPrisKategorier.setDisable(disable);
+		btnTilføjPris.setDisable(disable);
+		txfPris.setDisable(disable);
+	}
 
 	// ListView formatting classes;
 	private class ProduktPrisKategoriFormat {
@@ -182,7 +183,7 @@ public class ProduktTab extends GridPane {
 		
 		@Override
 		public String toString() {
-			return prisKategori.getNavn() + "  :  " + produkt.getPris(prisKategori);
+			return String.format("%10s : %10.2f", prisKategori.getNavn(), produkt.getPris(prisKategori));
 		}
 	}
 	

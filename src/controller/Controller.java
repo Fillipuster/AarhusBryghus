@@ -9,6 +9,7 @@ import storage.Storage;
 
 public class Controller {
 
+	// Produkt
 	public static ArrayList<Produkt> getProdukterIKategori(ProduktKategori kategori) {
 		ArrayList<Produkt> result = new ArrayList<>();
 		
@@ -36,6 +37,18 @@ public class Controller {
 	
 	public static void addPrisToProdukt(Produkt produkt, PrisKategori kategori, double pris) {
 		produkt.setPris(kategori, pris);
+	}
+	
+	// ProduktKategori
+	public static ProduktKategori createProduktKategori(String navn) {
+		ProduktKategori pk = new ProduktKategori(navn);
+		Storage.addProduktKategori(pk);
+		
+		return pk;
+	}
+	
+	public static void updateProduktKategori(ProduktKategori kategori, String navn) {
+		kategori.setNavn(navn);
 	}
 	
 }
