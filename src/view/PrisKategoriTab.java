@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
 import storage.Storage;
@@ -12,8 +13,7 @@ import javafx.geometry.Insets;
 
 public class PrisKategoriTab extends GridPane implements ReloadableTab {
 
-	private ListView<ProduktKategori> lvwKategorier;
-	private ListView<Produkt> lvwProdukter;
+	private ListView<PrisKategori> lvwKategorier;
 	
 	private TextField txfKategoriNavn;
 	private Button btnOpdaterKategori, btnSletKategori, btnOpretKategori;
@@ -33,7 +33,7 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 		setUpPane();
 
 		// Column 0
-		lvwKategorier = new ListView<ProduktKategori>();
+		lvwKategorier = new ListView<PrisKategori>();
 		lvwKategorier.setOnMouseClicked(e -> lvwKategorierAction());
 		this.add(lvwKategorier, 0, 0, 1, 5);
 		
@@ -53,40 +53,26 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 		btnOpretKategori.setOnAction(e -> btnOpretKategoriAction());
 		this.add(btnOpretKategori, 1, 3);
 		
-		// Column 2
-		lvwProdukter = new ListView<Produkt>();
-		this.add(lvwProdukter, 2, 0, 1, 5);
-		
 		updateLvwKategorier();
 	}
 	
 	// ListView updater methods;
 	private void updateLvwKategorier() {
 		lvwKategorier.getItems().removeAll(lvwKategorier.getItems());
-		lvwKategorier.getItems().addAll(Storage.getProduktKategorier());
+		lvwKategorier.getItems().addAll(Storage.getPrisKategorier());
 		disableKategoriNodes(true);
-	}
-	
-	private void updateLvwProdukter() {
-		ProduktKategori selected = lvwKategorier.getSelectionModel().getSelectedItem();
-		if (selected != null) {
-			lvwProdukter.getItems().removeAll(lvwProdukter.getItems());
-			lvwProdukter.getItems().addAll(Controller.getProdukterIKategori(selected));
-		}
 	}
 	
 	// Node disabling methods;
 	private void disableKategoriNodes(boolean disable) {
 		btnOpdaterKategori.setDisable(disable);
 		btnSletKategori.setDisable(disable);
-		lvwProdukter.setDisable(disable);
 	}
 	
 	// Node action methods;
 	private void lvwKategorierAction() {
-		ProduktKategori selected = lvwKategorier.getSelectionModel().getSelectedItem();
+		PrisKategori selected = lvwKategorier.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			updateLvwProdukter();
 			disableKategoriNodes(false);
 			txfKategoriNavn.setText(selected.getNavn());
 		} else {
@@ -95,12 +81,12 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void btnOpdaterKategoriAction() {
-		Controller.updateProduktKategori(lvwKategorier.getSelectionModel().getSelectedItem(), txfKategoriNavn.getText());
+		Controller.updatePrisKategori(lvwKategorier.getSelectionModel().getSelectedItem(), txfKategoriNavn.getText());
 		updateLvwKategorier();
 	}
 	
 	private void btnSletKategoriAction() {
-		Storage.removeProduktKategori(lvwKategorier.getSelectionModel().getSelectedItem());
+		Storage.removePrisKategori(lvwKategorier.getSelectionModel().getSelectedItem());
 		updateLvwKategorier();
 	}
 	

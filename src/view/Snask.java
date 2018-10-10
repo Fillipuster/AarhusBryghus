@@ -2,6 +2,6 @@ package view;
 
 public class Snask {
 
-	det er dårligt
+	det er noget lort
 	
 }
