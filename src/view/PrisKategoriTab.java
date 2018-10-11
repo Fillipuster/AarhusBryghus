@@ -5,8 +5,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import model.PrisKategori;
-import model.Produkt;
-import model.ProduktKategori;
 import storage.Storage;
 import controller.Controller;
 import javafx.geometry.Insets;
@@ -91,7 +89,7 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void btnOpretKategoriAction() {
-		Controller.createProduktKategori(txfKategoriNavn.getText());
+		Controller.createPrisKategori(txfKategoriNavn.getText());
 		updateLvwKategorier();
 	}
 	

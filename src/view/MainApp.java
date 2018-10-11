@@ -45,18 +45,21 @@ public class MainApp extends Application {
 		Tab tabProdukt = new Tab("Produkter");
 		Tab tabProduktKategori = new Tab("Produkt Kategorier");
 		Tab tabSalg = new Tab("Salg");
+		Tab tabPrisKategori = new Tab("Pris Kategorier");
 //		Tab tabKunde = new Tab("Kunder");
 //		Tab tabStatestik = new Tab("Statestik");
 
 		tabProdukt.setContent(new ProduktTab());
 		tabProduktKategori.setContent(new ProduktKategoriTab());
 		tabSalg.setContent(new SalgTab());
+		tabPrisKategori.setContent(new PrisKategoriTab());
 //		tabKunde.setContent(new KundeTab());
 //		tabStatestik.setContent(new StatestikTab());
 
 		tabPane.getTabs().add(tabProdukt);
 		tabPane.getTabs().add(tabProduktKategori);
 		tabPane.getTabs().add(tabSalg);
+		tabPane.getTabs().add(tabPrisKategori);
 //		tabPane.getTabs().add(tabKunde);
 //		tabPane.getTabs().add(tabStatestik);
 
