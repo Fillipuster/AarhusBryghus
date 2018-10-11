@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
+import model.ProduktLinje;
 import model.Salg;
 import storage.Storage;
 
@@ -82,4 +83,17 @@ public class Controller {
 		return new Salg(LocalDate.of(9002, 6, 14));
 	}
 	
-}
+	public static ProduktLinje createProduktLinje(Salg salg, Produkt produkt, PrisKategori prisKategori, int antal, double rabat) {
+		return salg.opretProduktLinje(produkt, prisKategori, antal, rabat);
+	}
+	
+	public static void updateProduktLinje(ProduktLinje produktLinje, int antal, double rabat) {
+		produktLinje.setAntal(antal);
+		produktLinje.setRabat(rabat);
+	}
+	
+	public static void saveSalg(Salg salg) {
+		Storage.addSalg(salg);
+	}
+	
+ }

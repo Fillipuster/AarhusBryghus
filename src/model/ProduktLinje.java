@@ -36,21 +36,21 @@ public class ProduktLinje {
 	public void setProdukt(Produkt produkt) {
 		this.produkt = produkt;
 	}
-
-	@Override
-	public String toString() {
-		return produkt.getNavn() + "  " + antal + "  " + produkt.getPris(prisKategori) +  "  " + rabat * 100d + "%";
+	
+	public double getPris() {
+		return antal * produkt.getPris(prisKategori) * (1 - rabat);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if(obj instanceof ProduktLinje) {
-			if( this.getProdukt() == ((ProduktLinje) obj).getProdukt()) {
-				return (((ProduktLinje) obj).getRabat() == this.getRabat());
-			}
-			
+	public String toString() {
+		String total = String.format("%.2f", getPris());
+		
+		String rabatStr = "";
+		if (rabat > 0d) {
+			rabatStr = "(" + String.format("%.2f", rabat * 100d) + "%)";
 		}
-		return false;
+		
+		return produkt.getNavn() + " x " + antal + " af " + produkt.getPris(prisKategori) +  " kr.\n = " + total + " kr. " + rabatStr ;
 	}
 	
 }

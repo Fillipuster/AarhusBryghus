@@ -28,5 +28,18 @@ public class Salg {
 		produktLinjer.add(pl);
 		return pl;
 	}
+	
+	public void sletProduktLinje(ProduktLinje produktLinje) {
+		produktLinjer.remove(produktLinje);
+	}
+	
+	public double getTotalPris() {
+		double total = 0d;
+		for (ProduktLinje pl : produktLinjer) {
+			total += pl.getPris();
+		}
+		
+		return total;
+	}
 
 }
