@@ -16,18 +16,13 @@ import javafx.geometry.Insets;
 public class ProduktTab extends GridPane implements ReloadableTab {
 
 	private ListView<Produkt> lvwProdukter;
-	private ListView<ProduktPrisKategoriFormat> lvwPrisKategorier;
+	private ListView<ProduktPrisKategoriFormat> lvwPriser;
 	private ComboBox<ProduktKategori> cboxProduktKategorier;
 	private ComboBox<PrisKategori> cboxPrisKategorier;
 
 	private TextField txfProduktNavn, txfPris;
 	private TextArea txaProduktBeskrivelse;
 	private Button btnOpdaterProdukt, btnSletProdukt, btnOpretProdukt, btnTilføjPris;
-	
-	public void reload() {
-		cboxProduktKategorier.getItems().removeAll(cboxProduktKategorier.getItems());
-		cboxProduktKategorier.getItems().addAll(Storage.getProduktKategorier());
-	}
 	
 	private void setUpPane() {
 		this.setPadding(new Insets(20));
@@ -54,77 +49,75 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		ViewHelper.label(this, 1, 1, "Produktnavn:");
 		txfProduktNavn = new TextField("PRODUKT NAVN");
 		txfProduktNavn.setPrefWidth(200);
-		txfProduktNavn.setDisable(true);
 		this.add(txfProduktNavn, 1, 2);
 
 		ViewHelper.label(this, 1, 3, "Produktbeskrivelse:");
 		txaProduktBeskrivelse = new TextArea("BESKRIVELSE");
 		txaProduktBeskrivelse.setPrefWidth(200);
-		txaProduktBeskrivelse.setDisable(true);
 		this.add(txaProduktBeskrivelse, 1, 4, 1, 3);
 
 		btnOpretProdukt = new Button("Opret");
 		btnOpretProdukt.setOnAction(e -> btnOpretProduktAction());
-		btnOpretProdukt.setDisable(true);
 		this.add(btnOpretProdukt, 1, 7);
 
 		btnOpdaterProdukt = new Button("Opdater");
 		btnOpdaterProdukt.setOnAction(e -> btnOpdaterProduktAction());
-		btnOpdaterProdukt.setDisable(true);
 		this.add(btnOpdaterProdukt, 1, 8);
 
 		btnSletProdukt = new Button("Slet");
 		btnSletProdukt.setOnAction(e -> btnSletProduktAction());
-		btnSletProdukt.setDisable(true);
 		this.add(btnSletProdukt, 1, 9);
 
 		// Column 2
 		ViewHelper.label(this, 2, 1, "Produktpriser:");
-		lvwPrisKategorier = new ListView<ProduktTab.ProduktPrisKategoriFormat>();
-		lvwPrisKategorier.setDisable(true);
-		lvwPrisKategorier.setStyle("-fx-font-family: monospace;");
-		this.add(lvwPrisKategorier, 2, 2, 1, 10);
+		lvwPriser = new ListView<ProduktTab.ProduktPrisKategoriFormat>();
+		lvwPriser.setStyle("-fx-font-family: monospace;");
+		this.add(lvwPriser, 2, 2, 1, 10);
 		
 		// Column 3
 		ViewHelper.label(this, 3, 1, "Vælg priskategori:");
 		cboxPrisKategorier = new ComboBox<>();
 		cboxPrisKategorier.getItems().addAll(Storage.getPrisKategorier());
-		cboxPrisKategorier.setDisable(true);
 		this.add(cboxPrisKategorier, 3, 2);
 		
 		ViewHelper.label(this, 3, 3, "Pris i valgte priskategori:");
 		txfPris = new TextField("PRIS");
-		txfPris.setDisable(true);
 		this.add(txfPris, 3, 4);
 		
 		btnTilføjPris = new Button("Tilføj");
 		btnTilføjPris.setOnAction(e -> btnTilføjPrisAction());
-		btnTilføjPris.setDisable(true);
 		this.add(btnTilføjPris, 3, 5);
 	}
 
 	// Node updater methods;
 	private void updateLvwProdukter() {
-		if (cboxProduktKategorier.getSelectionModel().getSelectedItem() == null) {
-			cboxProduktKategorier.getSelectionModel().select(0);
-		}
-		
 		lvwProdukter.getItems().removeAll(lvwProdukter.getItems());
-		lvwProdukter.getItems().addAll(Controller.getProdukterIKategori(cboxProduktKategorier.getValue()));
-		btnOpdaterProdukt.setDisable(true);
-		btnSletProdukt.setDisable(true);
+		
+		ProduktKategori selected = cboxProduktKategorier.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			lvwProdukter.getItems().addAll(Controller.getProdukterIKategori(selected));
+		}
 	}
 	
-	private void updateLvwPrisKategorier() {
-		if (cboxPrisKategorier.getSelectionModel().getSelectedItem() == null) {
-			cboxPrisKategorier.getSelectionModel().select(0);
-		}
+	private void updateLvwPriser() {
+		lvwPriser.getItems().removeAll(lvwPriser.getItems());
 		
-		lvwPrisKategorier.getItems().removeAll(lvwPrisKategorier.getItems());
-		for (PrisKategori pk : cboxPrisKategorier.getItems()) {
-			lvwPrisKategorier.getItems()
-					.add(new ProduktPrisKategoriFormat(lvwProdukter.getSelectionModel().getSelectedItem(), pk));
+		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			for (PrisKategori pk : Storage.getPrisKategorier()) {
+				lvwPriser.getItems().add(new ProduktPrisKategoriFormat(selected, pk));
+			}			
 		}
+	}
+	
+	private void updateCboxProduktKategorier() {
+		cboxProduktKategorier.getItems().removeAll(cboxProduktKategorier.getItems());
+		cboxProduktKategorier.getItems().addAll(Storage.getProduktKategorier());
+	}
+	
+	private void updateCboxPrisKategorier() {
+		cboxPrisKategorier.getItems().removeAll(cboxPrisKategorier.getItems());
+		cboxPrisKategorier.getItems().addAll(Storage.getPrisKategorier());
 	}
 
 	// Node action methods;
@@ -133,20 +126,12 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		if (selected != null) {
 			txfProduktNavn.setText(selected.getNavn());
 			txaProduktBeskrivelse.setText(selected.getBeskrivelse());
-			updateLvwPrisKategorier();
-			
-			disableProductNodes(false);
-		} else {
-			disableProductNodes(true);
+			updateLvwPriser();
 		}
 	}
 
 	private void cboxProduktKategoriAction() {
 		updateLvwProdukter();
-		btnOpretProdukt.setDisable(false);
-		txaProduktBeskrivelse.setDisable(false);
-		txfProduktNavn.setDisable(false);
-		disableProductNodes(true);
 	}
 
 	private void btnOpretProduktAction() {
@@ -156,31 +141,32 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnOpdaterProduktAction() {
+		if (!ViewHelper.listViewHasSelected(lvwProdukter)) {return;}
+		
 		Controller.updateProdukt(lvwProdukter.getSelectionModel().getSelectedItem(), cboxProduktKategorier.getValue(),
 				txfProduktNavn.getText(), txaProduktBeskrivelse.getText());
 		updateLvwProdukter();
 	}
 
 	private void btnSletProduktAction() {
+		if (!ViewHelper.listViewHasSelected(lvwProdukter)) {return;}
+		
 		Storage.removeProdukt(lvwProdukter.getSelectionModel().getSelectedItem());
 		updateLvwProdukter();
 	}
 	
 	private void btnTilføjPrisAction() {
+		if (!ViewHelper.listViewHasSelected(lvwProdukter)) {return;}
+		
 		Controller.addPrisToProdukt(lvwProdukter.getSelectionModel().getSelectedItem(),
 				cboxPrisKategorier.getSelectionModel().getSelectedItem(), Double.parseDouble(txfPris.getText()));
-		updateLvwPrisKategorier();
+		updateLvwPriser();
 	}
 	
-	// Node disabling methods;
-	private void disableProductNodes(boolean disable) {
-		btnOpdaterProdukt.setDisable(disable);
-		btnSletProdukt.setDisable(disable);
-		
-		cboxPrisKategorier.setDisable(disable);
-		lvwPrisKategorier.setDisable(disable);
-		btnTilføjPris.setDisable(disable);
-		txfPris.setDisable(disable);
+	// Tab reloading;
+	public void reload() {
+		updateCboxPrisKategorier();
+		updateCboxProduktKategorier();
 	}
 
 	// ListView formatting classes;
