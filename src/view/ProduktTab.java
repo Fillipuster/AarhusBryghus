@@ -194,7 +194,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		
 		@Override
 		public String toString() {
-			return String.format("%10s : %10.2f,-", prisKategori.getNavn(), produkt.getPris(prisKategori));
+			return String.format("%10s : %10.2f", prisKategori.getNavn(), produkt.getPris(prisKategori));
 		}
 	}
 	
