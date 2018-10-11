@@ -39,7 +39,6 @@ public class MainApp extends Application {
 		tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
 			@Override
 			public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-				System.out.println("Tab switched;");
 				((ReloadableTab) newValue.getContent()).reload();
 			}
 		});
