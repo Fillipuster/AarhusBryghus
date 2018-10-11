@@ -58,6 +58,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		// Column 2
 		lvwProduktLinjer = new ListView<>();
 		lvwProduktLinjer.setOnMouseClicked(e -> lvwProduktLinjerAction());
+		lvwProduktLinjer.setStyle("-fx-font-family: monospace;");
 		this.add(lvwProduktLinjer, 2, 1, 4, 5);
 		
 		lblTotal = ViewHelper.label(this, 2, 6, "TOTAL: 00,00 kr.");

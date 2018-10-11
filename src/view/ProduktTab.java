@@ -82,6 +82,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		ViewHelper.label(this, 2, 1, "Produktpriser:");
 		lvwPrisKategorier = new ListView<ProduktTab.ProduktPrisKategoriFormat>();
 		lvwPrisKategorier.setDisable(true);
+		lvwPrisKategorier.setStyle("-fx-font-family: monospace;");
 		this.add(lvwPrisKategorier, 2, 2, 1, 10);
 		
 		// Column 3
@@ -194,7 +195,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		
 		@Override
 		public String toString() {
-			return String.format("%10s : %10.2f", prisKategori.getNavn(), produkt.getPris(prisKategori));
+			return String.format("%-10s : %10.2f", prisKategori.getNavn(), produkt.getPris(prisKategori));
 		}
 	}
 	
