@@ -102,7 +102,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		this.add(btnTilføjPris, 3, 5);
 	}
 
-	// ListView updater methods;
+	// Node updater methods;
 	private void updateLvwProdukter() {
 		if (cboxProduktKategorier.getSelectionModel().getSelectedItem() == null) {
 			cboxProduktKategorier.getSelectionModel().select(0);

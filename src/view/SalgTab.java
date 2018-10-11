@@ -82,7 +82,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 
 	}
 
-	// Node updater methods
+	// Node updater methods;
 	private void updateCboxPrisKategrorier() {
 		cboxPrisKategorier.getItems().removeAll(cboxPrisKategorier.getItems());
 		cboxPrisKategorier.getItems().addAll(Storage.getPrisKategorier());
@@ -107,7 +107,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		lblTotal.setText(String.format("TOTAL: %.2f kr.", salg.getTotalPris()));
 	}
 
-	// Node Action methods
+	// Node action methods;
 	public void cboxPrisKategorierAction() {
 		updateLvwProdukter();
 	}
@@ -175,7 +175,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		updateLvwProduktLinjer(null);
 	}
 
-	// Reload;
+	// Tab reloading;
 	@Override
 	public void reload() {
 		updateCboxPrisKategrorier();
