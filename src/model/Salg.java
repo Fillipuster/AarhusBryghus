@@ -23,8 +23,8 @@ public class Salg {
 		return new ArrayList<ProduktLinje>(produktLinjer);
 	}
 
-	public ProduktLinje opretProduktLinje(Produkt produkt, int antal, double rabat) {
-		ProduktLinje pl = new ProduktLinje(produkt, antal, rabat);
+	public ProduktLinje opretProduktLinje(Produkt produkt, PrisKategori prisKategori, int antal, double rabat) {
+		ProduktLinje pl = new ProduktLinje(produkt, prisKategori, antal, rabat);
 		produktLinjer.add(pl);
 		return pl;
 	}

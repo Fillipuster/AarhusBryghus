@@ -3,6 +3,7 @@ package view;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -15,16 +16,24 @@ import javafx.scene.layout.VBox;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
+import model.ProduktLinje;
+import model.Salg;
 import storage.Storage;
+
+import java.time.LocalDate;
+
+import controller.Controller;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class SalgTab extends GridPane implements ReloadableTab {
-	private TableView table = new TableView();
-	private ListView lvwProdukter;
-	private TextField txfProdukt, txfAntal, txfPris, txfRabat;
-	private Button btnAdd;
+	private ListView<Produkt> lvwProdukter;
+	private ListView<ProduktLinje> lvwProduktLinjer;
+	private Button btnGennemførSalg, btnAdd, btnDelete, btnAntal, btnRabat, btnAnuller, btnKøb;
+	private ComboBox<PrisKategori> cboxPrisKategorier;
+	private Salg salg;
 
 	private void setUpPane() {
 		this.setPadding(new Insets(20));
@@ -35,74 +44,106 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	}
 
 	public SalgTab() {
+		salg = Controller.createSalg();
+		
 		setUpPane();
+		this.setGridLinesVisible(false);
 
 		// Column 0
+		cboxPrisKategorier = new ComboBox<>();
+		cboxPrisKategorier.setOnAction(e -> cboxPrisKategorierAction());
+		this.add(cboxPrisKategorier, 0, 0);
+
 		lvwProdukter = new ListView<>();
-		this.add(lvwProdukter, 0, 0);
+		this.add(lvwProdukter, 0, 1, 1, 5);
+		lvwProdukter.getItems().addAll(Storage.getProdukter());
 
 		// Column 1
-		table.setEditable(true);
-		TableColumn produktCol = new TableColumn("Produkt");
-		produktCol.setMinWidth(100);
-		// produktCol.setCellValueFactory(new PropertyValueFactory<Produkt,
-		// String>("Produkt"));
+		btnAdd = new Button("→");
+		btnAdd.setOnAction(e -> btnAddAction());
+		this.add(btnAdd, 1, 3);
 
-		TableColumn antalCol = new TableColumn("Antal");
-		antalCol.setMinWidth(100);
-		// antalCol.setCellValueFactory(new PropertyValueFactory<Produkt,
-		// String>("Antal"));
+		btnDelete = new Button("←");
+		this.add(btnDelete, 1, 4);
 
-		TableColumn prisCol = new TableColumn("Pris");
-		prisCol.setMinWidth(100);
-		// antalCol.setCellValueFactory(new PropertyValueFactory<Produkt,
-		// String>("Pris"));
-
-		TableColumn rabatCol = new TableColumn("Rabat");
-		rabatCol.setMinWidth(100);
-		// antalCol.setCellValueFactory(new PropertyValueFactory<Produkt,
-		// String>("Rabat"));
-
-		table.getColumns().addAll(produktCol, antalCol, prisCol, rabatCol);
-
-		txfProdukt = new TextField();
-		txfProdukt.setPromptText("Produkt");
-		txfProdukt.setPrefWidth(80);
-		
-		txfAntal = new TextField();
-		txfAntal.setPromptText("Antal");
-		txfAntal.setPrefWidth(80);
-		
-		txfPris = new TextField();
-		txfPris.setPromptText("Pris");
-		txfPris.setPrefWidth(80);
-		
-		txfRabat = new TextField();
-		txfRabat.setPromptText("Rabat");
-		txfRabat.setPrefWidth(80);
-		
-		btnAdd = new Button("Add");
-		
-		HBox hbox = new HBox();
-		hbox.setSpacing(5);
-		hbox.getChildren().addAll(txfProdukt, txfAntal, txfPris, txfRabat, btnAdd);
-//		this.add(hbox2, 1, 1);
-		
-
-		final VBox vbox = new VBox();
-		vbox.setSpacing(5);
-		vbox.setPadding(new Insets(10, 0, 0, 10));
-		vbox.getChildren().addAll(table,hbox);
-		this.add(vbox, 1, 0);
-		
 		// Column 2
+		ViewHelper.label(this, 2, 0, "Produkt");
+		ViewHelper.label(this, 3, 0, "Antal");
+		ViewHelper.label(this, 4, 0, "Pris");
+		ViewHelper.label(this, 5, 0, "Rabat");
 
-		// Column 3
+		lvwProduktLinjer = new ListView<>();
+		this.add(lvwProduktLinjer, 2, 1, 4, 5);
+		Salg s = new Salg(LocalDate.now());
+		s.opretProduktLinje(Storage.getProdukter().get(0), Storage.getPrisKategorier().get(0), 2, 0.1);
+		lvwProduktLinjer.getItems().addAll(s.getProduktLinjer());
 
+		btnGennemførSalg = new Button("Gennemfør salg");
+		this.add(btnGennemførSalg, 2, 6);
+
+		// Column 5
+		btnAntal = new Button("Antal");
+		this.add(btnAntal, 6, 2);
+
+		btnRabat = new Button("Rabat");
+		this.add(btnRabat, 6, 3);
+
+		btnAnuller = new Button("Anuller");
+		this.add(btnAnuller, 6, 5);
+
+		// Column 6
+		btnKøb = new Button("Køb");
+		this.add(btnKøb, 7, 5);
+
+	}
+
+	// Node updater methods
+	private void updateCboxPrisKategrorier() {
+		cboxPrisKategorier.getItems().removeAll(cboxPrisKategorier.getItems());
+		cboxPrisKategorier.getItems().addAll(Storage.getPrisKategorier());
+	}
+
+	private void updateLvwProdukter() {
+		lvwProdukter.getItems().removeAll(lvwProdukter.getItems());
+		PrisKategori selected = cboxPrisKategorier.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			lvwProdukter.getItems().addAll(Controller.getProdukterIPrisKategori(selected));
+		}
+	}
+
+	private void updateLvwProduktLinjer() {
+		lvwProduktLinjer.getItems().removeAll(lvwProduktLinjer.getItems());
+		lvwProduktLinjer.getItems().addAll(salg.getProduktLinjer());
+	}
+	
+	// Node Action methods
+	public void cboxPrisKategorierAction() {
+		updateLvwProdukter();
+	}
+	
+	public void btnAddAction() {
+		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			ProduktLinje match = null;
+			for (ProduktLinje pl : lvwProduktLinjer.getItems()) {
+				if(pl.getProdukt() == selected && pl.getRabat() == 0d) {
+					match = pl;
+				}
+			}
+			if(match == null) {
+				salg.opretProduktLinje(selected, cboxPrisKategorier.getSelectionModel().getSelectedItem(), 1, 0d);				
+			} else {
+				match.setAntal(match.getAntal() + 1);
+			}
+			updateLvwProduktLinjer();
+		}
+		
+		
 	}
 
 	@Override
 	public void reload() {
-		// TODO Auto-generated method stub
+		updateCboxPrisKategrorier();
 	}
+
 }

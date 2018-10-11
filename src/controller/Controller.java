@@ -1,10 +1,12 @@
 package controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
+import model.Salg;
 import storage.Storage;
 
 public class Controller {
@@ -62,6 +64,22 @@ public class Controller {
 	
 	public static void updatePrisKategori(PrisKategori kategori, String navn) {
 		kategori.setNavn(navn);
+	}
+	
+	public static ArrayList<Produkt> getProdukterIPrisKategori(PrisKategori prisKategori) {
+		ArrayList<Produkt> result = new ArrayList<>();
+
+		for (Produkt p : Storage.getProdukter()) {
+			if (!Double.isNaN(p.getPris(prisKategori))) {
+				result.add(p);
+			}
+		}
+		return result;
+	}
+	
+//	Salg
+	public static Salg createSalg() {
+		return new Salg(LocalDate.of(9002, 6, 14));
 	}
 	
 }
