@@ -3,20 +3,28 @@ package view;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
 import storage.Storage;
+
+import java.util.ArrayList;
+
 import controller.Controller;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 
-public class ProduktTab extends GridPane implements ReloadableTab {
+public class ProduktTabTVW extends GridPane implements ReloadableTab {
 
 	private ListView<Produkt> lvwProdukter;
-	private ListView<ProduktPrisKategoriFormat> lvwPrisKategorier;
+	private TableView<ProduktPrisKategoriModel> tvwPriser;
 	private ComboBox<ProduktKategori> cboxProduktKategorier;
 	private ComboBox<PrisKategori> cboxPrisKategorier;
 
@@ -36,7 +44,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		this.setGridLinesVisible(false);
 	}
 
-	public ProduktTab() {
+	public ProduktTabTVW() {
 		setUpPane();
 
 		// Column 0
@@ -80,9 +88,9 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 
 		// Column 2
 		ViewHelper.label(this, 2, 1, "Produktpriser:");
-		lvwPrisKategorier = new ListView<ProduktTab.ProduktPrisKategoriFormat>();
-		lvwPrisKategorier.setDisable(true);
-		this.add(lvwPrisKategorier, 2, 2, 1, 10);
+		tvwPriser = new TableView<ProduktTabTVW.ProduktPrisKategoriModel>();
+		buildTvwPriser();
+		this.add(tvwPriser, 2, 2, 1, 10);
 		
 		// Column 3
 		ViewHelper.label(this, 3, 1, "Vælg priskategori:");
@@ -101,6 +109,17 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		btnTilføjPris.setDisable(true);
 		this.add(btnTilføjPris, 3, 5);
 	}
+	
+	// Node builders;
+	private void buildTvwPriser() {
+		TableColumn<ProduktPrisKategoriModel, String> kategoriCol = new TableColumn<ProduktTabTVW.ProduktPrisKategoriModel, String>("Kategori");
+		kategoriCol.setCellValueFactory(new PropertyValueFactory<>("kategori"));
+		
+		TableColumn<ProduktPrisKategoriModel, Double> prisCol = new TableColumn<ProduktTabTVW.ProduktPrisKategoriModel, Double>("Pris");
+		prisCol.setCellValueFactory(new PropertyValueFactory<>("pris"));
+		
+		tvwPriser.getColumns().addAll(kategoriCol, prisCol);
+	}
 
 	// ListView updater methods;
 	private void updateLvwProdukter() {
@@ -114,16 +133,17 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		btnSletProdukt.setDisable(true);
 	}
 	
-	private void updateLvwPrisKategorier() {
+	private void updateTvwPriser() {
 		if (cboxPrisKategorier.getSelectionModel().getSelectedItem() == null) {
 			cboxPrisKategorier.getSelectionModel().select(0);
 		}
 		
-		lvwPrisKategorier.getItems().removeAll(lvwPrisKategorier.getItems());
+		ArrayList<ProduktPrisKategoriModel> items = new ArrayList<>();
+//		tvwPriser.getItems().removeAll(tvwPriser.getItems());
 		for (PrisKategori pk : cboxPrisKategorier.getItems()) {
-			lvwPrisKategorier.getItems()
-					.add(new ProduktPrisKategoriFormat(lvwProdukter.getSelectionModel().getSelectedItem(), pk));
+			items.add(new ProduktPrisKategoriModel(lvwProdukter.getSelectionModel().getSelectedItem(), pk));
 		}
+		tvwPriser.setItems(FXCollections.observableArrayList(items));
 	}
 
 	// Node action methods;
@@ -132,7 +152,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		if (selected != null) {
 			txfProduktNavn.setText(selected.getNavn());
 			txaProduktBeskrivelse.setText(selected.getBeskrivelse());
-			updateLvwPrisKategorier();
+			updateTvwPriser();
 			
 			disableProductNodes(false);
 		} else {
@@ -168,7 +188,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	private void btnTilføjPrisAction() {
 		Controller.addPrisToProdukt(lvwProdukter.getSelectionModel().getSelectedItem(),
 				cboxPrisKategorier.getSelectionModel().getSelectedItem(), Double.parseDouble(txfPris.getText()));
-		updateLvwPrisKategorier();
+		updateTvwPriser();
 	}
 	
 	// Node disabling methods;
@@ -177,24 +197,19 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		btnSletProdukt.setDisable(disable);
 		
 		cboxPrisKategorier.setDisable(disable);
-		lvwPrisKategorier.setDisable(disable);
+		tvwPriser.setDisable(disable);
 		btnTilføjPris.setDisable(disable);
 		txfPris.setDisable(disable);
 	}
 
-	// ListView formatting classes;
-	private class ProduktPrisKategoriFormat {
-		public Produkt produkt;
-		public PrisKategori prisKategori;
+	// TableView model classes;
+	private class ProduktPrisKategoriModel {
+		public PrisKategori kategori;
+		public double pris;
 		
-		public ProduktPrisKategoriFormat(Produkt produkt, PrisKategori prisKategori) {
-			this.produkt = produkt;
-			this.prisKategori = prisKategori;
-		}
-		
-		@Override
-		public String toString() {
-			return String.format("%10s : %10.2f", prisKategori.getNavn(), produkt.getPris(prisKategori));
+		public ProduktPrisKategoriModel(Produkt produkt, PrisKategori kategori) {
+			this.pris = produkt.getPris(kategori);
+			this.kategori = kategori;
 		}
 	}
 	
