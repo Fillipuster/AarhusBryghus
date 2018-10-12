@@ -62,6 +62,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		this.add(lvwProduktLinjer, 2, 1, 4, 5);
 		
 		lblTotal = ViewHelper.label(this, 2, 6, "TOTAL: 00,00 kr.");
+		
 
 		// Column 6
 		txfAntal = new TextField("Antal");
