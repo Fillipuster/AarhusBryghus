@@ -17,18 +17,23 @@ public class MainApp extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
+		for (int i = 0; i < javafx.scene.text.Font.getFamilies().size(); i++) {
+			System.out.println(javafx.scene.text.Font.getFamilies().get(i));
+		}
+		
 		stage.setTitle("Aarhus Bryghus Salgssystem");
 		TabPane pane = new TabPane();
 
 		initTabPane(pane);
 		
 		Scene scene = new Scene(pane);
+		scene.getStylesheets().add("style_jbootx.css");
 		stage.setScene(scene);
 		stage.setHeight(600);
 		stage.setWidth(1000);
 		stage.show();
 
-		pane.setTabMinWidth((stage.getWidth() / pane.getTabs().size()) - 20d);
+		pane.setTabMinWidth(200);
 	}
 
 	private void initTabPane(TabPane tabPane) {
