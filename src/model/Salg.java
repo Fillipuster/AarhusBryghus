@@ -4,8 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Salg {
-	private LocalDate dato;
+
+	private BetalingsMetode betalingsMetode;
 	private ArrayList<ProduktLinje> produktLinjer = new ArrayList<>();
+	
+	private LocalDate dato;
 
 	public Salg(LocalDate dato) {
 		this.dato = dato;
@@ -17,6 +20,14 @@ public class Salg {
 
 	public LocalDate getDato() {
 		return dato;
+	}
+
+	public BetalingsMetode getBetalingsMetode() {
+		return betalingsMetode;
+	}
+
+	public void setBetalingsMetode(BetalingsMetode betalingsMetode) {
+		this.betalingsMetode = betalingsMetode;
 	}
 
 	public ArrayList<ProduktLinje> getProduktLinjer() {
