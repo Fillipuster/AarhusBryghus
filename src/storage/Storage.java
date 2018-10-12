@@ -3,6 +3,7 @@ package storage;
 import java.util.ArrayList;
 
 import controller.Controller;
+import model.BetalingsMetode;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
@@ -14,6 +15,7 @@ public class Storage {
 	private static ArrayList<ProduktKategori> produktKategorier = new ArrayList<>();
 	private static ArrayList<PrisKategori> prisKategorier = new ArrayList<>();
 	private static ArrayList<Salg> salg = new ArrayList<>();
+	private static ArrayList<BetalingsMetode> betalingsMetoder = new ArrayList<>();
 
 	public static void createTestData() {
 		ProduktKategori flaskeøl = new ProduktKategori("Flaske Øl");
@@ -52,6 +54,11 @@ public class Storage {
 		Controller.addPrisToProdukt(p4, pk1, 10);
 		Controller.addPrisToProdukt(p5, pk0, 11);
 		Controller.addPrisToProdukt(p5, pk1, 12);
+		
+		Controller.createBetalingsMetode("Kreditkort");
+		Controller.createBetalingsMetode("Kontant");
+		Controller.createBetalingsMetode("MobilePay");
+		Controller.createBetalingsMetode("Klippekort");
 	}
 
 	// Produkt
@@ -104,6 +111,19 @@ public class Storage {
 	
 	public static void removeSalg(Salg s) {
 		salg.remove(s);
+	}
+	
+	// BetalingsMetode
+	public static ArrayList<BetalingsMetode> getBetalingsMetoder() {
+		return new ArrayList<>(betalingsMetoder);
+	}
+	
+	public static void addBetalingsMetode(BetalingsMetode bm) {
+		betalingsMetoder.add(bm);
+	}
+	
+	public static void removeBetalingsMetode(BetalingsMetode bm) {
+		betalingsMetoder.remove(bm);
 	}
 
 }

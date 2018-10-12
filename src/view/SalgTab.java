@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import model.BetalingsMetode;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktLinje;
@@ -23,6 +24,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	private Salg salg;
 	private TextField txfAntal, txfRabat;
 	private Label lblTotal;
+	private ComboBox<BetalingsMetode> cboxBetalingsMetoder;
 
 	private void setUpPane() {
 		this.setPadding(new Insets(20));
@@ -44,44 +46,51 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		this.add(cboxPrisKategorier, 0, 0);
 
 		lvwProdukter = new ListView<>();
-		this.add(lvwProdukter, 0, 1, 1, 5);
+		this.add(lvwProdukter, 0, 1, 1, 10);
 
 		// Column 1
 		btnAdd = new Button("→");
 		btnAdd.setOnAction(e -> btnAddAction());
+		btnAdd.setStyle("-fx-font-size: 16;");
 		this.add(btnAdd, 1, 3);
 
 		btnDelete = new Button("←");
 		btnDelete.setOnAction(e -> btnDeleteAction());
+		btnDelete.setStyle("-fx-font-size: 16;");
 		this.add(btnDelete, 1, 4);
 
 		// Column 2
 		lvwProduktLinjer = new ListView<>();
 		lvwProduktLinjer.setOnMouseClicked(e -> lvwProduktLinjerAction());
 		lvwProduktLinjer.setStyle("-fx-font-family: monospace;");
-		this.add(lvwProduktLinjer, 2, 1, 4, 5);
+		this.add(lvwProduktLinjer, 2, 1, 4, 10);
 		
-		lblTotal = ViewHelper.label(this, 2, 6, "TOTAL: 00,00 kr.");
+		lblTotal = ViewHelper.label(this, 2, 11, "TOTAL: 00,00 kr.");
 		lblTotal.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
 
 		// Column 6
-		txfAntal = new TextField("Antal");
+		ViewHelper.label(this, 6, 1, "Produktmængde");
+		txfAntal = new TextField("ANTAL");
 		txfAntal.setOnAction(e -> txfAntalAction());
 		this.add(txfAntal, 6, 2, 2, 1);
 
-		txfRabat = new TextField("Rabat");
+		ViewHelper.label(this, 6, 3, "Rabat (%)");
+		txfRabat = new TextField("RABAT");
 		txfRabat.setOnAction(e -> txfRabatAction());
-		this.add(txfRabat, 6, 3, 2, 1);
+		this.add(txfRabat, 6, 4, 2, 1);
+		
+		ViewHelper.label(this, 6, 8, "Vælg Betalingsmetode:");
+		cboxBetalingsMetoder = new ComboBox<>();
+		this.add(cboxBetalingsMetoder, 6, 9);
 
 		btnAnuller = new Button("Anuller");
 		btnAnuller.setOnAction(e -> btnAnullerAction());
-		this.add(btnAnuller, 6, 5);
+		this.add(btnAnuller, 6, 11);
 
 		// Column 7
-		btnKøb = new Button("Gennemfør Salgstransaktionativ");
+		btnKøb = new Button("Gennemfør Salg");
 		btnKøb.setOnAction(e -> btnKøbAction());
-		this.add(btnKøb, 7, 5);
-
+		this.add(btnKøb, 7, 11);
 	}
 
 	// Node updater methods;
@@ -107,6 +116,11 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		}
 		
 		lblTotal.setText(String.format("TOTAL: %.2f kr.", salg.getTotalPris()));
+	}
+	
+	private void updateCboxBetalingsMetoder() {
+		cboxBetalingsMetoder.getItems().removeAll(cboxBetalingsMetoder.getItems());
+		cboxBetalingsMetoder.getItems().addAll(Storage.getBetalingsMetoder());
 	}
 
 	// Node action methods;
@@ -167,12 +181,19 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void btnAnullerAction() {
-		salg = Controller.createSalg();
-		updateLvwProduktLinjer(null);
+		resetSalg();
 	}
 	
 	private void btnKøbAction() {
+		if (!ViewHelper.comboBoxHasSelected(cboxBetalingsMetoder)) {return;}
+		
+		Controller.setSalgBetalingsMetode(salg, cboxBetalingsMetoder.getValue());
 		Controller.saveSalg(salg);
+		resetSalg();
+	}
+	
+	// Helper methods;
+	private void resetSalg() {
 		salg = Controller.createSalg();
 		updateLvwProduktLinjer(null);
 	}
@@ -181,6 +202,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	@Override
 	public void reload() {
 		updateCboxPrisKategrorier();
+		updateCboxBetalingsMetoder();
 	}
 
 }
