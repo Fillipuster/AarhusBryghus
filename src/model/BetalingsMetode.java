@@ -5,3 +5,4 @@ public enum BetalingsMetode {
 }
 
 Ipren
+Pernodil
