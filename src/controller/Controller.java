@@ -91,7 +91,7 @@ public class Controller {
 	public static void updateProduktLinje(ProduktLinje produktLinje, int antal, double rabat) {
 		produktLinje.setAntal(antal);
 		produktLinje.setRabat(rabat);
-	}
+	}	
 	
 	public static void saveSalg(Salg salg) {
 		Storage.addSalg(salg);

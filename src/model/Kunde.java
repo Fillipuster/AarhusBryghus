@@ -44,6 +44,4 @@ public class Kunde {
 		this.udlejningsSalg = udlejningssalg;
 	}
 	
-	
-	
 }
