@@ -1,5 +1,5 @@
 package model;
 
 public enum BetalingsMetode {
-	DANKORT, KONTANT, MOBILEPAY, KLIPPEKORT, REGNING;
+	Kreditkort, Kontant, MobilePay, Klippekort, Regning;
 }
