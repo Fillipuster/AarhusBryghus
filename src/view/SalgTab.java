@@ -17,7 +17,7 @@ import storage.Storage;
 import controller.Controller;
 
 public class SalgTab extends GridPane implements ReloadableTab {
-	private ListView<Produkt> lvwProdukter;
+	private ListView<ProduktMedKategoriFormatter> lvwProdukter;
 	private ListView<ProduktLinje> lvwProduktLinjer;
 	private Button btnAdd, btnDelete, btnAnuller, btnKøb;
 	private ComboBox<PrisKategori> cboxPrisKategorier;
@@ -103,7 +103,9 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		lvwProdukter.getItems().removeAll(lvwProdukter.getItems());
 		PrisKategori selected = cboxPrisKategorier.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			lvwProdukter.getItems().addAll(Controller.getProdukterIPrisKategori(selected));
+			for (Produkt p : Controller.getProdukterIPrisKategori(selected)) {
+				lvwProdukter.getItems().add(new ProduktMedKategoriFormatter(p));
+			}
 		}
 	}
 
@@ -129,16 +131,16 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	}
 
 	public void btnAddAction() {
-		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
+		ProduktMedKategoriFormatter selected = lvwProdukter.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			ProduktLinje match = null;
 			for (ProduktLinje pl : lvwProduktLinjer.getItems()) {
-				if (pl.getProdukt() == selected && pl.getRabat() == 0d) {
+				if (pl.getProdukt() == selected.produkt && pl.getRabat() == 0d) {
 					match = pl;
 				}
 			}
 			if (match == null) {
-				Controller.createProduktLinje(salg, selected, cboxPrisKategorier.getSelectionModel().getSelectedItem(),
+				Controller.createProduktLinje(salg, selected.produkt, cboxPrisKategorier.getSelectionModel().getSelectedItem(),
 						1, 0d);
 			} else {
 				Controller.updateProduktLinje(match, match.getAntal() + 1, 0d);
@@ -203,6 +205,20 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	public void reload() {
 		updateCboxPrisKategrorier();
 		updateCboxBetalingsMetoder();
+	}
+	
+	// ListView formatting classes;
+	private class ProduktMedKategoriFormatter {
+		public Produkt produkt;
+		
+		public ProduktMedKategoriFormatter(Produkt produkt) {
+			this.produkt = produkt;
+		}
+		
+		@Override
+		public String toString() {
+			return String.format("%-20s\t(%s)", produkt.getNavn(), produkt.getProduktKategori().getNavn());
+		}
 	}
 
 }
