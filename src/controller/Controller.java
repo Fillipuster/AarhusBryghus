@@ -13,17 +13,18 @@ import storage.Storage;
 public class Controller {
 
 	// Produkt
-	public static Produkt createProdukt(ProduktKategori kategori, String navn, String beskrivelse) {
-		Produkt p = new Produkt(kategori, navn, beskrivelse);
+	public static Produkt createProdukt(ProduktKategori kategori, String navn, String beskrivelse, int klipPris) {
+		Produkt p = new Produkt(kategori, navn, beskrivelse, klipPris);
 		Storage.addProdukt(p);
 		
 		return p;
 	}
 	
-	public static void updateProdukt(Produkt produkt, ProduktKategori produktKategori, String navn, String beskrivelse) {
+	public static void updateProdukt(Produkt produkt, ProduktKategori produktKategori, String navn, String beskrivelse, int klipPris) {
 		produkt.setProduktKategori(produktKategori);
 		produkt.setNavn(navn);
 		produkt.setBeskrivelse(beskrivelse);
+		produkt.setKlipPris(klipPris);
 	}
 	
 	public static void addPrisToProdukt(Produkt produkt, PrisKategori kategori, double pris) {
