@@ -15,7 +15,7 @@ Produkt p;
 	
 	@Before
 	public void setUp() throws Exception {
-		p = new Produkt(new ProduktKategori("Fadøl"),"Pilsner", "God øl");
+//		p = new Produkt(new ProduktKategori("Fadøl"),"Pilsner", "God øl");
 	}
 
 	@Test
