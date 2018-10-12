@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import model.BetalingsMetode;
 import model.PrisKategori;
 import model.Produkt;
@@ -25,7 +26,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	private ComboBox<PrisKategori> cboxPrisKategorier;
 	private Salg salg;
 	private TextField txfAntal, txfRabat;
-	private Label lblTotal;
+	private Label lblTotal, lblError;
 	private ComboBox<BetalingsMetode> cboxBetalingsMetoder;
 
 	private void setUpPane() {
@@ -52,6 +53,11 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		lvwProdukter.setStyle("-fx-font-family: Consolas;\n-fx-font-size: 14;");
 		lvwProdukter.setOnMouseClicked((MouseEvent) -> lvwProdukterAction(MouseEvent));
 		this.add(lvwProdukter, 0, 2, 1, 10);
+		
+		lblError = new Label("");
+//		lblError.setStyle("-fx-text-color: red;");
+		lblError.setTextFill(Color.RED);
+		this.add(lblError, 0, 13);
 
 		// Column 1
 		btnAdd = new Button("→");
@@ -154,6 +160,8 @@ public class SalgTab extends GridPane implements ReloadableTab {
 				Controller.updateProduktLinje(match, match.getAntal() + 1, 0d);
 			}
 			updateLvwProduktLinjer(null);
+		} else {
+			setErrorText("Produkt skal være valgt.");
 		}
 
 	}
@@ -163,13 +171,19 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		if (selected != null) {
 			salg.sletProduktLinje(selected);
 			updateLvwProduktLinjer(null);
+		} else {
+			setErrorText("Produktlinje skal være valgt.");
 		}
 	}
 
 	public void txfAntalAction() {
 		ProduktLinje selected = lvwProduktLinjer.getSelectionModel().getSelectedItem();
 		if (selected != null) {
+			try {
 			Controller.updateProduktLinje(selected, Integer.parseInt(txfAntal.getText()), selected.getRabat());
+			} catch (NumberFormatException e) {
+				setErrorText("Produktmængde skal være et heltal.");
+			}
 		}
 		updateLvwProduktLinjer(selected);
 	}
@@ -177,7 +191,11 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	public void txfRabatAction() {
 		ProduktLinje selected = lvwProduktLinjer.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			Controller.updateProduktLinje(selected, selected.getAntal(), Double.parseDouble(txfRabat.getText()) / 100d);
+			try {
+				Controller.updateProduktLinje(selected, selected.getAntal(), Double.parseDouble(txfRabat.getText()) / 100d);				
+			} catch (NumberFormatException e) {
+				setErrorText("Rabat skal være et tal.");
+			}
 		}
 		updateLvwProduktLinjer(selected);
 	}
@@ -198,11 +216,14 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		BetalingsMetode betalingsMetode = cboxBetalingsMetoder.getValue();
 		if (betalingsMetode != null) {
 			if (salg.getTotalKlipPris() < 0 && betalingsMetode.isBrugerKlip()) {
+				setErrorText("Produkt kan ikke betales med klippekort.");
 				return;
 			}
 			Controller.setSalgBetalingsMetode(salg, betalingsMetode);
 			Controller.saveSalg(salg);
 			resetSalg();
+		} else {
+			setErrorText("Betalingsmetode skal være valgt.");
 		}
 		
 	}
@@ -220,12 +241,17 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		salg = Controller.createSalg();
 		updateLvwProduktLinjer(null);
 	}
+	
+	private void setErrorText(String text) {
+		lblError.setText(text);
+	}
 
 	// Tab reloading;
 	@Override
 	public void reload() {
 		updateCboxPrisKategrorier();
 		updateCboxBetalingsMetoder();
+		setErrorText("");
 	}
 	
 	// ListView formatting classes;
