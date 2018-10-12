@@ -36,12 +36,7 @@ public class MainApp extends Application {
 	private void initTabPane(TabPane tabPane) {
 		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 		
-		tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-			@Override
-			public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-				((ReloadableTab) newValue.getContent()).reload();
-			}
-		});
+		tabPane.getSelectionModel().selectedItemProperty().addListener((o, oldValue, newValue) -> tabChangeListener(oldValue, newValue));
 		
 		Tab tabProdukt = new Tab("Produkter");
 		tabProdukt.setContent(new ProduktTab());
@@ -59,6 +54,10 @@ public class MainApp extends Application {
 		tabPane.getTabs().add(tabProdukt);
 		tabPane.getTabs().add(tabProduktKategori);
 		tabPane.getTabs().add(tabPrisKategori);
+	}
+	
+	private void tabChangeListener(Tab oldValue, Tab newValue) {
+		((ReloadableTab) newValue.getContent()).reload();
 	}
 	
 }
