@@ -1,11 +1,14 @@
 package view;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import model.BetalingsMetode;
 import model.PrisKategori;
@@ -46,18 +49,29 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		this.add(cboxPrisKategorier, 0, 0);
 
 		lvwProdukter = new ListView<>();
+		lvwProdukter.setStyle("-fx-font-family: Consolas;\n-fx-font-size: 14;");
+		lvwProdukter.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.getButton().equals(MouseButton.PRIMARY)) {
+					if (event.getClickCount() >= 2) {
+						btnAddAction();
+					}
+				}
+			}
+		});
 		this.add(lvwProdukter, 0, 1, 1, 10);
 
 		// Column 1
 		btnAdd = new Button("→");
 		btnAdd.setOnAction(e -> btnAddAction());
 		btnAdd.setStyle("-fx-font-size: 16;");
-		this.add(btnAdd, 1, 3);
+		this.add(btnAdd, 1, 4);
 
 		btnDelete = new Button("←");
 		btnDelete.setOnAction(e -> btnDeleteAction());
 		btnDelete.setStyle("-fx-font-size: 16;");
-		this.add(btnDelete, 1, 4);
+		this.add(btnDelete, 1, 8);
 
 		// Column 2
 		lvwProduktLinjer = new ListView<>();
@@ -127,6 +141,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 
 	// Node action methods;
 	public void cboxPrisKategorierAction() {
+		resetSalg();
 		updateLvwProdukter();
 	}
 
@@ -217,7 +232,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		
 		@Override
 		public String toString() {
-			return String.format("%-20s\t(%s)", produkt.getNavn(), produkt.getProduktKategori().getNavn());
+			return String.format("%-15s(%s)", produkt.getNavn(), produkt.getProduktKategori().getNavn());
 		}
 	}
 
