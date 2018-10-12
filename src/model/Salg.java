@@ -52,5 +52,18 @@ public class Salg {
 		
 		return total;
 	}
+	
+	public int getTotalKlipPris() {
+		int total = 0;
+		for (ProduktLinje pl : produktLinjer) {
+			if (pl.getKlipPris() < 0) {
+				return -1;
+			}
+			
+			total += pl.getKlipPris();
+		}
+		
+		return total;
+	}
 
 }

@@ -80,6 +80,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		ViewHelper.label(this, 2, 1, "Produktpriser:");
 		lvwPriser = new ListView<ProduktTab.ProduktPrisKategoriFormat>();
 		lvwPriser.setStyle("-fx-font-family: monospace;");
+		lvwPriser.setOnMouseClicked(e -> lvwPriserAction());
 		this.add(lvwPriser, 2, 2, 2, 11);
 		
 		txfPris = new TextField("PRIS");
@@ -125,6 +126,13 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 			txaProduktBeskrivelse.setText(selected.getBeskrivelse());
 			txfKlipPris.setText(Integer.toString(selected.getKlipPris()));
 			updateLvwPriser();
+		}
+	}
+	
+	private void lvwPriserAction() {
+		ProduktPrisKategoriFormat selected = lvwPriser.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			txfPris.setText(Double.toString(selected.produkt.getPris(selected.prisKategori)));
 		}
 	}
 

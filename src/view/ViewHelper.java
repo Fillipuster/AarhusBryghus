@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
@@ -15,6 +16,10 @@ public class ViewHelper {
 	
 	public static boolean listViewHasSelected(ListView<?> lvw) {
 		return (lvw.getSelectionModel().getSelectedItem() != null);
+	}
+	
+	public static boolean comboBoxHasSelected(ComboBox<?> cbox) {
+		return (cbox.getSelectionModel().getSelectedItem() != null);
 	}
 	
 }

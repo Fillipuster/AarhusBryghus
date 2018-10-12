@@ -43,6 +43,10 @@ public class ProduktLinje {
 		return antal * produkt.getPris(prisKategori) * (1 - rabat);
 	}
 
+	public int getKlipPris() {
+		return getProdukt().getKlipPris() * getAntal();
+	}
+
 	@Override
 	public String toString() {
 		String total = String.format("%.2f", getPris());
