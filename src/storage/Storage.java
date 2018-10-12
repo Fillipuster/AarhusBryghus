@@ -25,14 +25,14 @@ public class Storage {
 
 		Produkt p0 = new Produkt(flaskeøl, "Klosterbryg", "Fyldig", 1);
 		produkter.add(p0);
-		Produkt p1 = new Produkt(flaskeøl, "IPA", "Indian Pale Ale\nFrugtig", 1);
+		Produkt p1 = new Produkt(flaskeøl, "IPA", "Indian Pale Ale\nFrugtig", -1);
 		produkter.add(p1);
-		Produkt p2 = new Produkt(flaskeøl, "Blonde", "Frisk", 1);
+		Produkt p2 = new Produkt(flaskeøl, "Blonde", "Frisk", 2);
 		produkter.add(p2);
 
-		Produkt p3 = new Produkt(fadøl, "Pilsner", "Klassiker, fra fad.", 2);
+		Produkt p3 = new Produkt(fadøl, "Pilsner", "Klassiker, fra fad.", 1);
 		produkter.add(p3);
-		Produkt p4 = new Produkt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad.", 2);
+		Produkt p4 = new Produkt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad.", -1);
 		produkter.add(p4);
 		Produkt p5 = new Produkt(fadøl, "Blonde", "Frisk, fra fad.", 3);
 		produkter.add(p5);
@@ -55,10 +55,10 @@ public class Storage {
 		Controller.addPrisToProdukt(p5, pk0, 11);
 		Controller.addPrisToProdukt(p5, pk1, 12);
 		
-		Controller.createBetalingsMetode("Kreditkort");
-		Controller.createBetalingsMetode("Kontant");
-		Controller.createBetalingsMetode("MobilePay");
-		Controller.createBetalingsMetode("Klippekort");
+		Controller.createBetalingsMetode("Kreditkort", false);
+		Controller.createBetalingsMetode("Kontant", false);
+		Controller.createBetalingsMetode("MobilePay", false);
+		Controller.createBetalingsMetode("Klippekort", true);
 	}
 
 	// Produkt

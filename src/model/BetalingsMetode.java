@@ -3,9 +3,11 @@ package model;
 public class BetalingsMetode {
 
 	private String navn;
+	private boolean brugerKlip;
 	
-	public BetalingsMetode(String navn) {
+	public BetalingsMetode(String navn, boolean brugerKlip) {
 		setNavn(navn);
+		setBrugerKlip(brugerKlip);
 	}
 
 	public String getNavn() {
@@ -19,6 +21,14 @@ public class BetalingsMetode {
 	@Override
 	public String toString() {
 		return navn;
+	}
+
+	public boolean isBrugerKlip() {
+		return brugerKlip;
+	}
+
+	public void setBrugerKlip(boolean brugerKlip) {
+		this.brugerKlip = brugerKlip;
 	}
 	
 }

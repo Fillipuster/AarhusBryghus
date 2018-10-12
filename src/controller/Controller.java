@@ -105,8 +105,8 @@ public class Controller {
 	}
 	
 	// BetalingsMetode
-	public static BetalingsMetode createBetalingsMetode(String navn) {
-		BetalingsMetode bm = new BetalingsMetode(navn);
+	public static BetalingsMetode createBetalingsMetode(String navn, boolean brugerKlip) {
+		BetalingsMetode bm = new BetalingsMetode(navn, brugerKlip);
 		Storage.addBetalingsMetode(bm);
 		
 		return bm;
