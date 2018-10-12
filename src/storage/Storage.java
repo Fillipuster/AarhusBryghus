@@ -21,18 +21,18 @@ public class Storage {
 		produktKategorier.add(flaskeøl);
 		produktKategorier.add(fadøl);
 
-		Produkt p0 = new Produkt(flaskeøl, "Klosterbryg", "Fyldig");
+		Produkt p0 = new Produkt(flaskeøl, "Klosterbryg", "Fyldig", 1);
 		produkter.add(p0);
-		Produkt p1 = new Produkt(flaskeøl, "IPA", "Indian Pale Ale\nFrugtig");
+		Produkt p1 = new Produkt(flaskeøl, "IPA", "Indian Pale Ale\nFrugtig", 1);
 		produkter.add(p1);
-		Produkt p2 = new Produkt(flaskeøl, "Blonde", "Frisk");
+		Produkt p2 = new Produkt(flaskeøl, "Blonde", "Frisk", 1);
 		produkter.add(p2);
 
-		Produkt p3 = new Produkt(fadøl, "Pilsner", "Klassiker, fra fad.");
+		Produkt p3 = new Produkt(fadøl, "Pilsner", "Klassiker, fra fad.", 2);
 		produkter.add(p3);
-		Produkt p4 = new Produkt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad.");
+		Produkt p4 = new Produkt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad.", 2);
 		produkter.add(p4);
-		Produkt p5 = new Produkt(fadøl, "Blonde", "Frisk, fra fad.");
+		Produkt p5 = new Produkt(fadøl, "Blonde", "Frisk, fra fad.", 3);
 		produkter.add(p5);
 		
 		PrisKategori pk0 = new PrisKategori("Bar");

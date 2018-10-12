@@ -5,14 +5,17 @@ import java.util.HashMap;
 public class Produkt {
 	
 	private ProduktKategori produktKategori;
-	private String navn;
-	private String beskrivelse;
 	private HashMap<PrisKategori, Double> priser = new HashMap<>();
 	
-	public Produkt(ProduktKategori produktKategori, String navn, String beskrivelse) {
+	private String navn;
+	private String beskrivelse;
+	private int klipPris;
+	
+	public Produkt(ProduktKategori produktKategori, String navn, String beskrivelse, int klipPris) {
 		this.setProduktKategori(produktKategori);
 		this.setNavn(navn);
 		this.setBeskrivelse(beskrivelse);
+		this.setKlipPris(klipPris);
 	}
 
 	public ProduktKategori getProduktKategori() {
@@ -37,6 +40,14 @@ public class Produkt {
 
 	public void setBeskrivelse(String beskrivelse) {
 		this.beskrivelse = beskrivelse;
+	}
+	
+	public int getKlipPris() {
+		return klipPris;
+	}
+	
+	public void setKlipPris(int klipPris) {
+		this.klipPris = klipPris;
 	}
 	
 	public void setPris(PrisKategori kategori, double pris) {

@@ -1,8 +1,10 @@
 package model;
 
 public class ProduktLinje {
+	
 	private Produkt produkt;
 	private PrisKategori prisKategori;
+	
 	private int antal;
 	private double rabat;
 
