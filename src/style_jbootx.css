@@ -1,6 +1,11 @@
 /*#135b1f BLUE*/
 /*#135b1f GREEN*/
 
+@font-face {
+	font-family: Roboto;
+	src: url("https://github.com/google/fonts/raw/master/apache/roboto/Roboto-Regular.ttf");
+}
+
 .root {
 	-fx-body-color : #F5F5F5;
 	-fx-outer-border : #cecece;
@@ -937,11 +942,6 @@ VBox > .split-menu-button.last > .arrow-button {
 }
 .slider:vertical .track {
 	-fx-pref-width: 5;
-}
-
-@font-face {
-	font-family: Roboto;
-	src: url("https://github.com/google/fonts/raw/master/apache/roboto/Roboto-Regular.ttf");
 }
 
 .tab-content-area {
