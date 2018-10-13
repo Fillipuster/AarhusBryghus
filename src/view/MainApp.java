@@ -41,14 +41,14 @@ public class MainApp extends Application {
 		
 		tabPane.getSelectionModel().selectedItemProperty().addListener((o, oldValue, newValue) -> tabChangeListener(oldValue, newValue));
 		
+		Tab tabSalg = new Tab("Salg");
+		tabSalg.setContent(new SalgTab());
+
 		Tab tabProdukt = new Tab("Produkter");
 		tabProdukt.setContent(new ProduktTab());
 		
 		Tab tabProduktKategori = new Tab("Produkt Kategorier");
 		tabProduktKategori.setContent(new ProduktKategoriTab());
-		
-		Tab tabSalg = new Tab("Salg");
-		tabSalg.setContent(new SalgTab());
 		
 		Tab tabPrisKategori = new Tab("Pris Kategorier");
 		tabPrisKategori.setContent(new PrisKategoriTab());
