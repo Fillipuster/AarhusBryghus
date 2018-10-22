@@ -28,16 +28,14 @@ public class Storage {
 		glasProduktKategori = Controller.createProduktKategori("Glas");
 		flaskeølProduktKategori = Controller.createProduktKategori("Flaske Øl");
 
-		ProduktKategori flaskeøl = new ProduktKategori("Flaske Øl");
 		ProduktKategori fadøl = new ProduktKategori("Fadøl");
-		produktKategorier.add(flaskeøl);
 		produktKategorier.add(fadøl);
 
-		Produkt p0 = new Produkt(flaskeøl, "Klosterbryg", "Fyldig", 1);
+		Produkt p0 = new Produkt(flaskeølProduktKategori, "Klosterbryg", "Fyldig", 1);
 		produkter.add(p0);
-		Produkt p1 = new Produkt(flaskeøl, "IPA", "Indian Pale Ale\nFrugtig", -1);
+		Produkt p1 = new Produkt(flaskeølProduktKategori, "IPA", "Indian Pale Ale\nFrugtig", -1);
 		produkter.add(p1);
-		Produkt p2 = new Produkt(flaskeøl, "Blonde", "Frisk", 2);
+		Produkt p2 = new Produkt(flaskeølProduktKategori, "Blonde", "Frisk", 2);
 		produkter.add(p2);
 
 		Produkt p3 = new Produkt(fadøl, "Pilsner", "Klassiker, fra fad.", 1);

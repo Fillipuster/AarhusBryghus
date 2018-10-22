@@ -23,9 +23,9 @@ public class Gaveaeske extends Produkt {
 	private GaveæskePreset getPreset() {
 		int flasker = 0, glas = 0;
 		for (Produkt p : produkter) {
-			if (p.getProduktKategori() == Storage.flaskeølProduktKategori) {
+			if (p.getProduktKategori() == Storage.getFlaskeølProduktKategori()) {
 				flasker++;
-			} else if(p.getProduktKategori() == Storage.glasProduktKategori) {
+			} else if(p.getProduktKategori() == Storage.getGlasProduktKategori()) {
 				glas++;
 			}
 		}
@@ -47,7 +47,7 @@ public class Gaveaeske extends Produkt {
 		double sum = 0d;
 		
 		for (Produkt p : produkter) {
-			sum += p.getPris(Storage.butikPrisKategori);
+			sum += p.getPris(Storage.getButikPrisKategori());
 		}
 		
 		return sum;

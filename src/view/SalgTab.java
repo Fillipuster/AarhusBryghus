@@ -54,12 +54,12 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		lvwProdukter.setStyle("-fx-font-family: Consolas;\n-fx-font-size: 14;");
 		lvwProdukter.setOnMouseClicked((MouseEvent) -> lvwProdukterAction(MouseEvent));
 		this.add(lvwProdukter, 0, 2, 1, 10);
-		
+
 		lblError = new Label("");
-//		lblError.setStyle("-fx-text-color: red;");
+		// lblError.setStyle("-fx-text-color: red;");
 		lblError.setTextFill(Color.RED);
 		this.add(lblError, 0, 13);
-		
+
 		btnOpretGaveæske = new Button("Opret Gaveæske");
 		btnOpretGaveæske.setOnAction(e -> btnOpretGaveæskeAction());
 		this.add(btnOpretGaveæske, 0, 14);
@@ -81,7 +81,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		lvwProduktLinjer.setOnMouseClicked(e -> lvwProduktLinjerAction());
 		lvwProduktLinjer.setStyle("-fx-font-family: monospace;");
 		this.add(lvwProduktLinjer, 2, 2, 4, 10);
-		
+
 		lblTotal = ViewHelper.label(this, 2, 12, "TOTAL: 00,00 kr.\n(0 klip)");
 		lblTotal.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
 
@@ -95,7 +95,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		txfRabat = new TextField("RABAT");
 		txfRabat.setOnAction(e -> txfRabatAction());
 		this.add(txfRabat, 6, 5, 2, 1);
-		
+
 		ViewHelper.label(this, 6, 8, "Vælg Betalingsmetode:");
 		cboxBetalingsMetoder = new ComboBox<>();
 		this.add(cboxBetalingsMetoder, 6, 10);
@@ -129,15 +129,16 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	private void updateLvwProduktLinjer(ProduktLinje newSelection) {
 		lvwProduktLinjer.getItems().removeAll(lvwProduktLinjer.getItems());
 		lvwProduktLinjer.getItems().addAll(salg.getProduktLinjer());
-		
+
 		if (newSelection != null && lvwProduktLinjer.getItems().contains(newSelection)) {
 			lvwProduktLinjer.getSelectionModel().select(newSelection);
 		}
-		
-		String klipString = (salg.getTotalKlipPris() >= 0) ? String.format("(%d klip)", salg.getTotalKlipPris()) : "(kun penge >:D)";
+
+		String klipString = (salg.getTotalKlipPris() >= 0) ? String.format("(%d klip)", salg.getTotalKlipPris())
+				: "(kun penge >:D)";
 		lblTotal.setText(String.format("TOTAL: %.2f kr.\n%s", salg.getTotalPris(), klipString));
 	}
-	
+
 	private void updateCboxBetalingsMetoder() {
 		cboxBetalingsMetoder.getItems().removeAll(cboxBetalingsMetoder.getItems());
 		cboxBetalingsMetoder.getItems().addAll(Storage.getBetalingsMetoder());
@@ -159,8 +160,9 @@ public class SalgTab extends GridPane implements ReloadableTab {
 				}
 			}
 			if (match == null) {
-				Controller.createProduktLinje(salg, selected.produkt, cboxPrisKategorier.getSelectionModel().getSelectedItem(),
-						1, 0d);
+
+				Controller.createProduktLinje(salg, selected.produkt,
+						cboxPrisKategorier.getSelectionModel().getSelectedItem(), 1, 0d);
 			} else {
 				Controller.updateProduktLinje(match, match.getAntal() + 1, 0d);
 			}
@@ -170,10 +172,13 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		}
 
 	}
-	
+
 	public void btnOpretGaveæskeAction() {
 		GaveaeskeWindow window = new GaveaeskeWindow("Gaveæske", MainApp.getMainStage());
 		window.showAndWait();
+		Controller.createProduktLinje(salg, window.getGaveæske(),
+				cboxPrisKategorier.getSelectionModel().getSelectedItem(), 1, 0d);
+		updateLvwProduktLinjer(null);
 	}
 
 	public void btnDeleteAction() {
@@ -190,7 +195,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		ProduktLinje selected = lvwProduktLinjer.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			try {
-			Controller.updateProduktLinje(selected, Integer.parseInt(txfAntal.getText()), selected.getRabat());
+				Controller.updateProduktLinje(selected, Integer.parseInt(txfAntal.getText()), selected.getRabat());
 			} catch (NumberFormatException e) {
 				setErrorText("Produktmængde skal være et heltal.");
 			}
@@ -202,7 +207,8 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		ProduktLinje selected = lvwProduktLinjer.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			try {
-				Controller.updateProduktLinje(selected, selected.getAntal(), Double.parseDouble(txfRabat.getText()) / 100d);				
+				Controller.updateProduktLinje(selected, selected.getAntal(),
+						Double.parseDouble(txfRabat.getText()) / 100d);
 			} catch (NumberFormatException e) {
 				setErrorText("Rabat skal være et tal.");
 			}
@@ -217,11 +223,11 @@ public class SalgTab extends GridPane implements ReloadableTab {
 			txfRabat.setText(Double.toString(selected.getRabat() * 100d));
 		}
 	}
-	
+
 	private void btnAnullerAction() {
 		resetSalg();
 	}
-	
+
 	private void btnKøbAction() {
 		BetalingsMetode betalingsMetode = cboxBetalingsMetoder.getValue();
 		if (betalingsMetode != null) {
@@ -235,9 +241,9 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		} else {
 			setErrorText("Betalingsmetode skal være valgt.");
 		}
-		
+
 	}
-	
+
 	private void lvwProdukterAction(MouseEvent e) {
 		if (e.getButton().equals(MouseButton.PRIMARY)) {
 			if (e.getClickCount() >= 2) {
@@ -245,13 +251,13 @@ public class SalgTab extends GridPane implements ReloadableTab {
 			}
 		}
 	}
-	
+
 	// Helper methods;
 	private void resetSalg() {
 		salg = Controller.createSalg();
 		updateLvwProduktLinjer(null);
 	}
-	
+
 	private void setErrorText(String text) {
 		lblError.setText(text);
 	}
@@ -263,15 +269,15 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		updateCboxBetalingsMetoder();
 		setErrorText("");
 	}
-	
+
 	// ListView formatting classes;
 	private class ProduktMedKategoriFormatter {
 		public Produkt produkt;
-		
+
 		public ProduktMedKategoriFormatter(Produkt produkt) {
 			this.produkt = produkt;
 		}
-		
+
 		@Override
 		public String toString() {
 			return String.format("%-15s(%s)", produkt.getNavn(), produkt.getProduktKategori().getNavn());
