@@ -9,7 +9,7 @@ import model.Produkt;
 import storage.Storage;
 
 public class GaveaeskeWindow extends GridPane {
-
+	
 	private ListView<Produkt> lvwProdukter;
 	private ComboBox<Produkt> cboxProdukter;
 	private Button btnAccepter, btnAnnuller;
@@ -37,6 +37,13 @@ public class GaveaeskeWindow extends GridPane {
 		ViewHelper.label(this, 0, 3, "Vælg øl");
 		cboxProdukter = new ComboBox<>();
 		this.add(cboxProdukter, 0, 0);
+		
+		ViewHelper.label(this, 0, 1, "Indhold");
+		lvwProdukter = new ListView<>();
+		lvwProdukter.setStyle("-fx-font-family: monospace;");
+		this.add(lvwProdukter, 1, 1, 4, 10);
+		
+		
 		
 	}
 	
