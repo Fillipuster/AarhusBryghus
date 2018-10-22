@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.BetalingsMetode;
+import model.Gaveaeske;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
@@ -114,6 +115,13 @@ public class Controller {
 	
 	public static void updateBetalingsMetode(BetalingsMetode bm, String navn) {
 		bm.setNavn(navn);
+	}
+	
+	// Gaveæsker
+	public static Gaveaeske createGaveæske(String navn, String beskrivelse, int antalØl, double pris) {
+		Gaveaeske g = new Gaveaeske(navn, beskrivelse, antalØl, pris);
+		
+		return g;
 	}
 
 }

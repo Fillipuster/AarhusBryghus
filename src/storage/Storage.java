@@ -11,6 +11,9 @@ import model.Salg;
 
 public class Storage {
 
+	private static ProduktKategori gaveæskeProduktKategori;
+	private static PrisKategori butikPrisKategori;
+	
 	private static ArrayList<Produkt> produkter = new ArrayList<>();
 	private static ArrayList<ProduktKategori> produktKategorier = new ArrayList<>();
 	private static ArrayList<PrisKategori> prisKategorier = new ArrayList<>();
@@ -18,6 +21,10 @@ public class Storage {
 	private static ArrayList<BetalingsMetode> betalingsMetoder = new ArrayList<>();
 
 	public static void createTestData() {
+		// These two categories are essential for gift boxes to work. They musn't be removed;
+		gaveæskeProduktKategori = Controller.createProduktKategori("Gaveæsker");
+		butikPrisKategori = Controller.createPrisKategori("Butik");
+		
 		ProduktKategori flaskeøl = new ProduktKategori("Flaske Øl");
 		ProduktKategori fadøl = new ProduktKategori("Fadøl");
 		produktKategorier.add(flaskeøl);
@@ -37,28 +44,36 @@ public class Storage {
 		Produkt p5 = new Produkt(fadøl, "Blonde", "Frisk, fra fad.", 3);
 		produkter.add(p5);
 		
-		PrisKategori pk0 = new PrisKategori("Bar");
 		PrisKategori pk1 = new PrisKategori("Butik");
-		prisKategorier.add(pk0);
+		prisKategorier.add(butikPrisKategori);
 		prisKategorier.add(pk1);
 		
-		Controller.addPrisToProdukt(p0, pk0, 1);
+		Controller.addPrisToProdukt(p0, butikPrisKategori, 1);
 		Controller.addPrisToProdukt(p0, pk1, 2);
-		Controller.addPrisToProdukt(p1, pk0, 3);
+		Controller.addPrisToProdukt(p1, butikPrisKategori, 3);
 		Controller.addPrisToProdukt(p1, pk1, 4);
-		Controller.addPrisToProdukt(p2, pk0, 5);
+		Controller.addPrisToProdukt(p2, butikPrisKategori, 5);
 		Controller.addPrisToProdukt(p2, pk1, 6);
-		Controller.addPrisToProdukt(p3, pk0, 7);
+		Controller.addPrisToProdukt(p3, butikPrisKategori, 7);
 		Controller.addPrisToProdukt(p3, pk1, 8);
-		Controller.addPrisToProdukt(p4, pk0, 9);
+		Controller.addPrisToProdukt(p4, butikPrisKategori, 9);
 		Controller.addPrisToProdukt(p4, pk1, 10);
-		Controller.addPrisToProdukt(p5, pk0, 11);
+		Controller.addPrisToProdukt(p5, butikPrisKategori, 11);
 		Controller.addPrisToProdukt(p5, pk1, 12);
 		
 		Controller.createBetalingsMetode("Kreditkort", false);
 		Controller.createBetalingsMetode("Kontant", false);
 		Controller.createBetalingsMetode("MobilePay", false);
 		Controller.createBetalingsMetode("Klippekort", true);
+	}
+	
+	// Specific getters for gaveæske pris and produkt -kategorier
+	public static ProduktKategori getGaveæskeProduktKategori() {
+		return gaveæskeProduktKategori;
+	}
+	
+	public static PrisKategori getButikPrisKategori() {
+		return butikPrisKategori;
 	}
 
 	// Produkt
