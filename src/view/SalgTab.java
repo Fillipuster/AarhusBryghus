@@ -17,12 +17,14 @@ import model.ProduktLinje;
 import model.Salg;
 import storage.Storage;
 
+import com.sun.java.swing.plaf.windows.resources.windows_de;
+
 import controller.Controller;
 
 public class SalgTab extends GridPane implements ReloadableTab {
 	private ListView<ProduktMedKategoriFormatter> lvwProdukter;
 	private ListView<ProduktLinje> lvwProduktLinjer;
-	private Button btnAdd, btnDelete, btnAnuller, btnKøb;
+	private Button btnAdd, btnDelete, btnAnuller, btnKøb, btnOpretGaveæske;
 	private ComboBox<PrisKategori> cboxPrisKategorier;
 	private Salg salg;
 	private TextField txfAntal, txfRabat;
@@ -33,7 +35,6 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
-		this.setGridLinesVisible(false);
 
 	}
 
@@ -58,6 +59,10 @@ public class SalgTab extends GridPane implements ReloadableTab {
 //		lblError.setStyle("-fx-text-color: red;");
 		lblError.setTextFill(Color.RED);
 		this.add(lblError, 0, 13);
+		
+		btnOpretGaveæske = new Button("Opret Gaveæske");
+		btnOpretGaveæske.setOnAction(e -> btnOpretGaveæskeAction());
+		this.add(btnOpretGaveæske, 0, 14);
 
 		// Column 1
 		btnAdd = new Button("→");
@@ -164,6 +169,11 @@ public class SalgTab extends GridPane implements ReloadableTab {
 			setErrorText("Produkt skal være valgt.");
 		}
 
+	}
+	
+	public void btnOpretGaveæskeAction() {
+		GaveaeskeWindow window = new GaveaeskeWindow("Gaveæske", MainApp.getMainStage());
+		window.showAndWait();
 	}
 
 	public void btnDeleteAction() {

@@ -14,9 +14,13 @@ public class MainApp extends Application {
 		Storage.initializeStorage();
 		Application.launch(args);
 	}
+	
+	private static Stage mainStage;
 
 	@Override
 	public void start(Stage stage) throws Exception {
+		mainStage = stage;
+		
 		for (int i = 0; i < javafx.scene.text.Font.getFamilies().size(); i++) {
 			System.out.println(javafx.scene.text.Font.getFamilies().get(i));
 		}
@@ -33,7 +37,11 @@ public class MainApp extends Application {
 		stage.setWidth(1000);
 		stage.show();
 
-		pane.setTabMinWidth(200);
+		pane.setTabMinWidth(150);
+	}
+	
+	public static Stage getMainStage() {
+		return mainStage;
 	}
 
 	private void initTabPane(TabPane tabPane) {
@@ -52,11 +60,15 @@ public class MainApp extends Application {
 		
 		Tab tabPrisKategori = new Tab("Pris Kategorier");
 		tabPrisKategori.setContent(new PrisKategoriTab());
+		
+//		Tab tabGaveæskeTab = new Tab("Gaveæsker");
+//		tabGaveæskeTab.setContent(new GaveaeskeTab());
 
 		tabPane.getTabs().add(tabSalg);
 		tabPane.getTabs().add(tabProdukt);
 		tabPane.getTabs().add(tabProduktKategori);
 		tabPane.getTabs().add(tabPrisKategori);
+//		tabPane.getTabs().add(tabGaveæskeTab);
 	}
 	
 	private void tabChangeListener(Tab oldValue, Tab newValue) {
