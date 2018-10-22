@@ -11,7 +11,7 @@ import storage.Storage;
 public class MainApp extends Application {
 	
 	public static void main(String[] args) {
-		Storage.createTestData();
+		Storage.initializeStorage();
 		Application.launch(args);
 	}
 

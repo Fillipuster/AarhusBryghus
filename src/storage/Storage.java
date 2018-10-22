@@ -10,21 +10,21 @@ import model.ProduktKategori;
 import model.Salg;
 
 public class Storage {
-
-	private static ProduktKategori gaveæskeProduktKategori;
-	private static PrisKategori butikPrisKategori;
 	
+	// Kategorier der er nødvendige for at gaveæsker kan fungere;
+	public static final PrisKategori butikPrisKategori = Controller.createPrisKategori("Butik");
+	public static final ProduktKategori glasProduktKategori = Controller.createProduktKategori("Glas");
+	public static final ProduktKategori flaskeølProduktKategori = Controller.createProduktKategori("Flaske Øl");
+	
+	// Lister;
 	private static ArrayList<Produkt> produkter = new ArrayList<>();
 	private static ArrayList<ProduktKategori> produktKategorier = new ArrayList<>();
 	private static ArrayList<PrisKategori> prisKategorier = new ArrayList<>();
 	private static ArrayList<Salg> salg = new ArrayList<>();
 	private static ArrayList<BetalingsMetode> betalingsMetoder = new ArrayList<>();
 
-	public static void createTestData() {
-		// These two categories are essential for gift boxes to work. They musn't be removed;
-		gaveæskeProduktKategori = Controller.createProduktKategori("Gaveæsker");
-		butikPrisKategori = Controller.createPrisKategori("Butik");
-		
+	public static void initializeStorage() {
+
 		ProduktKategori flaskeøl = new ProduktKategori("Flaske Øl");
 		ProduktKategori fadøl = new ProduktKategori("Fadøl");
 		produktKategorier.add(flaskeøl);
@@ -44,8 +44,7 @@ public class Storage {
 		Produkt p5 = new Produkt(fadøl, "Blonde", "Frisk, fra fad.", 3);
 		produkter.add(p5);
 		
-		PrisKategori pk1 = new PrisKategori("Butik");
-		prisKategorier.add(butikPrisKategori);
+		PrisKategori pk1 = new PrisKategori("Bar");
 		prisKategorier.add(pk1);
 		
 		Controller.addPrisToProdukt(p0, butikPrisKategori, 1);
@@ -67,15 +66,6 @@ public class Storage {
 		Controller.createBetalingsMetode("Klippekort", true);
 	}
 	
-	// Specific getters for gaveæske pris and produkt -kategorier
-	public static ProduktKategori getGaveæskeProduktKategori() {
-		return gaveæskeProduktKategori;
-	}
-	
-	public static PrisKategori getButikPrisKategori() {
-		return butikPrisKategori;
-	}
-
 	// Produkt
 	public static ArrayList<Produkt> getProdukter() {
 		return new ArrayList<>(produkter);

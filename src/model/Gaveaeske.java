@@ -1,24 +1,35 @@
 package model;
 
+import java.util.ArrayList;
+
 import storage.Storage;
 
 public class Gaveaeske extends Produkt {
-
-	private int antalØl;
 	
-	public Gaveaeske(String navn, String beskrivelse, int antalØl, double pris) {
-		super(Storage.getGaveæskeProduktKategori(), navn, beskrivelse, -1);
-		super.setPris(Storage.getButikPrisKategori(), pris);
+	ArrayList<Produkt> produkter;
+	
+	public Gaveaeske(ArrayList<Produkt> produkter) {
+		super(null, "Gaveæske (" + produkter.size() + ")", "Gaveæske med " + produkter.size() + " produkter i.", -1);
+		this.produkter = new ArrayList<>(produkter);
+	}
+	
+	public ArrayList<Produkt> getProdukter() {
+		return new ArrayList<>(produkter);
+	}
+	
+	public double getPris() {
+		double sum = 0d;
 		
-		setAntalØl(antalØl);
+		for (Produkt p : produkter) {
+			sum += p.getPris(Storage.butikPrisKategori);
+		}
+		
+		return sum;
 	}
-
-	public int getAntalØl() {
-		return antalØl;
-	}
-
-	public void setAntalØl(int antalØl) {
-		this.antalØl = antalØl;
+	
+	@Override
+	public double getPris(PrisKategori kategori) {
+		return getPris();
 	}
 	
 }
