@@ -12,9 +12,9 @@ import model.Salg;
 public class Storage {
 	
 	// Kategorier der er nødvendige for at gaveæsker kan fungere;
-	public static final PrisKategori butikPrisKategori = Controller.createPrisKategori("Butik");
-	public static final ProduktKategori glasProduktKategori = Controller.createProduktKategori("Glas");
-	public static final ProduktKategori flaskeølProduktKategori = Controller.createProduktKategori("Flaske Øl");
+	private static PrisKategori butikPrisKategori;
+	private static ProduktKategori glasProduktKategori;
+	private static ProduktKategori flaskeølProduktKategori;
 	
 	// Lister;
 	private static ArrayList<Produkt> produkter = new ArrayList<>();
@@ -24,6 +24,9 @@ public class Storage {
 	private static ArrayList<BetalingsMetode> betalingsMetoder = new ArrayList<>();
 
 	public static void initializeStorage() {
+		butikPrisKategori = Controller.createPrisKategori("Butik");
+		glasProduktKategori = Controller.createProduktKategori("Glas");
+		flaskeølProduktKategori = Controller.createProduktKategori("Flaske Øl");
 
 		ProduktKategori flaskeøl = new ProduktKategori("Flaske Øl");
 		ProduktKategori fadøl = new ProduktKategori("Fadøl");
@@ -64,6 +67,19 @@ public class Storage {
 		Controller.createBetalingsMetode("Kontant", false);
 		Controller.createBetalingsMetode("MobilePay", false);
 		Controller.createBetalingsMetode("Klippekort", true);
+	}
+	
+	// Getters for essential categories;
+	public static PrisKategori getButikPrisKategori() {
+		return butikPrisKategori;
+	}
+	
+	public static ProduktKategori getFlaskeølProduktKategori() {
+		return flaskeølProduktKategori;
+	}
+	
+	public static ProduktKategori getGlasProduktKategori() {
+		return glasProduktKategori;
 	}
 	
 	// Produkt
