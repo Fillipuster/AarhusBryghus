@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Salg {
-
+	
 	private BetalingsMetode betalingsMetode;
 	private ArrayList<ProduktLinje> produktLinjer = new ArrayList<>();
 	
