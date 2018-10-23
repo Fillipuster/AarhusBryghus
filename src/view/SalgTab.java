@@ -61,7 +61,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 
 		btnOpretGaveæske = new Button("Opret Gaveæske");
 		btnOpretGaveæske.setOnAction(e -> btnOpretGaveæskeAction());
-		this.add(btnOpretGaveæske, 0, 14);
+		this.add(btnOpretGaveæske, 0, 12);
 
 		// Column 1
 		btnAdd = new Button("→");
