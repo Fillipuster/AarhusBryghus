@@ -10,7 +10,7 @@ public class Gaveaeske extends Produkt {
 			new GaveæskePreset(4, 0, 130d), new GaveæskePreset(6, 0, 240d), new GaveæskePreset(6, 2, 250d),
 			new GaveæskePreset(6, 6, 290d), new GaveæskePreset(12, 0, 390d) };
 	
-	private ArrayList<Produkt> produkter;
+	private ArrayList<Produkt> produkter = new ArrayList<>();
 	
 	public Gaveaeske() {
 		super(null, "", "", -1);
