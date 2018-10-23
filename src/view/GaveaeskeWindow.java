@@ -21,7 +21,7 @@ public class GaveaeskeWindow extends Stage {
 	
 	private ListView<Produkt> lvwProdukter, lvwTilføjedeProdukter;
 	private Button btnTilføj, btnFjern, btnAccepter, btnAnnuller;
-	private Label lblPris;
+	private Label lblPris, lblProdukter, lblGaveæske;
 
 	public GaveaeskeWindow(String title, Stage owner) {
 		this.initOwner(owner);
@@ -54,6 +54,8 @@ public class GaveaeskeWindow extends Stage {
 		lvwProdukter = new ListView<>();
 		lvwProdukter.setStyle("-fx-font-family: monospace;");
 		pane.add(lvwProdukter, 0, 1, 1, 5);
+		
+		lblProdukter = ViewHelper.label(pane, 0, 0, "Tilgængelige Produkter");
 
 		// Column 1
 		btnTilføj = new Button("→");
@@ -67,6 +69,8 @@ public class GaveaeskeWindow extends Stage {
 		// Column 2
 		lvwTilføjedeProdukter = new ListView<>();
 		pane.add(lvwTilføjedeProdukter, 2, 1, 1, 5);
+		
+		lblGaveæske = ViewHelper.label(pane, 2, 0, "Produkter i gaveæske");
 
 		lblPris = ViewHelper.label(pane, 2, 6, "PRIS: 0.0 kr.");
 		
