@@ -174,6 +174,10 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	}
 
 	public void btnOpretGaveæskeAction() {
+		if (!ViewHelper.comboBoxHasSelected(cboxPrisKategorier)) {
+			return;
+		}
+		
 		GaveaeskeWindow window = new GaveaeskeWindow("Gaveæske", MainApp.getMainStage());
 		window.showAndWait();
 		Controller.createProduktLinje(salg, window.getGaveæske(),
