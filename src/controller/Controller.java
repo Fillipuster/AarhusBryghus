@@ -30,8 +30,8 @@ public class Controller {
 		produkt.setKlipPris(klipPris);
 	}
 
-	public static void addPrisToProdukt(Produkt produkt, PrisKategori kategori, double pris) {
-		produkt.setPris(kategori, pris);
+	public static void addPrisToProdukt(Produkt produkt, PrisKategori prisKategori, double pris) {
+		produkt.setPris(prisKategori, pris);
 	}
 
 	public static ArrayList<Produkt> getProdukterIKategori(ProduktKategori kategori) {
@@ -90,8 +90,8 @@ public class Controller {
 		Storage.addSalg(salg);
 	}
 	
-	public static void setSalgBetalingsMetode(Salg s, BetalingsMetode bm) {
-		s.setBetalingsMetode(bm);
+	public static void setSalgBetalingsMetode(Salg salg, BetalingsMetode betalingsMetode) {
+		salg.setBetalingsMetode(betalingsMetode);
 	}
 
 	// ProduktLinje
