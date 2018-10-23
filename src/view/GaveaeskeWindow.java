@@ -1,9 +1,6 @@
 package view;
 
 import java.util.ArrayList;
-
-import com.sun.org.apache.bcel.internal.generic.Select;
-
 import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -26,6 +23,7 @@ public class GaveaeskeWindow extends Stage {
 	private ListView<Produkt> lvwProdukter, lvwTilføjedeProdukter;
 	private ComboBox<Produkt> cboxProdukter;
 	private Button btnTilføj, btnFjern, btnAccepter, btnAnnuller;
+	private Label lblPris;
 
 	public GaveaeskeWindow(String title, Stage owner) {
 		this.initOwner(owner);
@@ -70,7 +68,7 @@ public class GaveaeskeWindow extends Stage {
 		lvwTilføjedeProdukter = new ListView<>();
 		pane.add(lvwTilføjedeProdukter, 2, 1, 1, 5);
 
-		Label lblPris = ViewHelper.label(pane, 2, 6, "PRIS: 0.0 kr.");
+		lblPris = ViewHelper.label(pane, 2, 6, "PRIS: 0.0 kr.");
 		
 		// Column 3
 		btnAccepter = new Button("Accepter");
@@ -82,6 +80,8 @@ public class GaveaeskeWindow extends Stage {
 		pane.add(btnAnnuller, 3, 3);
 		
 		updateLvwProdukter();
+		
+		gaveæske = Controller.createGaveæske();
 	}
 
 	private void updateLvwProdukter() {
@@ -99,6 +99,8 @@ public class GaveaeskeWindow extends Stage {
 		if (ViewHelper.listViewHasSelected(lvwProdukter)) {
 			Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
 			lvwTilføjedeProdukter.getItems().add(selected);
+			gaveæske.addProdukt(selected);
+			updateTotalPris();
 		}
 	}
 
@@ -106,15 +108,21 @@ public class GaveaeskeWindow extends Stage {
 		if (ViewHelper.listViewHasSelected(lvwTilføjedeProdukter)) {
 			Produkt selected = lvwTilføjedeProdukter.getSelectionModel().getSelectedItem();
 			lvwTilføjedeProdukter.getItems().remove(selected);
+			gaveæske.removeProdukt(selected);
+			updateTotalPris();
 		}
 	}
 	
 	private void btnAccepterAction() {
-		gaveæske = Controller.createGaveæske(new ArrayList<Produkt>(lvwTilføjedeProdukter.getItems()));
 		this.close();
 	}
 	
+	private void updateTotalPris() {
+		lblPris.setText(String.format("TOTAL: %.2f kr.", getGaveæske().getPris()));
+	}
+	
 	private void btnAnnullerAction() {
+		gaveæske = null;
 		this.close();
 	}
 	

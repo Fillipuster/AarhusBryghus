@@ -118,8 +118,8 @@ public class Controller {
 	}
 	
 	// Gaveæsker
-	public static Gaveaeske createGaveæske(ArrayList<Produkt> produkter) {
-		Gaveaeske g = new Gaveaeske(produkter);
+	public static Gaveaeske createGaveæske() {
+		Gaveaeske g = new Gaveaeske();
 		
 		return g;
 	}
