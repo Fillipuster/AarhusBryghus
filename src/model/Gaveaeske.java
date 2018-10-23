@@ -52,6 +52,8 @@ public class Gaveaeske extends Produkt {
 			}
 		}
 		
+		System.out.println("Preset: " + flasker + ":" + glas);
+		
 		return new GaveæskePreset(flasker, glas, -1d);		
 	}
 	
@@ -59,6 +61,7 @@ public class Gaveaeske extends Produkt {
 		GaveæskePreset preset = getPreset();
 		for (int i = 0; i < presets.length; i++) {
 			if (presets[i].equals(preset)) {
+				System.out.println(presets[i].pris);
 				return presets[i].pris;
 			}
 		}
@@ -81,6 +84,11 @@ public class Gaveaeske extends Produkt {
 		return getPris();
 	}
 	
+	@Override
+	public int getKlipPris() {
+		return -1;
+	}
+	
 	private static class GaveæskePreset {
 		public int ølAmount, glasAmount;
 		public double pris;
@@ -88,6 +96,7 @@ public class Gaveaeske extends Produkt {
 		public GaveæskePreset(int ølAmount, int glasAmount, double pris) {
 			this.ølAmount = ølAmount;
 			this.glasAmount = glasAmount;
+			this.pris = pris;
 		}
 		
 		@Override
