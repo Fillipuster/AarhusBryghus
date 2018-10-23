@@ -40,9 +40,7 @@ public class MainApp extends Application {
 		pane.setTabMinWidth(150);
 	}
 	
-	public static Stage getMainStage() {
-		return mainStage;
-	}
+	public static Stage getMainStage() { return mainStage; }
 
 	private void initTabPane(TabPane tabPane) {
 		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);

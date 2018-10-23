@@ -25,7 +25,7 @@ public class GaveaeskeWindow extends Stage {
 
 	public GaveaeskeWindow(String title, Stage owner) {
 		this.initOwner(owner);
-		this.initStyle(StageStyle.UNIFIED);
+		this.initStyle(StageStyle.DECORATED);
 		this.initModality(Modality.APPLICATION_MODAL);
 		this.setOnCloseRequest(e -> btnAnnullerAction());
 		this.setMinHeight(100);
@@ -38,6 +38,7 @@ public class GaveaeskeWindow extends Stage {
 
 		Scene scene = new Scene(pane);
 		this.setScene(scene);
+		scene.getStylesheets().add("style_jbootx.css");
 	}
 
 	private void setUpPane(GridPane pane) {
