@@ -12,6 +12,11 @@ public class Gaveaeske extends Produkt {
 	
 	private ArrayList<Produkt> produkter;
 	
+	public Gaveaeske() {
+		super(null, "", "", -1);
+		updateNavnBeskrivelse();
+	}
+	
 	public Gaveaeske(ArrayList<Produkt> produkter) {
 		super(null, "", "", -1);
 		this.produkter = new ArrayList<>(produkter);
