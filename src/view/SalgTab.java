@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import model.BetalingsMetode;
+import model.Gaveaeske;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktLinje;
@@ -180,9 +181,12 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		
 		GaveaeskeWindow window = new GaveaeskeWindow("Gaveæske", MainApp.getMainStage());
 		window.showAndWait();
-		Controller.createProduktLinje(salg, window.getGaveæske(),
-				cboxPrisKategorier.getSelectionModel().getSelectedItem(), 1, 0d);
-		updateLvwProduktLinjer(null);
+		Gaveaeske gaveæske = window.getGaveæske();
+		if (gaveæske != null) {			
+			Controller.createProduktLinje(salg, window.getGaveæske(),
+					cboxPrisKategorier.getSelectionModel().getSelectedItem(), 1, 0d);
+			updateLvwProduktLinjer(null);
+		}
 	}
 
 	public void btnDeleteAction() {
