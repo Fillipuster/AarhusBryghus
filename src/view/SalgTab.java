@@ -18,8 +18,6 @@ import model.ProduktLinje;
 import model.Salg;
 import storage.Storage;
 
-import com.sun.java.swing.plaf.windows.resources.windows_de;
-
 import controller.Controller;
 
 public class SalgTab extends GridPane implements ReloadableTab {
@@ -175,17 +173,17 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	}
 
 	public void btnOpretGaveæskeAction() {
-		if (!ViewHelper.comboBoxHasSelected(cboxPrisKategorier)) {
-			return;
-		}
-		
-		GaveaeskeWindow window = new GaveaeskeWindow("Gaveæske", MainApp.getMainStage());
-		window.showAndWait();
-		Gaveaeske gaveæske = window.getGaveæske();
-		if (gaveæske != null) {			
-			Controller.createProduktLinje(salg, window.getGaveæske(),
-					cboxPrisKategorier.getSelectionModel().getSelectedItem(), 1, 0d);
-			updateLvwProduktLinjer(null);
+		if (ViewHelper.comboBoxHasSelected(cboxPrisKategorier)) {
+			GaveaeskeWindow window = new GaveaeskeWindow("Gaveæske", MainApp.getMainStage());
+			window.showAndWait();
+			Gaveaeske gaveæske = window.getGaveæske();
+			if (gaveæske != null) {			
+				Controller.createProduktLinje(salg, window.getGaveæske(),
+						cboxPrisKategorier.getSelectionModel().getSelectedItem(), 1, 0d);
+				updateLvwProduktLinjer(null);
+			}			
+		} else {
+			setErrorText("Priskategori skal være valgt.");
 		}
 	}
 

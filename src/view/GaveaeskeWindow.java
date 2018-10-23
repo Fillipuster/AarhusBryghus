@@ -5,7 +5,6 @@ import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
@@ -21,7 +20,6 @@ public class GaveaeskeWindow extends Stage {
 	private Gaveaeske gaveæske;
 	
 	private ListView<Produkt> lvwProdukter, lvwTilføjedeProdukter;
-	private ComboBox<Produkt> cboxProdukter;
 	private Button btnTilføj, btnFjern, btnAccepter, btnAnnuller;
 	private Label lblPris;
 
