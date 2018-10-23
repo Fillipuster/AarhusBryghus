@@ -54,6 +54,7 @@ public class Controller {
 				result.add(p);
 			}
 		}
+		
 		return result;
 	}
 
@@ -83,7 +84,7 @@ public class Controller {
 
 	// Salg
 	public static Salg createSalg() {
-		return new Salg(LocalDate.of(9002, 6, 14));
+		return new Salg(LocalDate.of(1, 1, 1));
 	}
 
 	public static void saveSalg(Salg salg) {
