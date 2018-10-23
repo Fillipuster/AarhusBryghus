@@ -67,6 +67,10 @@ public class Gaveaeske extends Produkt {
 		return sum;
 	}
 	
+	public boolean isEmpty() {
+		return produkter.isEmpty();
+	}
+	
 	@Override
 	public double getPris(PrisKategori kategori) {
 		return getPris();
