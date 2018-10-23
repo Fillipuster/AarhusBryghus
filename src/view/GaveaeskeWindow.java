@@ -27,12 +27,13 @@ public class GaveaeskeWindow extends Stage {
 
 	public GaveaeskeWindow(String title, Stage owner) {
 		this.initOwner(owner);
-		this.initStyle(StageStyle.UTILITY);
+		this.initStyle(StageStyle.UNIFIED);
 		this.initModality(Modality.APPLICATION_MODAL);
+		this.setOnCloseRequest(e -> btnAnnullerAction());
 		this.setMinHeight(100);
 		this.setMinWidth(200);
 		this.setResizable(false);
-
+		
 		this.setTitle(title);
 		GridPane pane = new GridPane();
 		this.initContent(pane);
