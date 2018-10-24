@@ -22,6 +22,7 @@ import storage.Storage;
 import controller.Controller;
 
 public class SalgTab extends GridPane implements ReloadableTab {
+	
 	private ListView<ProduktMedKategoriFormatter> lvwProdukter;
 	private ListView<ProduktLinje> lvwProduktLinjer;
 	private Button btnAdd, btnDelete, btnAnuller, btnKøb, btnOpretGaveæske;
@@ -31,6 +32,13 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	private Label lblTotal, lblError;
 	private ComboBox<BetalingsMetode> cboxBetalingsMetoder;
 
+	@Override
+	public void reload() {
+		updateCboxPrisKategrorier();
+		updateCboxBetalingsMetoder();
+		setErrorText("");
+	}
+	
 	private void setUpPane() {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
@@ -40,7 +48,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				lblErrorTextDelete(null);	
+				clearErrorText();
 			}
 		});
 	}
@@ -276,20 +284,10 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		lblError.setText(text);
 	}
 
-	// Tab reloading;
-	@Override
-	public void reload() {
-		updateCboxPrisKategrorier();
-		updateCboxBetalingsMetoder();
-		setErrorText("");
-	}
-//	Sætter errotext til tom når man klikker med musen
-	private void lblErrorTextDelete(String text) {
-		lblError.setText(" ");
+	private void clearErrorText() {
+		lblError.setText("");
 	}
 
-	
-	
 	// ListView formatting classes;
 	private class ProduktMedKategoriFormatter {
 		public Produkt produkt;
