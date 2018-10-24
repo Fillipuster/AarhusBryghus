@@ -32,13 +32,13 @@ public class Storage {
 		glasProduktKategori = Controller.createProduktKategori("Glas");
 		flaskeølProduktKategori = Controller.createProduktKategori("Flaske Øl");
 
-		Controller.createGaveaeskePreset(2, 2, 100d, GaveaeskePakning.Gaveæske);
-		Controller.createGaveaeskePreset(4, 0, 130d, GaveaeskePakning.Gaveæske);
-		Controller.createGaveaeskePreset(6, 0, 240d, GaveaeskePakning.Trækasse);
-		Controller.createGaveaeskePreset(6, 2, 250d, GaveaeskePakning.Gavekurv);
-		Controller.createGaveaeskePreset(6, 6, 290d, GaveaeskePakning.Trækasse);
-		Controller.createGaveaeskePreset(12, 0, 390d, GaveaeskePakning.Trækasse);
-		Controller.createGaveaeskePreset(12, 0, 360d, GaveaeskePakning.Papkasse);
+		Controller.createGaveaeskePreset(2, 2, 100d, GaveaeskePakning.GAVEÆSKE);
+		Controller.createGaveaeskePreset(4, 0, 130d, GaveaeskePakning.GAVEÆSKE);
+		Controller.createGaveaeskePreset(6, 0, 240d, GaveaeskePakning.TRÆKASSE);
+		Controller.createGaveaeskePreset(6, 2, 250d, GaveaeskePakning.GAVEKURV);
+		Controller.createGaveaeskePreset(6, 6, 290d, GaveaeskePakning.TRÆKASSE);
+		Controller.createGaveaeskePreset(12, 0, 390d, GaveaeskePakning.TRÆKASSE);
+		Controller.createGaveaeskePreset(12, 0, 360d, GaveaeskePakning.PAPKASSE);
 		
 		ProduktKategori fadøl = new ProduktKategori("Fadøl");
 		produktKategorier.add(fadøl);

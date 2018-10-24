@@ -58,22 +58,22 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 		
 		ViewHelper.label(this, 1, 6, "Pakning:");
 		rbPakningGaveæske = new RadioButton("Gaveæske");
-		rbPakningGaveæske.setUserData(GaveaeskePakning.Gaveæske);
+		rbPakningGaveæske.setUserData(GaveaeskePakning.GAVEÆSKE);
 		rbPakningGaveæske.setToggleGroup(tggPakning);
 		this.add(rbPakningGaveæske, 1, 7);
 		
 		rbPakningTrækasse = new RadioButton("Trækasse");
-		rbPakningTrækasse.setUserData(GaveaeskePakning.Trækasse);
+		rbPakningTrækasse.setUserData(GaveaeskePakning.TRÆKASSE);
 		rbPakningTrækasse.setToggleGroup(tggPakning);
 		this.add(rbPakningTrækasse, 1, 8);
 		
 		rbPakningGavekurv = new RadioButton("Gavekurv");
-		rbPakningGavekurv.setUserData(GaveaeskePakning.Gavekurv);
+		rbPakningGavekurv.setUserData(GaveaeskePakning.GAVEKURV);
 		rbPakningGavekurv.setToggleGroup(tggPakning);
 		this.add(rbPakningGavekurv, 1, 9);
 		
 		rbPakningPapkasse = new RadioButton("Papkasse");
-		rbPakningPapkasse.setUserData(GaveaeskePakning.Papkasse);
+		rbPakningPapkasse.setUserData(GaveaeskePakning.PAPKASSE);
 		rbPakningPapkasse.setToggleGroup(tggPakning);
 		this.add(rbPakningPapkasse, 1, 10);
 		
