@@ -124,6 +124,11 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		btnKøb.setOnAction(e -> btnKøbAction());
 		this.add(btnKøb, 7, 12);
 	}
+	
+	private void resetSalg() {
+		salg = Controller.createSalg();
+		updateLvwProduktLinjer(null);
+	}
 
 	// Node updater methods;
 	private void updateCboxPrisKategrorier() {
@@ -274,12 +279,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		}
 	}
 
-	// Helper methods;
-	private void resetSalg() {
-		salg = Controller.createSalg();
-		updateLvwProduktLinjer(null);
-	}
-
+	// Error Label;
 	private void setErrorText(String text) {
 		lblError.setText(text);
 	}
