@@ -216,7 +216,6 @@ VBox > .split-menu-button.last > .arrow-button {
 	-fx-effect: innershadow(gaussian, #135b1f, 10, 0, 0, 3);
 }
 
-
 	/*primary*/
 
 .button.primary,.split-menu-button.primary,.toggle-button.primary,.menu-button.primary,
@@ -427,7 +426,7 @@ VBox > .split-menu-button.last > .arrow-button {
 	-fx-border-width: 0;
 }
 
-.text-field, .text-area {
+.text-field, .text-area, .list-view {
 	-fx-border-color: #135b1f;
 	-fx-background-color: white;
 	-fx-border-radius: 4;
@@ -436,14 +435,16 @@ VBox > .split-menu-button.last > .arrow-button {
 }
 
 .text-field:focused, .text-area:focused {
-	-fx-border-color: #66afe9;
-	-fx-effect: dropshadow(gaussian, #66afe9, 10, 0, 0, 0);
+	-fx-border-color: #135b1f;
+	-fx-effect: dropshadow(gaussian, #135b1f, 10, 0, 0, 0);
 }
 
 .text-area .scroll-pane, .text-area .scroll-pane .content {
 	-fx-background-color: white;
 	-fx-background-radius: 4;
 }
+
+
 
 
 .tab-pane .tab-header-background {
@@ -955,7 +956,9 @@ VBox > .split-menu-button.last > .arrow-button {
 
 .list-view .list-cell:filled:selected, .list-view .list-cell:filled:selected:focused {
 	-fx-background-color: #135b1f;
-	-fx-text-fill: white; 
+	-fx-text-fill: white;
+	
+	
 }
 
 .list-cell:filled:hover {
