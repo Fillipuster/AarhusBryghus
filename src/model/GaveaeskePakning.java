@@ -1,5 +1,5 @@
 package model;
 
 public enum GaveaeskePakning {
-	Gaveæske, Trækasse, Gavekurv, Papkasse;
+	GAVEÆSKE, TRÆKASSE, GAVEKURV, PAPKASSE;
 }
