@@ -888,7 +888,7 @@ VBox > .split-menu-button.last > .arrow-button {
 }
 .radio-button > .radio,
 .radio-button:focused > .radio  {
-	-fx-border-color: #56c0e0;
+	-fx-border-color: #135b1f;
 	-fx-border-radius: 1em;
 	-fx-background-radius: 1.0em; /* large value to make sure this remains circular */
 	-fx-padding: 1 2 3 2;
@@ -901,13 +901,13 @@ VBox > .split-menu-button.last > .arrow-button {
 	-fx-background-insets: 3 2 1 2;
 }
 .radio-button:selected > .radio,.radio-button:hover > .radio {
-	-fx-fill-color: #56c0e0;
+	-fx-fill-color: #135b1f;
 }
 .radio-button:pressed > .radio {
-	-fx-background-color: #50c0e2;
+	-fx-background-color: #135b1f;
 }
 .radio-button:selected > .radio > .dot {
-	-fx-background-color: #56c0e0;
+	-fx-background-color: #135b1f;
 }
 
 /*common things*/
@@ -920,7 +920,7 @@ VBox > .split-menu-button.last > .arrow-button {
 
 .check-box:pressed > .box,
 .radio-button:pressed > .radio {
-	-fx-background-color: #50c0e2;
+	-fx-background-color: #52cc66;
 }
 
 /*******************************************************************************
