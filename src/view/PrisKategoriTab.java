@@ -17,7 +17,7 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 	private Button btnOpdaterKategori, btnSletKategori, btnOpretKategori;
 
 	public void reload() {
-		
+		updateLvwKategorier();
 	}
 	
 	private void setUpPane() {
@@ -56,36 +56,36 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 		updateLvwKategorier();
 	}
 	
-	// ListView updater methods;
+	// Node updater methods;
 	private void updateLvwKategorier() {
 		lvwKategorier.getItems().removeAll(lvwKategorier.getItems());
 		lvwKategorier.getItems().addAll(Storage.getPrisKategorier());
-		disableKategoriNodes(true);
-	}
-	
-	// Node disabling methods;
-	private void disableKategoriNodes(boolean disable) {
-		btnOpdaterKategori.setDisable(disable);
-		btnSletKategori.setDisable(disable);
 	}
 	
 	// Node action methods;
 	private void lvwKategorierAction() {
 		PrisKategori selected = lvwKategorier.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			disableKategoriNodes(false);
 			txfKategoriNavn.setText(selected.getNavn());
 		} else {
-			disableKategoriNodes(true);
+			// TODO: err label?
 		}
 	}
 	
 	private void btnOpdaterKategoriAction() {
+		if (!ViewHelper.listViewHasSelected(lvwKategorier)) {
+			return;
+		}
+		
 		Controller.updatePrisKategori(lvwKategorier.getSelectionModel().getSelectedItem(), txfKategoriNavn.getText());
 		updateLvwKategorier();
 	}
 	
 	private void btnSletKategoriAction() {
+		if (!ViewHelper.listViewHasSelected(lvwKategorier)) {
+			return;
+		}
+		
 		Storage.removePrisKategori(lvwKategorier.getSelectionModel().getSelectedItem());
 		updateLvwKategorier();
 	}
