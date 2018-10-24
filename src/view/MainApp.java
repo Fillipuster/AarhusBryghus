@@ -49,23 +49,22 @@ public class MainApp extends Application {
 		
 		Tab tabSalg = new Tab("Salg");
 		tabSalg.setContent(new SalgTab());
+		tabPane.getTabs().add(tabSalg);
 
 		Tab tabProdukt = new Tab("Produkter");
 		tabProdukt.setContent(new ProduktTab());
+		tabPane.getTabs().add(tabProdukt);
 		
 		Tab tabProduktKategori = new Tab("Produkt Kategorier");
 		tabProduktKategori.setContent(new ProduktKategoriTab());
+		tabPane.getTabs().add(tabProduktKategori);
 		
 		Tab tabPrisKategori = new Tab("Pris Kategorier");
 		tabPrisKategori.setContent(new PrisKategoriTab());
+		tabPane.getTabs().add(tabPrisKategori);
 		
 		Tab tabGaveæskePresets = new Tab("Gaveæske Presets");
 		tabGaveæskePresets.setContent(new GaveaeskePresetTab());
-
-		tabPane.getTabs().add(tabSalg);
-		tabPane.getTabs().add(tabProdukt);
-		tabPane.getTabs().add(tabProduktKategori);
-		tabPane.getTabs().add(tabPrisKategori);
 		tabPane.getTabs().add(tabGaveæskePresets);
 	}
 	
