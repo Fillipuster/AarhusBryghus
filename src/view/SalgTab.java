@@ -102,13 +102,15 @@ public class SalgTab extends GridPane implements ReloadableTab {
 
 		// Column 6
 		ViewHelper.label(this, 6, 2, "Produktmængde");
-		txfAntal = new TextField("ANTAL");
+		txfAntal = new TextField("1");
 		txfAntal.setOnAction(e -> txfAntalAction());
+		ViewHelper.textFieldRestrictInt(txfAntal);
 		this.add(txfAntal, 6, 3, 2, 1);
 
 		ViewHelper.label(this, 6, 4, "Rabat (%)");
-		txfRabat = new TextField("RABAT");
+		txfRabat = new TextField("0.0");
 		txfRabat.setOnAction(e -> txfRabatAction());
+		ViewHelper.textFieldRestrictDouble(txfRabat);
 		this.add(txfRabat, 6, 5, 2, 1);
 
 		ViewHelper.label(this, 6, 8, "Vælg Betalingsmetode:");
@@ -163,9 +165,8 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		cboxBetalingsMetoder.getItems().removeAll(cboxBetalingsMetoder.getItems());
 		cboxBetalingsMetoder.getItems().addAll(Storage.getBetalingsMetoder());
 	}
-
-	// Node action methods;
-	public void cboxPrisKategorierAction() {
+	
+	private void cboxPrisKategorierAction() {
 		resetSalg();
 		updateLvwProdukter();
 	}

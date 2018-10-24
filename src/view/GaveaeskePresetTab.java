@@ -45,15 +45,18 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 		
 		// Column 1
 		ViewHelper.label(this, 1, 0, "Ølflasker i æske:");
-		txfØl = new TextField("ØLFLASKER");
+		txfØl = new TextField("4");
+		ViewHelper.textFieldRestrictInt(txfØl);
 		this.add(txfØl, 1, 1);
 		
 		ViewHelper.label(this, 1, 2, "Glas i æske:");
-		txfGlas = new TextField("GLAS");
+		txfGlas = new TextField("2");
+		ViewHelper.textFieldRestrictInt(txfGlas);
 		this.add(txfGlas, 1, 3);
 
 		ViewHelper.label(this, 1, 4, "Pris på æske:");
-		txfPris = new TextField("PRIS");
+		txfPris = new TextField("299.95");
+		ViewHelper.textFieldRestrictDouble(txfPris);
 		this.add(txfPris, 1, 5);
 		
 		ViewHelper.label(this, 1, 6, "Pakning:");

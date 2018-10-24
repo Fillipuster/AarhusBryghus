@@ -74,8 +74,9 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		this.add(txaProduktBeskrivelse, 1, 4, 1, 3);
 		
 		ViewHelper.label(this, 1, 7, "Pris i klippekort klip:");
-		txfKlipPris = new TextField("KLIP PRIS");
+		txfKlipPris = new TextField("1");
 		txfKlipPris .setPrefWidth(200);
+		ViewHelper.textFieldRestrictInt(txfKlipPris);
 		this.add(txfKlipPris, 1, 8);
 
 		btnOpretProdukt = new Button("Opret");
@@ -100,7 +101,8 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		lvwPriser.setOnMouseClicked(e -> lvwPriserAction());
 		this.add(lvwPriser, 2, 2, 2, 11);
 		
-		txfPris = new TextField("PRIS");
+		txfPris = new TextField("59.95");
+		ViewHelper.textFieldRestrictDouble(txfPris);
 		this.add(txfPris, 2, 14);
 
 		// Column 3
