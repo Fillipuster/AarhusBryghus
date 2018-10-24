@@ -34,6 +34,9 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
+		
+//		Når musen klikkes slettes fejlbesked
+		this.setOnMouseClicked(e -> emptyErrorText(null));
 
 	}
 
@@ -274,6 +277,10 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		updateCboxPrisKategrorier();
 		updateCboxBetalingsMetoder();
 		setErrorText("");
+	}
+//	Sætter errotext til tom når man klikker med musen
+	private void emptyErrorText(String text) {
+		lblError.setText(" ");
 	}
 
 	// ListView formatting classes;
