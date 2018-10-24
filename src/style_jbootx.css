@@ -196,7 +196,7 @@ VBox > .split-menu-button.last > .arrow-button {
 .button:hover,.menu-button:hover,.toggle-button:hover,
 .font-menu-button:hover,
 .split-menu-button > .label:hover, .split-menu-button > .arrow-button:hover {
-	-fx-background-color: #e6e6e6;
+	-fx-background-color: #52cc66;
 	-fx-border-color: #acacac;
 }
 	/*pressed selected*/
