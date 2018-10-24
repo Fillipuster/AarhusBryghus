@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import model.GaveaeskePakning;
@@ -88,6 +89,8 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 		btnSlet = new Button("Slet");
 		btnSlet.setOnAction(e -> btnSletAction());
 		this.add(btnSlet, 2, 3);
+		
+		tggPakning.selectToggle(rbPakningGaveæske);
 	}
 
 	// Node updater methods;
@@ -102,6 +105,12 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 			txfØl.setText(Integer.toString(selected.getØl()));
 			txfGlas.setText(Integer.toString(selected.getGlas()));
 			txfPris.setText(Double.toString(selected.getPris()));
+			
+			for (Toggle t : tggPakning.getToggles()) {
+				if (t.getUserData().equals(selected.getPakning())) {
+					tggPakning.selectToggle(t);
+				}
+			}
 		}
 	}
 	
@@ -116,7 +125,7 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 			try {
 				Controller.updateGaveaeskePreset(selected, Integer.parseInt(txfØl.getText()),
 						Integer.parseInt(txfGlas.getText()), Double.parseDouble(txfPris.getText()),
-						(GaveaeskePakning) tggPakning.getSelectedToggle().getUserData());				
+						(GaveaeskePakning) tggPakning.getSelectedToggle().getUserData());
 			} catch (NumberFormatException e) {
 				// TODO: Set error text.
 			}
