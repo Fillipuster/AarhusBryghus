@@ -6,20 +6,11 @@ import storage.Storage;
 
 public class Gaveaeske extends Produkt {
 	
-	private static GaveæskePreset[] presets = new GaveæskePreset[] { new GaveæskePreset(2, 2, 100d),
-			new GaveæskePreset(4, 0, 130d), new GaveæskePreset(6, 0, 240d), new GaveæskePreset(6, 2, 250d),
-			new GaveæskePreset(6, 6, 290d), new GaveæskePreset(12, 0, 390d) };
-	
+	private GaveaeskePakning pakning;
 	private ArrayList<Produkt> produkter = new ArrayList<>();
 	
 	public Gaveaeske() {
 		super(null, "", "", -1);
-		updateNavnBeskrivelse();
-	}
-	
-	public Gaveaeske(ArrayList<Produkt> produkter) {
-		super(null, "", "", -1);
-		this.produkter = new ArrayList<>(produkter);
 		updateNavnBeskrivelse();
 	}
 	
@@ -42,24 +33,32 @@ public class Gaveaeske extends Produkt {
 		updateNavnBeskrivelse();
 	}
 	
-	private GaveæskePreset getPreset() {
+	public GaveaeskePakning getPakning() {
+		return pakning;
+	}
+	
+	public void setPakning(GaveaeskePakning pakning) {
+		this.pakning = pakning;
+	}
+	
+	private GaveaeskePreset getPreset() {
 		int flasker = 0, glas = 0;
 		for (Produkt p : produkter) {
 			if (p.getProduktKategori() == Storage.getFlaskeølProduktKategori()) {
 				flasker++;
-			} else if(p.getProduktKategori() == Storage.getGlasProduktKategori()) {
+			} else if (p.getProduktKategori() == Storage.getGlasProduktKategori()) {
 				glas++;
 			}
 		}
-		
-		return new GaveæskePreset(flasker, glas, -1d);		
+
+		return new GaveaeskePreset(flasker, glas, -1d, getPakning());
 	}
 	
 	public double getPris() {
-		GaveæskePreset preset = getPreset();
-		for (int i = 0; i < presets.length; i++) {
-			if (presets[i].equals(preset)) {
-				return presets[i].pris;
+		GaveaeskePreset preset = getPreset();
+		for (GaveaeskePreset gp : Storage.getGaveaeskePresets()) {
+			if (gp.equals(preset)) {
+				return gp.getPris();
 			}
 		}
 		
@@ -84,27 +83,6 @@ public class Gaveaeske extends Produkt {
 	@Override
 	public int getKlipPris() {
 		return -1;
-	}
-	
-	private static class GaveæskePreset {
-		public int ølAmount, glasAmount;
-		public double pris;
-		
-		public GaveæskePreset(int ølAmount, int glasAmount, double pris) {
-			this.ølAmount = ølAmount;
-			this.glasAmount = glasAmount;
-			this.pris = pris;
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			if (obj instanceof GaveæskePreset) {
-				GaveæskePreset comp = (GaveæskePreset) obj;
-				return (this.ølAmount == comp.ølAmount && this.glasAmount == comp.glasAmount);
-			}
-			
-			return false;
-		}
 	}
 	
 }

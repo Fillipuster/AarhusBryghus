@@ -34,7 +34,6 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
-
 	}
 
 	public SalgTab() {
