@@ -1,5 +1,6 @@
 package view;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -34,11 +35,19 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
+
+		// Clear error label on mouse event;
+		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				lblErrorTextDelete(null);	
+			}
+		});
 	}
 
 	public SalgTab() {
 		salg = Controller.createSalg();
-
+		
 		setUpPane();
 		this.setGridLinesVisible(false);
 
@@ -274,7 +283,13 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		updateCboxBetalingsMetoder();
 		setErrorText("");
 	}
+//	Sætter errotext til tom når man klikker med musen
+	private void lblErrorTextDelete(String text) {
+		lblError.setText(" ");
+	}
 
+	
+	
 	// ListView formatting classes;
 	private class ProduktMedKategoriFormatter {
 		public Produkt produkt;

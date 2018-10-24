@@ -2,15 +2,19 @@ package view;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
 import storage.Storage;
 import controller.Controller;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 
 public class ProduktTab extends GridPane implements ReloadableTab {
@@ -18,7 +22,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	private ListView<Produkt> lvwProdukter;
 	private ListView<ProduktPrisKategoriFormat> lvwPriser;
 	private ComboBox<ProduktKategori> cboxProduktKategorier;
-
+	private Label lblError;
 	private TextField txfProduktNavn, txfPris, txfKlipPris;
 	private TextArea txaProduktBeskrivelse;
 	private Button btnOpdaterProdukt, btnSletProdukt, btnOpretProdukt, btnSætPris;
@@ -28,11 +32,21 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		this.setHgap(20);
 		this.setVgap(10);
 		this.setGridLinesVisible(false);
+		
+//		Når musen klikkes slettes fejlbesked
+		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				lblErrorTextDelete(null);
+			}
+		});
+		
 	}
 
 	public ProduktTab() {
 		setUpPane();
 
+		
 		// Column 0
 		ViewHelper.label(this, 0, 0, "Vælg produktkategori for at se produkter:");
 		cboxProduktKategorier = new ComboBox<>();
@@ -90,6 +104,11 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		btnSætPris = new Button("Sæt Pris");
 		btnSætPris.setOnAction(e -> btnSætPris());
 		this.add(btnSætPris, 3, 14);
+		
+		lblError = new Label("");
+		// lblError.setStyle("-fx-text-color: red;");
+		lblError.setTextFill(Color.RED);
+		this.add(lblError, 0, 13);
 	}
 
 	// Node updater methods;
@@ -141,9 +160,15 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnOpretProduktAction() {
+		try {
 		Controller.createProdukt(cboxProduktKategorier.getValue(), txfProduktNavn.getText(),
 				txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()));
 		updateLvwProdukter();
+		}
+		catch(NumberFormatException e) {
+			setErrorText("Klippepris SKAL være et tal");
+		}
+		
 	}
 
 	private void btnOpdaterProduktAction() {
@@ -173,6 +198,14 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	// Tab reloading;
 	public void reload() {
 		updateCboxProduktKategorier();
+	}
+	
+	private void setErrorText(String text) {
+		lblError.setText(text);
+	}
+	
+	private void lblErrorTextDelete(String text) {
+		lblError.setText(" ");
 	}
 
 	// ListView formatting classes;
