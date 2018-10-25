@@ -159,6 +159,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 				: "(kun penge >:D)";
 		lblTotal.setText(String.format("TOTAL: %.2f kr.\n%s", salg.getTotalPris(), klipString));
 	}
+	
 
 	private void updateCboxBetalingsMetoder() {
 		cboxBetalingsMetoder.getItems().removeAll(cboxBetalingsMetoder.getItems());

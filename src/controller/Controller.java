@@ -243,6 +243,10 @@ public class Controller {
 	public static void tilbageleverUdlejningsSalg(UdlejningsSalg salg) {
 		salg.setRetuneringsDato(LocalDate.now());
 	}
+	
+	public static void sletUdlejligProduktLinje(UdlejningsSalg udlejningsSalg, ProduktLinje produktLinje) {
+		udlejningsSalg.sletProduktLinje(produktLinje);
+	}
 
 	// ProduktLinje
 	public static ProduktLinje createProduktLinje(Salg salg, Produkt produkt, PrisKategori prisKategori, int antal,

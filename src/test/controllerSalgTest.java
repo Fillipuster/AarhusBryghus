@@ -102,7 +102,7 @@ public class controllerSalgTest {
 	
 	@Test 
 	public void createProduktLinjeTC2() {
-		ProduktLinje pl1 = Controller.createProduktLinje(s1, p1, PrK1, null, 21);
+//		ProduktLinje pl1 = Controller.createProduktLinje(s1, p1, PrK1, null, 21);
 		
 	}
 	

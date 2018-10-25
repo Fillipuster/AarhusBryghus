@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import model.Kunde;
 import model.Produkt;
 import model.ProduktKategori;
@@ -24,10 +25,9 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	private ListView<Kunde> lvwKunder;
 	private ListView<UdlejningsProdukt> lvwUdlejligeProdukter;
 	private ListView<ProduktLinje> lvwProduktLinjer;
-	private TextField txfPant, txfAntal;
-	private Label lblTotal, lblPant;
+	private TextField txfAntal;
+	private Label lblTotal, lblPant, lblError;
 	private UdlejningsSalg salg;
-	private UdlejningsProdukt udlejnigsProdukt;
 	private Button btnAdd, btnDelete, btnAnnuler, btnGennemførSalg;
 	private ComboBox<ProduktKategori> cboxProduktKategori;
 
@@ -55,7 +55,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		// Column 1
 		ViewHelper.label(this, 1, 0, "Produkt kategori:");
 		cboxProduktKategori = new ComboBox<>();
-		 cboxProduktKategori.setOnAction(e -> cboxProduktKategoriAction());
+		cboxProduktKategori.setOnAction(e -> cboxProduktKategoriAction());
 		this.add(cboxProduktKategori, 1, 1);
 
 		ViewHelper.label(this, 2, 0, "Produkter");
@@ -73,6 +73,10 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		btnDelete.setPrefWidth(200d);
 		this.add(btnDelete, 2, 6);
 
+		lblError = new Label("");
+		lblError.setTextFill(Color.RED);
+		this.add(lblError, 2, 7);
+
 		// Column 3
 		ViewHelper.label(this, 3, 0, "Valgte Produkter");
 		lvwProduktLinjer = new ListView<>();
@@ -86,6 +90,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 
 		// Column 4
 		txfAntal = new TextField("Antal");
+		txfAntal.setOnAction(e -> txfAntalAction());
 		this.add(txfAntal, 4, 5);
 
 		btnAnnuler = new Button("Annuler");
@@ -94,6 +99,10 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 
 		btnGennemførSalg = new Button("Gennemfør Salg");
 		this.add(btnGennemførSalg, 4, 8);
+	}
+
+	private void setErrorText(String text) {
+		lblError.setText(text);
 	}
 
 	private void updateLvwKunder() {
@@ -106,6 +115,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 
 	private void updateLvwProduktLinjer() {
 		lvwProduktLinjer.getItems().setAll(salg.getProduktLinjer());
+		lblTotal.setText(String.format("TOTAL: %.2f kr. \n%s", salg.getTotalPris()));
 	}
 
 	private void updateLvwUdlejligeProdukter() {
@@ -129,8 +139,25 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnDeleteAction() {
-		// ProduktKategori selected = lvw
+		ProduktLinje selected = lvwProduktLinjer.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			Controller.sletUdlejligProduktLinje(salg, selected);
+			updateLvwProduktLinjer();
+		} else {
+			setErrorText("NAAAAAAJ!");
+		}
+	}
 
+	public void txfAntalAction() {
+		ProduktLinje selected = lvwProduktLinjer.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			try {
+				Controller.updateProduktLinje(selected, Integer.parseInt(txfAntal.getText()), 0d);
+			} catch (NumberFormatException nfe) {
+				setErrorText("Produktmængden skal være et heltal");
+			}
+		}
+		updateLvwProduktLinjer();
 	}
 
 }
