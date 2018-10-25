@@ -6,6 +6,7 @@ import controller.Controller;
 import model.BetalingsMetode;
 import model.GaveaeskePakning;
 import model.GaveaeskePreset;
+import model.Kunde;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
@@ -25,6 +26,7 @@ public class Storage {
 	private static ArrayList<Salg> salg = new ArrayList<>();
 	private static ArrayList<BetalingsMetode> betalingsMetoder = new ArrayList<>();
 	private static ArrayList<GaveaeskePreset> gaveaeskePresets = new ArrayList<>();
+	private static ArrayList<Kunde> kunder = new ArrayList<>();
 
 	public static void initializeStorage() {
 		// Kategorier nødvendige for at gaveæsker fungerer;
@@ -168,6 +170,19 @@ public class Storage {
 	
 	public static void removeGaveaeskePreset(GaveaeskePreset gp) {
 		gaveaeskePresets.remove(gp);
+	}
+
+	// Kunde
+	public static ArrayList<Kunde> getKunder(){
+		return new ArrayList<>(kunder);
+	}
+	
+	public static void addKunde(Kunde k) {
+		kunder.add(k);
+	}
+	
+	public static void removeKunde(Kunde k) {
+		kunder.remove(k);
 	}
 
 }

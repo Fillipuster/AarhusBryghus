@@ -220,5 +220,19 @@ public class Controller {
 		preset.setPris(pris);
 		preset.setPakning(pakning);
 	}
+	
+	// Kunde
+	public static Kunde createKunde(String navn, String addresse, String tlf) {
+		Kunde k = new Kunde(navn, addresse, tlf);
+		Storage.addKunde(k);
+		
+		return k;
+	}
+	
+	public static void updateKunde(Kunde k, String navn, String addresse, String tlf) {
+		k.setNavn(navn);
+		k.setAddresse(addresse);
+		k.setTelefonNr(tlf);
+	}
 
 }

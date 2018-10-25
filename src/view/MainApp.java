@@ -62,6 +62,10 @@ public class MainApp extends Application {
 		Tab tabGaveæskePresets = new Tab("Gaveæske Presets");
 		tabGaveæskePresets.setContent(new GaveaeskePresetTab());
 		tabPane.getTabs().add(tabGaveæskePresets);
+		
+		Tab tabKunder = new Tab("Kunder");
+		tabKunder.setContent(new KundeTab());
+		tabPane.getTabs().add(tabKunder);
 	}
 	
 	private void tabChangeListener(Tab oldValue, Tab newValue) {
