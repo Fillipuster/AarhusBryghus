@@ -27,6 +27,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	private TextField txfPant, txfAntal;
 	private Label lblTotal, lblPant;
 	private UdlejningsSalg salg;
+	private UdlejningsProdukt udlejnigsProdukt;
 	private Button btnAdd, btnDelete, btnAnnuler, btnGennemførSalg;
 	private ComboBox<ProduktKategori> cboxProduktKategori;
 
@@ -109,10 +110,9 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void updateLvwUdlejligeProdukter() {
-		lvwUdlejligeProdukter.getItems().removeAll(lvwUdlejligeProdukter.getItems());
+		lvwUdlejligeProdukter.getItems().setAll(lvwUdlejligeProdukter.getItems());
 		ProduktKategori selected = cboxProduktKategori.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			Controller.get
 		}
 	}
 	
