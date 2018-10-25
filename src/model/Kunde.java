@@ -3,13 +3,14 @@ package model;
 import java.util.ArrayList;
 
 public class Kunde {
-	private String navn, addresse;
-	private int telefonNr;
+	
+	private String navn, addresse, telefonNr;
 	private ArrayList<UdlejningsSalg> udlejningsSalg = new ArrayList<>();
 	
-	public Kunde(String navn, String addresse) {
-		this.navn = navn;
-		this.addresse = addresse;
+	public Kunde(String navn, String addresse, String tlf) {
+		setNavn(navn);
+		setAddresse(addresse);
+		setTelefonNr(tlf);
 	}
 
 	public String getNavn() {
@@ -28,11 +29,11 @@ public class Kunde {
 		this.addresse = addresse;
 	}
 
-	public int getTelefonNr() {
+	public String getTelefonNr() {
 		return telefonNr;
 	}
 
-	public void setTelefonNr(int telefonNr) {
+	public void setTelefonNr(String telefonNr) {
 		this.telefonNr = telefonNr;
 	}
 
@@ -42,6 +43,11 @@ public class Kunde {
 
 	public void setUdlejningssalg(ArrayList<UdlejningsSalg> udlejningssalg) {
 		this.udlejningsSalg = udlejningssalg;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s (%s)", getNavn(), getTelefonNr());
 	}
 	
 }
