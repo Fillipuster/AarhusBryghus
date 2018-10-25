@@ -109,11 +109,22 @@ public class Controller {
 	}
 	
 	// Udlejligt Produkt
-	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukterIProduktKategori(ProduktKategori kategori){
+	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukter() {
 		ArrayList<UdlejningsProdukt> result = new ArrayList<>();
 		for (Produkt p : Storage.getProdukter()) {
 			if (p instanceof UdlejningsProdukt) {
 				result.add((UdlejningsProdukt)p);
+			}
+		}
+		
+		return result;
+	}
+	
+	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukterIProduktKategori(ProduktKategori kategori){
+		ArrayList<UdlejningsProdukt> result = new ArrayList<>();
+		for (UdlejningsProdukt up : getUdlejningsProdukter()) {
+			if (up.getProduktKategori() == kategori) {
+				result.add(up);
 			}
 		}
 		
