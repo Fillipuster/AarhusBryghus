@@ -197,11 +197,17 @@ public class Controller {
 	}
 
 	public static void saveSalg(Salg salg) {
+		if (salg == null) {
+			throw new IllegalArgumentException("Salg må ikke være null");
+		}
 		salg.setDato(LocalDate.now());
 		Storage.addSalg(salg);
 	}
 	
 	public static void setSalgBetalingsMetode(Salg salg, BetalingsMetode betalingsMetode) {
+		if (betalingsMetode == null) {
+			throw new IllegalArgumentException("Betalingsmetode må ikke være null");
+		}
 		salg.setBetalingsMetode(betalingsMetode);
 	}
 	
