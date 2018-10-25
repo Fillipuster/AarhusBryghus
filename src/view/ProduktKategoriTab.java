@@ -45,14 +45,17 @@ public class ProduktKategoriTab extends GridPane implements ReloadableTab {
 		
 		btnOpdaterKategori = new Button("Opdater");
 		btnOpdaterKategori.setOnAction(e -> btnOpdaterKategoriAction());
+		btnOpdaterKategori.setPrefWidth(200d);
 		this.add(btnOpdaterKategori, 1, 2);
 		
 		btnSletKategori = new Button("Slet");
 		btnSletKategori.setOnAction(e -> btnSletKategoriAction());
+		btnSletKategori.setPrefWidth(200d);
 		this.add(btnSletKategori, 1, 3);
 		
 		btnOpretKategori = new Button("Opret");
 		btnOpretKategori.setOnAction(e -> btnOpretKategoriAction());
+		btnOpretKategori.setPrefWidth(200d);
 		this.add(btnOpretKategori, 1, 4);
 		
 		// Column 2
