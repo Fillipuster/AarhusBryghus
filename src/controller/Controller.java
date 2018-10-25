@@ -13,6 +13,7 @@ import model.Produkt;
 import model.ProduktKategori;
 import model.ProduktLinje;
 import model.Salg;
+import model.UdlejningsProdukt;
 import model.UdlejningsSalg;
 import storage.Storage;
 
@@ -105,6 +106,21 @@ public class Controller {
 		}
 		
 		return result;
+	}
+	
+	// Udlejligt Produkt
+	public static UdlejningsProdukt createUdlejningsProdukt(ProduktKategori produktKategori, String navn, String beskrivelse, double pris, double pant) {
+		UdlejningsProdukt up = new UdlejningsProdukt(produktKategori, navn, beskrivelse, pris, pant);
+		Storage.addProdukt(up);
+		return up;
+	}
+	
+	public static void updateUdlejningsProdukt(UdlejningsProdukt udlejningsProdukt, ProduktKategori produktKategori, String navn, String beskrivelse, double pris, double pant) {
+		udlejningsProdukt.setProduktKategori(produktKategori);
+		udlejningsProdukt.setNavn(navn);
+		udlejningsProdukt.setBeskrivelse(beskrivelse);
+		udlejningsProdukt.setPris(pris);
+		udlejningsProdukt.setPant(pant);
 	}
 
 	// ProduktKategori
