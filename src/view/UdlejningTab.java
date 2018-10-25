@@ -32,8 +32,8 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	private ComboBox<ProduktKategori> cboxProduktKategori;
 
 	public void reload() {
-		 updateLvwKunder();
-		 updateCboxProduktKategori();
+		updateLvwKunder();
+		updateCboxProduktKategori();
 	}
 
 	private void setUpPane() {
@@ -55,7 +55,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		// Column 1
 		ViewHelper.label(this, 1, 0, "Produkt kategori:");
 		cboxProduktKategori = new ComboBox<>();
-//		cboxProduktKategori.setOnAction(e -> cboxProduktKategoriAction);
+		 cboxProduktKategori.setOnAction(e -> cboxProduktKategoriAction());
 		this.add(cboxProduktKategori, 1, 1);
 
 		ViewHelper.label(this, 2, 0, "Produkter");
@@ -81,45 +81,45 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		lblTotal = ViewHelper.label(this, 3, 7, "TOTAL: 00,00 kr.");
 		lblTotal.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
 
-		lblPant = ViewHelper.label(this, 3, 8,"PANT: 00,00 kr.");
+		lblPant = ViewHelper.label(this, 3, 8, "PANT: 00,00 kr.");
 		lblPant.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
-
 
 		// Column 4
 		txfAntal = new TextField("Antal");
 		this.add(txfAntal, 4, 5);
 
 		btnAnnuler = new Button("Annuler");
-//		btnAnnuler.setOnAction(e -> btnAnnulerAction);
+		// btnAnnuler.setOnAction(e -> btnAnnulerAction);
 		this.add(btnAnnuler, 4, 7);
 
 		btnGennemførSalg = new Button("Gennemfør Salg");
 		this.add(btnGennemførSalg, 4, 8);
 	}
-	
+
 	private void updateLvwKunder() {
 		lvwKunder.getItems().setAll(Storage.getKunder());
 	}
-	
+
 	private void updateCboxProduktKategori() {
 		cboxProduktKategori.getItems().setAll(Storage.getProduktKategorier());
 	}
-	
+
 	private void updateLvwProduktLinjer() {
 		lvwProduktLinjer.getItems().setAll(salg.getProduktLinjer());
 	}
-	
+
 	private void updateLvwUdlejligeProdukter() {
-		lvwUdlejligeProdukter.getItems().setAll(lvwUdlejligeProdukter.getItems());
 		ProduktKategori selected = cboxProduktKategori.getSelectionModel().getSelectedItem();
 		if (selected != null) {
+			lvwUdlejligeProdukter.getItems().setAll(Controller.getUdlejningsProdukterIProduktKategori(selected));
+
 		}
 	}
-	
+
 	private void cboxProduktKategoriAction() {
-		
+		updateLvwUdlejligeProdukter();
 	}
-	
+
 	private void btnAddAction() {
 		UdlejningsProdukt selected = lvwUdlejligeProdukter.getSelectionModel().getSelectedItem();
 		if (selected != null) {
@@ -127,9 +127,10 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 			updateLvwProduktLinjer();
 		}
 	}
+
 	private void btnDeleteAction() {
-//		ProduktKategori selected = lvw
-				
+		// ProduktKategori selected = lvw
+
 	}
-	
+
 }

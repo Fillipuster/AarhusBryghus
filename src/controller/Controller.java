@@ -30,7 +30,7 @@ public class Controller {
 		if (beskrivelse == null) {
 			throw new IllegalArgumentException("Beskrivelse kan ikke være null");
 		}
-		
+
 		Produkt p = new Produkt(kategori, navn, beskrivelse, klipPris);
 		Storage.addProdukt(p);
 
@@ -51,8 +51,9 @@ public class Controller {
 		if (beskrivelse == null) {
 			throw new IllegalArgumentException("Beskrivelse kan ikke være null");
 		}
-		//TODO LAV FUCKING KLIPPRISEN SÅ DEN FUCKING IKKE KAN VÆRE FUCKING NEGATIV (jonas :D)
-		
+		// TODO LAV FUCKING KLIPPRISEN SÅ DEN FUCKING IKKE KAN VÆRE FUCKING NEGATIV
+		// (jonas :D)
+
 		produkt.setProduktKategori(produktKategori);
 		produkt.setNavn(navn);
 		produkt.setBeskrivelse(beskrivelse);
@@ -72,7 +73,7 @@ public class Controller {
 		if (pris == 0) {
 			throw new IllegalArgumentException("Prisen kan ikke være 0");
 		}
-		
+
 		produkt.setPris(prisKategori, pris);
 	}
 
@@ -80,7 +81,7 @@ public class Controller {
 		if (kategori == null) {
 			throw new IllegalArgumentException("Produktkategori kan ikke være null");
 		}
-		
+
 		ArrayList<Produkt> result = new ArrayList<>();
 
 		for (Produkt p : Storage.getProdukter()) {
@@ -96,7 +97,7 @@ public class Controller {
 		if (prisKategori == null) {
 			throw new IllegalArgumentException("Produktkategori kan ikke være null");
 		}
-		
+
 		ArrayList<Produkt> result = new ArrayList<>();
 
 		for (Produkt p : Storage.getProdukter()) {
@@ -104,40 +105,42 @@ public class Controller {
 				result.add(p);
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	// Udlejligt Produkt
 	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukter() {
 		ArrayList<UdlejningsProdukt> result = new ArrayList<>();
 		for (Produkt p : Storage.getProdukter()) {
 			if (p instanceof UdlejningsProdukt) {
-				result.add((UdlejningsProdukt)p);
+				result.add((UdlejningsProdukt) p);
 			}
 		}
-		
+
 		return result;
 	}
-	
-	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukterIProduktKategori(ProduktKategori kategori){
+
+	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukterIProduktKategori(ProduktKategori kategori) {
 		ArrayList<UdlejningsProdukt> result = new ArrayList<>();
 		for (UdlejningsProdukt up : getUdlejningsProdukter()) {
 			if (up.getProduktKategori() == kategori) {
 				result.add(up);
 			}
 		}
-		
+
 		return result;
 	}
-	
-	public static UdlejningsProdukt createUdlejningsProdukt(ProduktKategori produktKategori, String navn, String beskrivelse, double pris, double pant) {
+
+	public static UdlejningsProdukt createUdlejningsProdukt(ProduktKategori produktKategori, String navn,
+			String beskrivelse, double pris, double pant) {
 		UdlejningsProdukt up = new UdlejningsProdukt(produktKategori, navn, beskrivelse, pris, pant);
 		Storage.addProdukt(up);
 		return up;
 	}
-	
-	public static void updateUdlejningsProdukt(UdlejningsProdukt udlejningsProdukt, ProduktKategori produktKategori, String navn, String beskrivelse, double pris, double pant) {
+
+	public static void updateUdlejningsProdukt(UdlejningsProdukt udlejningsProdukt, ProduktKategori produktKategori,
+			String navn, String beskrivelse, double pris, double pant) {
 		udlejningsProdukt.setProduktKategori(produktKategori);
 		udlejningsProdukt.setNavn(navn);
 		udlejningsProdukt.setBeskrivelse(beskrivelse);
@@ -150,8 +153,7 @@ public class Controller {
 		if (navn == null) {
 			throw new IllegalArgumentException("Navn må ikke være null");
 		}
-		
-		
+
 		ProduktKategori pk = new ProduktKategori(navn);
 		Storage.addProduktKategori(pk);
 
@@ -165,7 +167,7 @@ public class Controller {
 		if (navn == null) {
 			throw new IllegalArgumentException("Navn må ikke være null");
 		}
-		
+
 		kategori.setNavn(navn);
 	}
 
@@ -187,7 +189,7 @@ public class Controller {
 		if (navn == null) {
 			throw new IllegalArgumentException("Navn må ikke være null");
 		}
-		
+
 		kategori.setNavn(navn);
 	}
 
@@ -200,37 +202,38 @@ public class Controller {
 		salg.setDato(LocalDate.now());
 		Storage.addSalg(salg);
 	}
-	
+
 	public static void setSalgBetalingsMetode(Salg salg, BetalingsMetode betalingsMetode) {
 		salg.setBetalingsMetode(betalingsMetode);
 	}
-	
+
 	// UdlejningsSalg
 	public static UdlejningsSalg createUdlejningsSalg() {
 		return new UdlejningsSalg();
 	}
-	public static ArrayList<UdlejningsSalg> getUdlejningsSalg(){
+
+	public static ArrayList<UdlejningsSalg> getUdlejningsSalg() {
 		ArrayList<UdlejningsSalg> result = new ArrayList<>();
 		for (Salg s : Storage.getSalg()) {
 			if (s instanceof UdlejningsSalg) {
 				result.add((UdlejningsSalg) s);
 			}
 		}
-		
+
 		return result;
 	}
-	
-	public static ArrayList<UdlejningsSalg> getKundeUdlejningsSalg(Kunde kunde){
+
+	public static ArrayList<UdlejningsSalg> getKundeUdlejningsSalg(Kunde kunde) {
 		ArrayList<UdlejningsSalg> result = new ArrayList<>();
 		for (UdlejningsSalg us : getUdlejningsSalg()) {
 			if (us.getKunde() == kunde) {
 				result.add(us);
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	public static void tilbageleverUdlejningsSalg(UdlejningsSalg salg) {
 		salg.setRetuneringsDato(LocalDate.now());
 	}
@@ -245,56 +248,57 @@ public class Controller {
 		produktLinje.setAntal(antal);
 		produktLinje.setRabat(rabat);
 	}
-	
+
 	public static void setProduktLinjeAntalUbrugt(ProduktLinje produktLinje, int antalUbrugt) {
 		produktLinje.setAntalUbrugt(antalUbrugt);
 	}
-	
+
 	// BetalingsMetode
 	public static BetalingsMetode createBetalingsMetode(String navn, boolean brugerKlip) {
 		BetalingsMetode bm = new BetalingsMetode(navn, brugerKlip);
 		Storage.addBetalingsMetode(bm);
-		
+
 		return bm;
 	}
-	
+
 	public static void updateBetalingsMetode(BetalingsMetode bm, String navn) {
 		bm.setNavn(navn);
 	}
-	
+
 	// Gaveæsker
 	public static Gaveaeske createGaveaeske() {
 		Gaveaeske g = new Gaveaeske();
-		
+
 		return g;
 	}
-	
+
 	public static void setGaveaeskePakning(Gaveaeske gaveaeske, GaveaeskePakning pakning) {
 		gaveaeske.setPakning(pakning);
 	}
-	
+
 	// GaveæskePreset
 	public static GaveaeskePreset createGaveaeskePreset(int øl, int glas, double pris, GaveaeskePakning pakning) {
 		GaveaeskePreset gp = new GaveaeskePreset(øl, glas, pris, pakning);
 		Storage.addGaveaeskePreset(gp);
 		return gp;
 	}
-	
-	public static void updateGaveaeskePreset(GaveaeskePreset preset, int øl, int glas, double pris, GaveaeskePakning pakning) {
+
+	public static void updateGaveaeskePreset(GaveaeskePreset preset, int øl, int glas, double pris,
+			GaveaeskePakning pakning) {
 		preset.setØl(øl);
 		preset.setGlas(glas);
 		preset.setPris(pris);
 		preset.setPakning(pakning);
 	}
-	
+
 	// Kunde
 	public static Kunde createKunde(String navn, String addresse, String tlf) {
 		Kunde k = new Kunde(navn, addresse, tlf);
 		Storage.addKunde(k);
-		
+
 		return k;
 	}
-	
+
 	public static void updateKunde(Kunde k, String navn, String addresse, String tlf) {
 		k.setNavn(navn);
 		k.setAddresse(addresse);
