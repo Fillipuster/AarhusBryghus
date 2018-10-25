@@ -112,7 +112,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		lvwUdlejligeProdukter.getItems().removeAll(lvwUdlejligeProdukter.getItems());
 		ProduktKategori selected = cboxProduktKategori.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			// TODO: Controller.getUdlejligeProdukterIProduktKategori
+			Controller.get
 		}
 	}
 	

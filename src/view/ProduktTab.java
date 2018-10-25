@@ -1,6 +1,7 @@
 package view;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -12,6 +13,7 @@ import javafx.scene.paint.Color;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
+import model.UdlejningsProdukt;
 import storage.Storage;
 import controller.Controller;
 import javafx.event.EventHandler;
@@ -23,9 +25,10 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	private ListView<ProduktPrisKategoriFormat> lvwPriser;
 	private ComboBox<ProduktKategori> cboxProduktKategorier;
 	private Label lblError;
-	private TextField txfProduktNavn, txfPris, txfKlipPris;
+	private TextField txfProduktNavn, txfPris, txfKlipPris, txfUdlejligPris, txfUdlejligPant; 
 	private TextArea txaProduktBeskrivelse;
 	private Button btnOpdaterProdukt, btnSletProdukt, btnOpretProdukt, btnSætPris;
+	private CheckBox cbUdlejlig;
 	
 	public void reload() {
 		updateCboxProduktKategorier();
@@ -110,10 +113,27 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		btnSætPris.setOnAction(e -> btnSætPris());
 		this.add(btnSætPris, 3, 14);
 		
-		lblError = new Label("");
-		// lblError.setStyle("-fx-text-color: red;");
+		lblError = new Label();
 		lblError.setTextFill(Color.RED);
 		this.add(lblError, 0, 13);
+		
+		// Column 4
+		ViewHelper.label(this, 4, 1, "For udlejningsprodukter:");
+		cbUdlejlig = new CheckBox("Udlejligt Produkt");
+		cbUdlejlig.setOnAction(e -> cbUdlejligAction());
+		this.add(cbUdlejlig, 4, 2);
+		
+		ViewHelper.label(this, 4, 3, "Udlejlig pris:");
+		txfUdlejligPris = new TextField("295.85");
+		txfUdlejligPris.setDisable(true);
+		ViewHelper.textFieldRestrictDouble(txfUdlejligPris);
+		this.add(txfUdlejligPris, 4, 4);
+		
+		ViewHelper.label(this, 4, 5, "Udlejlig pant:");
+		txfUdlejligPant = new TextField("109.50");
+		txfUdlejligPant.setDisable(true);
+		ViewHelper.textFieldRestrictDouble(txfUdlejligPant);
+		this.add(txfUdlejligPant, 4, 6);
 	}
 
 	// Node updater methods;
@@ -142,14 +162,22 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		cboxProduktKategorier.getItems().addAll(Storage.getProduktKategorier());
 	}
 	
-	// Node action methods;
+	// Node action methods;	
 	private void lvwProdukterAction() {
 		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
 		if (selected != null) {
+			if (selected instanceof UdlejningsProdukt) {
+				cbUdlejlig.setSelected(true);
+				txfUdlejligPris.setText(Double.toString(((UdlejningsProdukt)selected).getPris()));
+				txfUdlejligPant.setText(Double.toString(((UdlejningsProdukt)selected).getPant()));
+			} else {
+				cbUdlejlig.setSelected(false);
+				txfKlipPris.setText(Integer.toString(selected.getKlipPris()));
+				updateLvwPriser();
+			}			
 			txfProduktNavn.setText(selected.getNavn());
 			txaProduktBeskrivelse.setText(selected.getBeskrivelse());
-			txfKlipPris.setText(Integer.toString(selected.getKlipPris()));
-			updateLvwPriser();
+			cbUdlejligAction();
 		}
 	}
 	
@@ -165,23 +193,45 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnOpretProduktAction() {
-		try {
-		Controller.createProdukt(cboxProduktKategorier.getValue(), txfProduktNavn.getText(),
-				txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()));
-		updateLvwProdukter();
+		if (cbUdlejlig.isSelected()) {
+			try {
+				Controller.createUdlejningsProdukt(cboxProduktKategorier.getValue(), txfProduktNavn.getText(),
+						txaProduktBeskrivelse.getText(), Double.parseDouble(txfUdlejligPris.getText()),
+						Double.parseDouble(txfUdlejligPant.getText()));
+				updateLvwProdukter();
+			} catch (NumberFormatException e) {
+				setErrorText("Pris og pant skal være tal.");
+			}
+		} else {
+			try {
+			Controller.createProdukt(cboxProduktKategorier.getValue(), txfProduktNavn.getText(),
+					txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()));
+			updateLvwProdukter();
+			}
+			catch(NumberFormatException e) {
+				setErrorText("Klippris skal være et tal.");
+			}
 		}
-		catch(NumberFormatException e) {
-			setErrorText("Klippepris SKAL være et tal");
-		}
-		
 	}
 
 	private void btnOpdaterProduktAction() {
 		if (!ViewHelper.listViewHasSelected(lvwProdukter)) {return;}
 		
-		Controller.updateProdukt(lvwProdukter.getSelectionModel().getSelectedItem(), cboxProduktKategorier.getValue(),
-				txfProduktNavn.getText(), txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()));
-		updateLvwProdukter();
+		if (cbUdlejlig.isSelected() && lvwProdukter.getSelectionModel().getSelectedItem() instanceof UdlejningsProdukt) {
+			try {
+				Controller.updateUdlejningsProdukt((UdlejningsProdukt)lvwProdukter.getSelectionModel().getSelectedItem(), cboxProduktKategorier.getValue(), txfProduktNavn.getText(), txaProduktBeskrivelse.getText(), Double.parseDouble(txfUdlejligPris.getText()), Double.parseDouble(txfUdlejligPant.getText()));
+			} catch (NumberFormatException e) {
+				setErrorText("Pris og pant skal være tal.");
+			}
+		} else {
+			try {
+				Controller.updateProdukt(lvwProdukter.getSelectionModel().getSelectedItem(), cboxProduktKategorier.getValue(),
+						txfProduktNavn.getText(), txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()));
+				updateLvwProdukter();			
+			} catch(NumberFormatException e) {
+				setErrorText("Klippris skal være et tal.");
+			}			
+		}
 	}
 
 	private void btnSletProduktAction() {
@@ -198,6 +248,17 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		Controller.addPrisToProdukt(lvwProdukter.getSelectionModel().getSelectedItem(),
 				lvwPriser.getSelectionModel().getSelectedItem().prisKategori, Double.parseDouble(txfPris.getText()));
 		updateLvwPriser();
+	}
+	
+	private void cbUdlejligAction() {
+		boolean checked = cbUdlejlig.isSelected();
+		lvwPriser.setDisable(checked);
+		txfPris.setDisable(checked);
+		txfKlipPris.setDisable(checked);
+		btnSætPris.setDisable(checked);
+		
+		txfUdlejligPris.setDisable(!checked);
+		txfUdlejligPant.setDisable(!checked);
 	}
 	
 	// Error Label;
