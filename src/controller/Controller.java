@@ -18,6 +18,16 @@ public class Controller {
 
 	// Produkt
 	public static Produkt createProdukt(ProduktKategori kategori, String navn, String beskrivelse, int klipPris) {
+		if (kategori == null) {
+			throw new IllegalArgumentException("Kategori kan ikke være null");
+		}
+		if (navn == null) {
+			throw new IllegalArgumentException("Navn kan ikke være null");
+		}
+		if (beskrivelse == null) {
+			throw new IllegalArgumentException("Beskrivelse kan ikke være null");
+		}
+		
 		Produkt p = new Produkt(kategori, navn, beskrivelse, klipPris);
 		Storage.addProdukt(p);
 
@@ -26,6 +36,20 @@ public class Controller {
 
 	public static void updateProdukt(Produkt produkt, ProduktKategori produktKategori, String navn, String beskrivelse,
 			int klipPris) {
+		if (produkt == null) {
+			throw new IllegalArgumentException("Produkt kan ikke være null");
+		}
+		if (produktKategori == null) {
+			throw new IllegalArgumentException("ProduktKategori kan ikke være null");
+		}
+		if (navn == null) {
+			throw new IllegalArgumentException("Navn kan ikke være null");
+		}
+		if (beskrivelse == null) {
+			throw new IllegalArgumentException("Beskrivelse kan ikke være null");
+		}
+		//TODO LAV FUCKING KLIPPRISEN SÅ DEN FUCKING IKKE KAN VÆRE FUCKING NEGATIV (jonas :D)
+		
 		produkt.setProduktKategori(produktKategori);
 		produkt.setNavn(navn);
 		produkt.setBeskrivelse(beskrivelse);
@@ -33,10 +57,27 @@ public class Controller {
 	}
 
 	public static void addPrisToProdukt(Produkt produkt, PrisKategori prisKategori, double pris) {
+		if (produkt == null) {
+			throw new IllegalArgumentException("Produkt kan ikke være null");
+		}
+		if (prisKategori == null) {
+			throw new IllegalArgumentException("Priskategori kan ikke være null");
+		}
+		if (pris < 0) {
+			throw new IllegalArgumentException("pris kan ikke være negativt");
+		}
+		if (pris == 0) {
+			throw new IllegalArgumentException("Prisen kan ikke være 0");
+		}
+		
 		produkt.setPris(prisKategori, pris);
 	}
 
 	public static ArrayList<Produkt> getProdukterIKategori(ProduktKategori kategori) {
+		if (kategori == null) {
+			throw new IllegalArgumentException("Produktkategori kan ikke være null");
+		}
+		
 		ArrayList<Produkt> result = new ArrayList<>();
 
 		for (Produkt p : Storage.getProdukter()) {
@@ -49,6 +90,10 @@ public class Controller {
 	}
 
 	public static ArrayList<Produkt> getProdukterIPrisKategori(PrisKategori prisKategori) {
+		if (prisKategori == null) {
+			throw new IllegalArgumentException("Produktkategori kan ikke være null");
+		}
+		
 		ArrayList<Produkt> result = new ArrayList<>();
 
 		for (Produkt p : Storage.getProdukter()) {
@@ -62,6 +107,11 @@ public class Controller {
 
 	// ProduktKategori
 	public static ProduktKategori createProduktKategori(String navn) {
+		if (navn == null) {
+			throw new IllegalArgumentException("Navn må ikke være null");
+		}
+		
+		
 		ProduktKategori pk = new ProduktKategori(navn);
 		Storage.addProduktKategori(pk);
 
@@ -69,6 +119,13 @@ public class Controller {
 	}
 
 	public static void updateProduktKategori(ProduktKategori kategori, String navn) {
+		if (kategori == null) {
+			throw new IllegalArgumentException("Kategori må ikke være null");
+		}
+		if (navn == null) {
+			throw new IllegalArgumentException("Navn må ikke være null");
+		}
+		
 		kategori.setNavn(navn);
 	}
 
@@ -81,6 +138,13 @@ public class Controller {
 	}
 
 	public static void updatePrisKategori(PrisKategori kategori, String navn) {
+		if (kategori == null) {
+			throw new IllegalArgumentException("Kategori må ikke være null");
+		}
+		if (navn == null) {
+			throw new IllegalArgumentException("Navn må ikke være null");
+		}
+		
 		kategori.setNavn(navn);
 	}
 

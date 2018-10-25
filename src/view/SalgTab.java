@@ -22,6 +22,7 @@ import storage.Storage;
 import controller.Controller;
 
 public class SalgTab extends GridPane implements ReloadableTab {
+	
 	private ListView<ProduktMedKategoriFormatter> lvwProdukter;
 	private ListView<ProduktLinje> lvwProduktLinjer;
 	private Button btnAdd, btnDelete, btnAnuller, btnKøb, btnOpretGaveæske;
@@ -31,6 +32,13 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	private Label lblTotal, lblError;
 	private ComboBox<BetalingsMetode> cboxBetalingsMetoder;
 
+	@Override
+	public void reload() {
+		updateCboxPrisKategrorier();
+		updateCboxBetalingsMetoder();
+		setErrorText("");
+	}
+	
 	private void setUpPane() {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
@@ -40,7 +48,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				lblErrorTextDelete(null);	
+				clearErrorText();
 			}
 		});
 	}
@@ -94,13 +102,15 @@ public class SalgTab extends GridPane implements ReloadableTab {
 
 		// Column 6
 		ViewHelper.label(this, 6, 2, "Produktmængde");
-		txfAntal = new TextField("ANTAL");
+		txfAntal = new TextField("1");
 		txfAntal.setOnAction(e -> txfAntalAction());
+		ViewHelper.textFieldRestrictInt(txfAntal);
 		this.add(txfAntal, 6, 3, 2, 1);
 
 		ViewHelper.label(this, 6, 4, "Rabat (%)");
-		txfRabat = new TextField("RABAT");
+		txfRabat = new TextField("0.0");
 		txfRabat.setOnAction(e -> txfRabatAction());
+		ViewHelper.textFieldRestrictDouble(txfRabat);
 		this.add(txfRabat, 6, 5, 2, 1);
 
 		ViewHelper.label(this, 6, 8, "Vælg Betalingsmetode:");
@@ -115,6 +125,11 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		btnKøb = new Button("Gennemfør Salg");
 		btnKøb.setOnAction(e -> btnKøbAction());
 		this.add(btnKøb, 7, 12);
+	}
+	
+	private void resetSalg() {
+		salg = Controller.createSalg();
+		updateLvwProduktLinjer(null);
 	}
 
 	// Node updater methods;
@@ -150,9 +165,8 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		cboxBetalingsMetoder.getItems().removeAll(cboxBetalingsMetoder.getItems());
 		cboxBetalingsMetoder.getItems().addAll(Storage.getBetalingsMetoder());
 	}
-
-	// Node action methods;
-	public void cboxPrisKategorierAction() {
+	
+	private void cboxPrisKategorierAction() {
 		resetSalg();
 		updateLvwProdukter();
 	}
@@ -266,30 +280,15 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		}
 	}
 
-	// Helper methods;
-	private void resetSalg() {
-		salg = Controller.createSalg();
-		updateLvwProduktLinjer(null);
-	}
-
+	// Error Label;
 	private void setErrorText(String text) {
 		lblError.setText(text);
 	}
 
-	// Tab reloading;
-	@Override
-	public void reload() {
-		updateCboxPrisKategrorier();
-		updateCboxBetalingsMetoder();
-		setErrorText("");
-	}
-//	Sætter errotext til tom når man klikker med musen
-	private void lblErrorTextDelete(String text) {
-		lblError.setText(" ");
+	private void clearErrorText() {
+		lblError.setText("");
 	}
 
-	
-	
 	// ListView formatting classes;
 	private class ProduktMedKategoriFormatter {
 		public Produkt produkt;

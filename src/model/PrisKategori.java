@@ -1,5 +1,7 @@
 package model;
 
+import com.sun.org.apache.xpath.internal.operations.Equals;
+
 public class PrisKategori {
 
 	private String navn;
@@ -19,6 +21,18 @@ public class PrisKategori {
 	@Override
 	public String toString() {
 		return getNavn();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof PrisKategori) {
+			if (navn.equals(((PrisKategori) obj).getNavn())) {
+				return true;
+			}
+		}
+		
+		
+	return false;
 	}
 	
 }

@@ -27,17 +27,21 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	private TextArea txaProduktBeskrivelse;
 	private Button btnOpdaterProdukt, btnSletProdukt, btnOpretProdukt, btnSætPris;
 	
+	public void reload() {
+		updateCboxProduktKategorier();
+	}
+	
 	private void setUpPane() {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
 		this.setGridLinesVisible(false);
 		
-//		Når musen klikkes slettes fejlbesked
+		// Clear error label on mouse event;
 		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				lblErrorTextDelete(null);
+				clearErrorText();
 			}
 		});
 		
@@ -45,7 +49,6 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 
 	public ProduktTab() {
 		setUpPane();
-
 		
 		// Column 0
 		ViewHelper.label(this, 0, 0, "Vælg produktkategori for at se produkter:");
@@ -71,8 +74,9 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		this.add(txaProduktBeskrivelse, 1, 4, 1, 3);
 		
 		ViewHelper.label(this, 1, 7, "Pris i klippekort klip:");
-		txfKlipPris = new TextField("KLIP PRIS");
+		txfKlipPris = new TextField("1");
 		txfKlipPris .setPrefWidth(200);
+		ViewHelper.textFieldRestrictInt(txfKlipPris);
 		this.add(txfKlipPris, 1, 8);
 
 		btnOpretProdukt = new Button("Opret");
@@ -97,7 +101,8 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		lvwPriser.setOnMouseClicked(e -> lvwPriserAction());
 		this.add(lvwPriser, 2, 2, 2, 11);
 		
-		txfPris = new TextField("PRIS");
+		txfPris = new TextField("59.95");
+		ViewHelper.textFieldRestrictDouble(txfPris);
 		this.add(txfPris, 2, 14);
 
 		// Column 3
@@ -195,17 +200,13 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		updateLvwPriser();
 	}
 	
-	// Tab reloading;
-	public void reload() {
-		updateCboxProduktKategorier();
-	}
-	
+	// Error Label;
 	private void setErrorText(String text) {
 		lblError.setText(text);
 	}
 	
-	private void lblErrorTextDelete(String text) {
-		lblError.setText(" ");
+	private void clearErrorText() {
+		lblError.setText("");
 	}
 
 	// ListView formatting classes;
