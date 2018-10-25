@@ -46,6 +46,7 @@ public class KundeTab extends GridPane implements ReloadableTab {
 		ViewHelper.label(this, 1, 2, "Addresse");
 		txaAddresse = new TextArea("ADDRESSE");
 		txaAddresse.setPrefWidth(250d);
+		txaAddresse.setPrefHeight(75d);
 		this.add(txaAddresse, 1, 3, 1, 2);
 		
 		ViewHelper.label(this, 1, 5, "Telefon Nr:");
