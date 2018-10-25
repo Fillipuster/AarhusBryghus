@@ -39,7 +39,7 @@ public class controllerProduktKategoriTest {
 	}
 
 	// -------------------------------------------------------------------------------------------------------------------------
-	// Test cases for createProduktKategori
+	// Test cases for updateProduktKategori
 
 	@Test
 	public void testUpdateProduktKategoriTC1() {
