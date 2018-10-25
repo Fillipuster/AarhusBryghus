@@ -134,9 +134,8 @@ public class Controller {
 	// PrisKategori
 	public static PrisKategori createPrisKategori(String navn) {
 		if (navn == null) {
-			throw new IllegalArgumentException("Navn kan ikke være null");
+			throw new IllegalArgumentException("Navn må ikke være null");
 		}
-		
 		PrisKategori pk = new PrisKategori(navn);
 		Storage.addPrisKategori(pk);
 
