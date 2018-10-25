@@ -4,14 +4,14 @@ import java.time.LocalDate;
 
 public class UdlejningsSalg extends Salg {
 	
-	private Kunde kunde;
 	private LocalDate retuneringsDato;
+	private Kunde kunde;
 	
 	public UdlejningsSalg(Kunde kunde) {
 		super();
 		setKunde(kunde);
 	}
-
+	
 	public Kunde getKunde() {
 		return kunde;
 	}
@@ -26,6 +26,15 @@ public class UdlejningsSalg extends Salg {
 
 	public void setRetuneringsDato(LocalDate retuneringsDato) {
 		this.retuneringsDato = retuneringsDato;
+	}
+	
+	public double getTotalPant() {
+		double sum = 0d;
+		for (ProduktLinje pl : super.getProduktLinjer()) {
+			sum += pl.getPant();
+		}
+		
+		return sum;
 	}
 	
 }

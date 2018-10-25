@@ -4,8 +4,8 @@ public class ProduktLinje {
 	
 	private Produkt produkt;
 	private PrisKategori prisKategori;
-	
-	private int antal;
+
+	private int antal, antalUbrugt;
 	private double rabat;
 
 	public ProduktLinje(Produkt produkt, PrisKategori prisKategori, int antal, double rabat) {
@@ -31,6 +31,14 @@ public class ProduktLinje {
 		this.antal = antal;
 	}
 
+	public int getAntalUbrugt() {
+		return antalUbrugt;
+	}
+
+	public void setAntalUbrugt(int antalUbrugt) {
+		this.antalUbrugt = antalUbrugt;
+	}
+
 	public Produkt getProdukt() {
 		return produkt;
 	}
@@ -40,13 +48,31 @@ public class ProduktLinje {
 	}
 	
 	public double getPris() {
-		return antal * produkt.getPris(prisKategori) * (1 - rabat);
+		if (produkt instanceof UdlejningsProdukt) {
+			return (antal - antalUbrugt) * ((UdlejningsProdukt) produkt).getPris() * (1 - rabat);
+		} else {
+			return antal * produkt.getPris(prisKategori) * (1 - rabat);
+		}
+	}
+
+	public double getPant() {
+		if (produkt instanceof UdlejningsProdukt) {
+			return ((UdlejningsProdukt) produkt).getPant() * antal;
+		} else {
+			return 0;
+		}
 	}
 
 	public int getKlipPris() {
-		return getProdukt().getKlipPris() * getAntal();
+		if (produkt instanceof UdlejningsProdukt) {
+			return -1;
+		} else {
+			return getProdukt().getKlipPris() * getAntal();
+		}
 	}
-
+	
+	
+	
 	@Override
 	public String toString() {
 		String total = String.format("%.2f", getPris());
@@ -58,5 +84,6 @@ public class ProduktLinje {
 		
 		return produkt.getNavn() + " x " + antal + " af " + produkt.getPris(prisKategori) +  " kr.\n = " + total + " kr. " + rabatStr ;
 	}
+	
 	
 }

@@ -7,7 +7,6 @@ public class Salg {
 	
 	private BetalingsMetode betalingsMetode;
 	private ArrayList<ProduktLinje> produktLinjer = new ArrayList<>();
-	
 	private LocalDate dato;
 
 	public void setDato(LocalDate dato) {
