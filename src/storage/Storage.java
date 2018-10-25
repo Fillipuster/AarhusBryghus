@@ -79,6 +79,10 @@ public class Storage {
 		Controller.createBetalingsMetode("Kontant", false);
 		Controller.createBetalingsMetode("MobilePay", false);
 		Controller.createBetalingsMetode("Klippekort", true);
+		
+		Controller.createKunde("Jonas Præstegaard", "Inger Christensens Gade 24, 8220 Brabrand", "50523263");
+		Controller.createKunde("Frederik Stræde", "Tordenkjoldsgade 21, 8200 Aarhus N", "25465501");
+		Controller.createKunde("Morten Faber", "Pottemagertoften 115, 8270 Højbjerg", "91554511");
 	}
 	
 	// Getters for essential categories;
