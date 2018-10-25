@@ -21,4 +21,15 @@ public class ProduktKategori {
 		return navn;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof ProduktKategori) {
+			if (navn.equals(((ProduktKategori) obj).getNavn())) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 }
