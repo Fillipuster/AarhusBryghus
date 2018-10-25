@@ -82,7 +82,14 @@ public class ProduktLinje {
 			rabatStr = "(" + String.format("%.2f", rabat * 100d) + "%)";
 		}
 		
-		return produkt.getNavn() + " x " + antal + " af " + produkt.getPris(prisKategori) +  " kr.\n = " + total + " kr. " + rabatStr ;
+		String prisStr = "";
+		if (produkt instanceof UdlejningsProdukt) {
+			prisStr = Double.toString(((UdlejningsProdukt)produkt).getPris());
+		} else {
+			prisStr = Double.toString(produkt.getPris(prisKategori));
+		}
+		
+		return String.format("%s x %d af %s kr.%n = %s kr. %s", produkt.getNavn(), antal, prisStr, total, rabatStr);
 	}
 	
 	
