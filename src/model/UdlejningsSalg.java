@@ -7,9 +7,8 @@ public class UdlejningsSalg extends Salg {
 	private LocalDate retuneringsDato;
 	private Kunde kunde;
 	
-	public UdlejningsSalg(Kunde kunde) {
+	public UdlejningsSalg() {
 		super();
-		setKunde(kunde);
 	}
 	
 	public Kunde getKunde() {

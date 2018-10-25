@@ -168,8 +168,8 @@ public class Controller {
 	}
 	
 	// UdlejningsSalg
-	public static UdlejningsSalg createUdlejningsSalg(Kunde kunde) {
-		return new UdlejningsSalg(kunde);
+	public static UdlejningsSalg createUdlejningsSalg() {
+		return new UdlejningsSalg();
 	}
 	
 	public static void tilbageleverUdlejningsSalg(UdlejningsSalg salg) {
