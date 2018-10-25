@@ -21,10 +21,6 @@ public class MainApp extends Application {
 	public void start(Stage stage) throws Exception {
 		mainStage = stage;
 		
-//		for (int i = 0; i < javafx.scene.text.Font.getFamilies().size(); i++) {
-//			System.out.println(javafx.scene.text.Font.getFamilies().get(i));
-//		}
-		
 		stage.setTitle("Aarhus Bryghus Salgssystem");
 		TabPane pane = new TabPane();
 
