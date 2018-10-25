@@ -168,6 +168,28 @@ public class Controller {
 	}
 	
 	// UdlejningsSalg
+	public static ArrayList<UdlejningsSalg> getUdlejningsSalg(){
+		ArrayList<UdlejningsSalg> result = new ArrayList<>();
+		for (Salg s : Storage.getSalg()) {
+			if (s instanceof UdlejningsSalg) {
+				result.add((UdlejningsSalg) s);
+			}
+		}
+		
+		return result;
+	}
+	
+	public static ArrayList<UdlejningsSalg> getKundeUdlejningsSalg(Kunde kunde){
+		ArrayList<UdlejningsSalg> result = new ArrayList<>();
+		for (UdlejningsSalg us : getUdlejningsSalg()) {
+			if (us.getKunde() == kunde) {
+				result.add(us);
+			}
+		}
+		
+		return result;
+	}
+	
 	public static UdlejningsSalg createUdlejningsSalg(Kunde kunde) {
 		return new UdlejningsSalg(kunde);
 	}
@@ -185,6 +207,10 @@ public class Controller {
 	public static void updateProduktLinje(ProduktLinje produktLinje, int antal, double rabat) {
 		produktLinje.setAntal(antal);
 		produktLinje.setRabat(rabat);
+	}
+	
+	public static void setProduktLinjeAntalUbrugt(ProduktLinje produktLinje, int antalUbrugt) {
+		produktLinje.setAntalUbrugt(antalUbrugt);
 	}
 	
 	// BetalingsMetode
