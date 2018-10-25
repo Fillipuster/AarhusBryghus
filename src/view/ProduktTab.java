@@ -174,7 +174,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 				cbUdlejlig.setSelected(false);
 				txfKlipPris.setText(Integer.toString(selected.getKlipPris()));
 				updateLvwPriser();
-			}			
+			}
 			txfProduktNavn.setText(selected.getNavn());
 			txaProduktBeskrivelse.setText(selected.getBeskrivelse());
 			cbUdlejligAction();

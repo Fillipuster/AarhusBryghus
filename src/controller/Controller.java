@@ -109,6 +109,17 @@ public class Controller {
 	}
 	
 	// Udlejligt Produkt
+	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukterIProduktKategori(ProduktKategori kategori){
+		ArrayList<UdlejningsProdukt> result = new ArrayList<>();
+		for (Produkt p : Storage.getProdukter()) {
+			if (p instanceof UdlejningsProdukt) {
+				result.add((UdlejningsProdukt)p);
+			}
+		}
+		
+		return result;
+	}
+	
 	public static UdlejningsProdukt createUdlejningsProdukt(ProduktKategori produktKategori, String navn, String beskrivelse, double pris, double pant) {
 		UdlejningsProdukt up = new UdlejningsProdukt(produktKategori, navn, beskrivelse, pris, pant);
 		Storage.addProdukt(up);
