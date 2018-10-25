@@ -17,7 +17,7 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 	private Button btnOpdaterKategori, btnSletKategori, btnOpretKategori;
 
 	public void reload() {
-		
+		updateLvwKategorier();
 	}
 	
 	private void setUpPane() {
@@ -31,59 +31,61 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 		setUpPane();
 
 		// Column 0
+		ViewHelper.label(this, 0, 0, "Priskategorier");
 		lvwKategorier = new ListView<PrisKategori>();
 		lvwKategorier.setOnMouseClicked(e -> lvwKategorierAction());
-		this.add(lvwKategorier, 0, 0, 1, 5);
+		this.add(lvwKategorier, 0, 1, 1, 5);
 		
 		// Column 1
+		ViewHelper.label(this, 1, 0, "Kategori navn:");
 		txfKategoriNavn = new TextField("KATEGORI NAVN");
-		this.add(txfKategoriNavn, 1, 0);
+		this.add(txfKategoriNavn, 1, 1);
 		
 		btnOpdaterKategori = new Button("Opdater");
 		btnOpdaterKategori.setOnAction(e -> btnOpdaterKategoriAction());
-		this.add(btnOpdaterKategori, 1, 1);
+		this.add(btnOpdaterKategori, 1, 2);
 		
 		btnSletKategori = new Button("Slet");
 		btnSletKategori.setOnAction(e -> btnSletKategoriAction());
-		this.add(btnSletKategori, 1, 2);
+		this.add(btnSletKategori, 1, 3);
 		
 		btnOpretKategori = new Button("Opret");
 		btnOpretKategori.setOnAction(e -> btnOpretKategoriAction());
-		this.add(btnOpretKategori, 1, 3);
+		this.add(btnOpretKategori, 1, 4);
 		
 		updateLvwKategorier();
 	}
 	
-	// ListView updater methods;
+	// Node updater methods;
 	private void updateLvwKategorier() {
 		lvwKategorier.getItems().removeAll(lvwKategorier.getItems());
 		lvwKategorier.getItems().addAll(Storage.getPrisKategorier());
-		disableKategoriNodes(true);
-	}
-	
-	// Node disabling methods;
-	private void disableKategoriNodes(boolean disable) {
-		btnOpdaterKategori.setDisable(disable);
-		btnSletKategori.setDisable(disable);
 	}
 	
 	// Node action methods;
 	private void lvwKategorierAction() {
 		PrisKategori selected = lvwKategorier.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			disableKategoriNodes(false);
 			txfKategoriNavn.setText(selected.getNavn());
 		} else {
-			disableKategoriNodes(true);
+			// TODO: err label?
 		}
 	}
 	
 	private void btnOpdaterKategoriAction() {
+		if (!ViewHelper.listViewHasSelected(lvwKategorier)) {
+			return;
+		}
+		
 		Controller.updatePrisKategori(lvwKategorier.getSelectionModel().getSelectedItem(), txfKategoriNavn.getText());
 		updateLvwKategorier();
 	}
 	
 	private void btnSletKategoriAction() {
+		if (!ViewHelper.listViewHasSelected(lvwKategorier)) {
+			return;
+		}
+		
 		Storage.removePrisKategori(lvwKategorier.getSelectionModel().getSelectedItem());
 		updateLvwKategorier();
 	}

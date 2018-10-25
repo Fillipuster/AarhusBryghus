@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import controller.Controller;
 import model.BetalingsMetode;
+import model.GaveaeskePakning;
+import model.GaveaeskePreset;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
@@ -22,12 +24,22 @@ public class Storage {
 	private static ArrayList<PrisKategori> prisKategorier = new ArrayList<>();
 	private static ArrayList<Salg> salg = new ArrayList<>();
 	private static ArrayList<BetalingsMetode> betalingsMetoder = new ArrayList<>();
+	private static ArrayList<GaveaeskePreset> gaveaeskePresets = new ArrayList<>();
 
 	public static void initializeStorage() {
+		// Kategorier nødvendige for at gaveæsker fungerer;
 		butikPrisKategori = Controller.createPrisKategori("Butik");
 		glasProduktKategori = Controller.createProduktKategori("Glas");
 		flaskeølProduktKategori = Controller.createProduktKategori("Flaske Øl");
 
+		Controller.createGaveaeskePreset(2, 2, 100d, GaveaeskePakning.GAVEÆSKE);
+		Controller.createGaveaeskePreset(4, 0, 130d, GaveaeskePakning.GAVEÆSKE);
+		Controller.createGaveaeskePreset(6, 0, 240d, GaveaeskePakning.TRÆKASSE);
+		Controller.createGaveaeskePreset(6, 2, 250d, GaveaeskePakning.GAVEKURV);
+		Controller.createGaveaeskePreset(6, 6, 290d, GaveaeskePakning.TRÆKASSE);
+		Controller.createGaveaeskePreset(12, 0, 390d, GaveaeskePakning.TRÆKASSE);
+		Controller.createGaveaeskePreset(12, 0, 360d, GaveaeskePakning.PAPKASSE);
+		
 		ProduktKategori fadøl = new ProduktKategori("Fadøl");
 		produktKategorier.add(fadøl);
 
@@ -143,6 +155,19 @@ public class Storage {
 	
 	public static void removeBetalingsMetode(BetalingsMetode bm) {
 		betalingsMetoder.remove(bm);
+	}
+	
+	// GaveaeskePreset
+	public static ArrayList<GaveaeskePreset> getGaveaeskePresets() {
+		return new ArrayList<>(gaveaeskePresets);
+	}
+	
+	public static void addGaveaeskePreset(GaveaeskePreset gp) {
+		gaveaeskePresets.add(gp);
+	}
+	
+	public static void removeGaveaeskePreset(GaveaeskePreset gp) {
+		gaveaeskePresets.remove(gp);
 	}
 
 }

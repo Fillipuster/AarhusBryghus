@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import model.BetalingsMetode;
 import model.Gaveaeske;
+import model.GaveaeskePakning;
+import model.GaveaeskePreset;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
@@ -99,6 +101,7 @@ public class Controller {
 				result.add(p);
 			}
 		}
+		
 		return result;
 	}
 
@@ -147,7 +150,7 @@ public class Controller {
 
 	// Salg
 	public static Salg createSalg() {
-		return new Salg(LocalDate.of(9002, 6, 14));
+		return new Salg(LocalDate.of(1, 1, 1));
 	}
 
 	public static void saveSalg(Salg salg) {
@@ -182,10 +185,28 @@ public class Controller {
 	}
 	
 	// Gaveæsker
-	public static Gaveaeske createGaveæske() {
+	public static Gaveaeske createGaveaeske() {
 		Gaveaeske g = new Gaveaeske();
 		
 		return g;
+	}
+	
+	public static void setGaveaeskePakning(Gaveaeske gaveaeske, GaveaeskePakning pakning) {
+		gaveaeske.setPakning(pakning);
+	}
+	
+	// GaveæskePreset
+	public static GaveaeskePreset createGaveaeskePreset(int øl, int glas, double pris, GaveaeskePakning pakning) {
+		GaveaeskePreset gp = new GaveaeskePreset(øl, glas, pris, pakning);
+		Storage.addGaveaeskePreset(gp);
+		return gp;
+	}
+	
+	public static void updateGaveaeskePreset(GaveaeskePreset preset, int øl, int glas, double pris, GaveaeskePakning pakning) {
+		preset.setØl(øl);
+		preset.setGlas(glas);
+		preset.setPris(pris);
+		preset.setPakning(pakning);
 	}
 
 }

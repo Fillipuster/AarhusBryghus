@@ -196,14 +196,14 @@ VBox > .split-menu-button.last > .arrow-button {
 .button:hover,.menu-button:hover,.toggle-button:hover,
 .font-menu-button:hover,
 .split-menu-button > .label:hover, .split-menu-button > .arrow-button:hover {
-	-fx-background-color: #e6e6e6;
+	-fx-background-color: #52cc66;
 	-fx-border-color: #acacac;
 }
 	/*pressed selected*/
 .color-picker:pressed,.color-picker:selected,
 .number-button:pressed,.number-button:selected,
 .date-picker:pressed > .arrow-button,
-.combo-box:pressed > .arrow-button,.combo-box:selected > .arrow-button,
+.combo-box:selected > .arrow-button,
 .choice-box:pressed > .arrow-button,.choice-box:selected > .arrow-button,
 .font-menu-button:pressed,.font-menu-button:selected,
 .left-arrow-button:pressed,.left-arrow-button:selected,
@@ -211,9 +211,9 @@ VBox > .split-menu-button.last > .arrow-button {
 .button:pressed, .button:selected,.menu-button:pressed,.menu-button:selected
 ,.toggle-button:pressed,.toggle-button:selected,
 .split-menu-button:pressed > .label, .split-menu-button > .arrow-button:pressed {
-	-fx-background-color: #e6e6e6;
+	-fx-background-color: #0a3111;
 	-fx-border-color: #acacac;
-	-fx-effect: innershadow(gaussian, #adadad, 10, 0, 0, 3);
+	-fx-effect: innershadow(gaussian, #135b1f, 10, 0, 0, 3);
 }
 
 	/*primary*/
@@ -426,7 +426,7 @@ VBox > .split-menu-button.last > .arrow-button {
 	-fx-border-width: 0;
 }
 
-.text-field, .text-area {
+.text-field, .text-area, .list-view {
 	-fx-border-color: #135b1f;
 	-fx-background-color: white;
 	-fx-border-radius: 4;
@@ -435,14 +435,16 @@ VBox > .split-menu-button.last > .arrow-button {
 }
 
 .text-field:focused, .text-area:focused {
-	-fx-border-color: #66afe9;
-	-fx-effect: dropshadow(gaussian, #66afe9, 10, 0, 0, 0);
+	-fx-border-color: #135b1f;
+	-fx-effect: dropshadow(gaussian, #135b1f, 10, 0, 0, 0);
 }
 
 .text-area .scroll-pane, .text-area .scroll-pane .content {
 	-fx-background-color: white;
 	-fx-background-radius: 4;
 }
+
+
 
 
 .tab-pane .tab-header-background {
@@ -886,7 +888,7 @@ VBox > .split-menu-button.last > .arrow-button {
 }
 .radio-button > .radio,
 .radio-button:focused > .radio  {
-	-fx-border-color: #56c0e0;
+	-fx-border-color: #135b1f;
 	-fx-border-radius: 1em;
 	-fx-background-radius: 1.0em; /* large value to make sure this remains circular */
 	-fx-padding: 1 2 3 2;
@@ -899,13 +901,13 @@ VBox > .split-menu-button.last > .arrow-button {
 	-fx-background-insets: 3 2 1 2;
 }
 .radio-button:selected > .radio,.radio-button:hover > .radio {
-	-fx-fill-color: #56c0e0;
+	-fx-fill-color: #135b1f;
 }
 .radio-button:pressed > .radio {
-	-fx-background-color: #50c0e2;
+	-fx-background-color: #135b1f;
 }
 .radio-button:selected > .radio > .dot {
-	-fx-background-color: #56c0e0;
+	-fx-background-color: #135b1f;
 }
 
 /*common things*/
@@ -918,7 +920,7 @@ VBox > .split-menu-button.last > .arrow-button {
 
 .check-box:pressed > .box,
 .radio-button:pressed > .radio {
-	-fx-background-color: #50c0e2;
+	-fx-background-color: #52cc66;
 }
 
 /*******************************************************************************
@@ -954,6 +956,9 @@ VBox > .split-menu-button.last > .arrow-button {
 
 .list-view .list-cell:filled:selected, .list-view .list-cell:filled:selected:focused {
 	-fx-background-color: #135b1f;
+	-fx-text-fill: white;
+	
+	
 }
 
 .list-cell:filled:hover {
