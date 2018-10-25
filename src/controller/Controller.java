@@ -7,11 +7,13 @@ import model.BetalingsMetode;
 import model.Gaveaeske;
 import model.GaveaeskePakning;
 import model.GaveaeskePreset;
+import model.Kunde;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
 import model.ProduktLinje;
 import model.Salg;
+import model.UdlejningsSalg;
 import storage.Storage;
 
 public class Controller {
@@ -154,15 +156,25 @@ public class Controller {
 
 	// Salg
 	public static Salg createSalg() {
-		return new Salg(LocalDate.of(1, 1, 1));
+		return new Salg();
 	}
 
 	public static void saveSalg(Salg salg) {
+		salg.setDato(LocalDate.now());
 		Storage.addSalg(salg);
 	}
 	
 	public static void setSalgBetalingsMetode(Salg salg, BetalingsMetode betalingsMetode) {
 		salg.setBetalingsMetode(betalingsMetode);
+	}
+	
+	// UdlejningsSalg
+	public static UdlejningsSalg createUdlejningsSalg(Kunde kunde) {
+		return new UdlejningsSalg(kunde);
+	}
+	
+	public static void tilbageleverUdlejningsSalg(UdlejningsSalg salg) {
+		salg.setRetuneringsDato(LocalDate.now());
 	}
 
 	// ProduktLinje

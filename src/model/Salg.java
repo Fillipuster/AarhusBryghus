@@ -10,10 +10,6 @@ public class Salg {
 	
 	private LocalDate dato;
 
-	public Salg(LocalDate dato) {
-		this.dato = dato;
-	}
-
 	public void setDato(LocalDate dato) {
 		this.dato = dato;
 	}

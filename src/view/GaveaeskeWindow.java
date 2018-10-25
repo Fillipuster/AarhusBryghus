@@ -83,25 +83,25 @@ public class GaveaeskeWindow extends Stage {
 		ViewHelper.label(pane, 3, 0, "Gaveæske pakning/emballage:");
 		
 		rbPakningGaveæske = new RadioButton("Gaveæske");
-		rbPakningGaveæske.setUserData(GaveaeskePakning.GAVEÆSKE);
+		rbPakningGaveæske.setUserData(GaveaeskePakning.Gaveæske);
 		rbPakningGaveæske.setToggleGroup(tggPakning);
 		rbPakningGaveæske.setOnAction(e -> radioBtnAction());
 		pane.add(rbPakningGaveæske, 3, 1);
 		
 		rbPakningTrækasse = new RadioButton("Trækasse");
-		rbPakningTrækasse.setUserData(GaveaeskePakning.TRÆKASSE);
+		rbPakningTrækasse.setUserData(GaveaeskePakning.Trækasse);
 		rbPakningTrækasse.setToggleGroup(tggPakning);
 		rbPakningTrækasse.setOnAction(e -> radioBtnAction());
 		pane.add(rbPakningTrækasse, 3, 2);
 		
 		rbPakningGavekurv = new RadioButton("Gavekurv");
-		rbPakningGavekurv.setUserData(GaveaeskePakning.GAVEKURV);
+		rbPakningGavekurv.setUserData(GaveaeskePakning.Gavekurv);
 		rbPakningGavekurv.setToggleGroup(tggPakning);
 		rbPakningGavekurv.setOnAction(e -> radioBtnAction());
 		pane.add(rbPakningGavekurv, 3, 3);
 		
 		rbPakningPapkasse = new RadioButton("Papkasse");
-		rbPakningPapkasse.setUserData(GaveaeskePakning.PAPKASSE);
+		rbPakningPapkasse.setUserData(GaveaeskePakning.Papkasse);
 		rbPakningPapkasse.setToggleGroup(tggPakning);
 		rbPakningPapkasse.setOnAction(e -> radioBtnAction());
 		pane.add(rbPakningPapkasse, 3, 4);
