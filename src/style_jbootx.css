@@ -478,7 +478,8 @@ VBox > .split-menu-button.last > .arrow-button {
 
 .tab-pane .tab-header-area .tab:selected {
 	-fx-focus-color: transparent;
-	-fx-border-color: #dddddd #dddddd white #dddddd;
+	/*-fx-border-color: #dddddd #dddddd white #dddddd;*/
+	-fx-border-color: #135b1f #135b1f white #135b1f;
 	-fx-background-color: white;
 }
 .tab-pane .tab-header-area .tab:selected .tab-label {

@@ -33,7 +33,7 @@ public class controllerPrisKategoriTest {
 			Controller.createPrisKategori(null);
 			fail();
 		} catch (IllegalArgumentException iae) {
-			assertEquals(iae.getMessage(), "Navn kan ikke være null");
+			assertEquals(iae.getMessage(), "Navn må ikke være null");
 		}
 	}
 
@@ -52,10 +52,12 @@ public class controllerPrisKategoriTest {
 		}
 		
 		
-//		@Test
-//		public void testUpdatePrisKategoriTC2() {
-//			PrisKategori actual = pk1;
-//			PrisKategori pk1 = Controller.updatePrisKategori(pk1, "Butik");
-//		}
-//
+		@Test
+		public void testUpdatePrisKategoriTC2() {
+			PrisKategori actual = pk1;
+			Controller.updatePrisKategori(pk1, "Butik");
+			PrisKategori pk2 = new PrisKategori("Butik");
+			assertEquals(pk2, actual);
+		}
+
 }
