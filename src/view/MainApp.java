@@ -63,6 +63,10 @@ public class MainApp extends Application {
 		tabGaveæskePresets.setContent(new GaveaeskePresetTab());
 		tabPane.getTabs().add(tabGaveæskePresets);
 		
+		Tab tabUdlejning = new Tab("Udlejninger");
+		tabUdlejning.setContent(new UdlejningTab());
+		tabPane.getTabs().add(tabUdlejning);
+
 		Tab tabKunder = new Tab("Kunder");
 		tabKunder.setContent(new KundeTab());
 		tabPane.getTabs().add(tabKunder);
