@@ -32,8 +32,6 @@ public class MainApp extends Application {
 		stage.setHeight(600);
 		stage.setWidth(1000);
 		stage.show();
-
-		pane.setTabMinWidth(150);
 	}
 	
 	public static Stage getMainStage() { return mainStage; }
@@ -63,10 +61,14 @@ public class MainApp extends Application {
 		tabGaveæskePresets.setContent(new GaveaeskePresetTab());
 		tabPane.getTabs().add(tabGaveæskePresets);
 		
-		Tab tabUdlejning = new Tab("Udlejninger");
+		Tab tabUdlejning = new Tab("Udlejning");
 		tabUdlejning.setContent(new UdlejningTab());
 		tabPane.getTabs().add(tabUdlejning);
 
+		Tab tabUdlejninger = new Tab("Udlejninger");
+		tabUdlejninger.setContent(new UdlejningerTab());
+		tabPane.getTabs().add(tabUdlejninger);
+		
 		Tab tabKunder = new Tab("Kunder");
 		tabKunder.setContent(new KundeTab());
 		tabPane.getTabs().add(tabKunder);
