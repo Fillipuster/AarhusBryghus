@@ -7,14 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.Gaveaeske;
-import model.GaveaeskePakning;
+import model.GaveaeskeEmballage;
 import model.Produkt;
 import storage.Storage;
 
@@ -25,8 +23,7 @@ public class GaveaeskeWindow extends Stage {
 	private ListView<Produkt> lvwProdukter, lvwTilføjedeProdukter;
 	private Button btnTilføj, btnFjern, btnAccepter, btnAnnuller;
 	private Label lblPris;
-	private ToggleGroup tggPakning = new ToggleGroup();
-	private RadioButton rbPakningGaveæske, rbPakningTrækasse, rbPakningGavekurv, rbPakningPapkasse;
+	private ListView<GaveaeskeEmballage> lvwEmballage;
 
 	public GaveaeskeWindow(String title, Stage owner) {
 		this.initOwner(owner);
@@ -81,30 +78,9 @@ public class GaveaeskeWindow extends Stage {
 		
 		// Column 3
 		ViewHelper.label(pane, 3, 0, "Gaveæske pakning/emballage:");
-		
-		rbPakningGaveæske = new RadioButton("Gaveæske");
-		rbPakningGaveæske.setUserData(GaveaeskePakning.Gaveæske);
-		rbPakningGaveæske.setToggleGroup(tggPakning);
-		rbPakningGaveæske.setOnAction(e -> radioBtnAction());
-		pane.add(rbPakningGaveæske, 3, 1);
-		
-		rbPakningTrækasse = new RadioButton("Trækasse");
-		rbPakningTrækasse.setUserData(GaveaeskePakning.Trækasse);
-		rbPakningTrækasse.setToggleGroup(tggPakning);
-		rbPakningTrækasse.setOnAction(e -> radioBtnAction());
-		pane.add(rbPakningTrækasse, 3, 2);
-		
-		rbPakningGavekurv = new RadioButton("Gavekurv");
-		rbPakningGavekurv.setUserData(GaveaeskePakning.Gavekurv);
-		rbPakningGavekurv.setToggleGroup(tggPakning);
-		rbPakningGavekurv.setOnAction(e -> radioBtnAction());
-		pane.add(rbPakningGavekurv, 3, 3);
-		
-		rbPakningPapkasse = new RadioButton("Papkasse");
-		rbPakningPapkasse.setUserData(GaveaeskePakning.Papkasse);
-		rbPakningPapkasse.setToggleGroup(tggPakning);
-		rbPakningPapkasse.setOnAction(e -> radioBtnAction());
-		pane.add(rbPakningPapkasse, 3, 4);
+		lvwEmballage = new ListView<GaveaeskeEmballage>();
+		lvwEmballage.setOnMouseClicked(e -> lvwEmballageAction());
+		pane.add(lvwEmballage, 3, 1);
 		
 		btnAccepter = new Button("Accepter");
 		btnAccepter.setOnAction(e -> btnAccepterAction());
@@ -115,10 +91,12 @@ public class GaveaeskeWindow extends Stage {
 		pane.add(btnAnnuller, 3, 6);
 		
 		updateLvwProdukter();
+		updateLvwEmballage();
 		
 		gaveæske = Controller.createGaveaeske();
 	}
 
+	// Node updater methods;
 	private void updateLvwProdukter() {
 		lvwProdukter.getItems().removeAll(lvwProdukter.getItems());
 		ArrayList<Produkt> produkter = new ArrayList<>();
@@ -130,6 +108,11 @@ public class GaveaeskeWindow extends Stage {
 		lvwProdukter.getItems().addAll(produkter);
 	}
 	
+	private void updateLvwEmballage() {
+		lvwEmballage.getItems().setAll(Storage.getGaveaeskeEmballager());
+	}
+	
+	// Node action methods;
 	private void btnTilføjAction() {
 		if (ViewHelper.listViewHasSelected(lvwProdukter)) {
 			Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
@@ -148,13 +131,18 @@ public class GaveaeskeWindow extends Stage {
 		}
 	}
 	
-	private void radioBtnAction() {
-		Controller.setGaveaeskePakning(gaveæske, (GaveaeskePakning) tggPakning.getSelectedToggle().getUserData());
-		updateTotalPris();
+	private void lvwEmballageAction() {
+		GaveaeskeEmballage selected = lvwEmballage.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			Controller.setGaveaeskeEmballage(gaveæske, lvwEmballage.getSelectionModel().getSelectedItem());
+			updateTotalPris();			
+		}
 	}
 	
 	private void btnAccepterAction() {
-		this.close();
+		if (ViewHelper.listViewHasSelected(lvwEmballage)) {
+			this.close();			
+		}
 	}
 	
 	private void updateTotalPris() {
