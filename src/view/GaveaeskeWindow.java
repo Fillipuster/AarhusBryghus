@@ -2,12 +2,15 @@ package view;
 
 import java.util.ArrayList;
 import controller.Controller;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -22,7 +25,7 @@ public class GaveaeskeWindow extends Stage {
 	
 	private ListView<Produkt> lvwProdukter, lvwTilføjedeProdukter;
 	private Button btnTilføj, btnFjern, btnAccepter, btnAnnuller;
-	private Label lblPris;
+	private Label lblPris, lblError;
 	private ListView<GaveaeskeEmballage> lvwEmballage;
 
 	public GaveaeskeWindow(String title, Stage owner) {
@@ -47,6 +50,14 @@ public class GaveaeskeWindow extends Stage {
 		pane.setPadding(new Insets(20));
 		pane.setHgap(20);
 		pane.setVgap(10);
+		
+		// Clear error label on mouse event;
+		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				clearErrorText();
+			}
+		});
 	}
 
 	public void initContent(GridPane pane) {
@@ -57,6 +68,10 @@ public class GaveaeskeWindow extends Stage {
 		
 		lvwProdukter = new ListView<>();
 		pane.add(lvwProdukter, 0, 1, 1, 8);
+		
+		lblError = new Label();
+		lblError.setTextFill(Color.RED);
+		pane.add(lblError, 0, 9);
 
 		// Column 1
 		btnTilføj = new Button("→");
@@ -119,6 +134,8 @@ public class GaveaeskeWindow extends Stage {
 			lvwTilføjedeProdukter.getItems().add(selected);
 			gaveæske.addProdukt(selected);
 			updateTotalPris();
+		} else {
+			setErrorText("Produkt skal vælges.");
 		}
 	}
 
@@ -128,13 +145,15 @@ public class GaveaeskeWindow extends Stage {
 			lvwTilføjedeProdukter.getItems().remove(selected);
 			gaveæske.removeProdukt(selected);
 			updateTotalPris();
+		} else {
+			setErrorText("Produkt skal vælges.");
 		}
 	}
 	
 	private void lvwEmballageAction() {
 		GaveaeskeEmballage selected = lvwEmballage.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			Controller.setGaveaeskeEmballage(gaveæske, lvwEmballage.getSelectionModel().getSelectedItem());
+			Controller.setGaveaeskeEmballage(gaveæske, selected);
 			updateTotalPris();			
 		}
 	}
@@ -142,6 +161,8 @@ public class GaveaeskeWindow extends Stage {
 	private void btnAccepterAction() {
 		if (ViewHelper.listViewHasSelected(lvwEmballage)) {
 			this.close();			
+		} else {
+			setErrorText("Emballage skal vælges.");
 		}
 	}
 	
@@ -152,6 +173,15 @@ public class GaveaeskeWindow extends Stage {
 	private void btnAnnullerAction() {
 		gaveæske = null;
 		this.close();
+	}
+	
+	// Error Label;
+	private void setErrorText(String text) {
+		lblError.setText(text);
+	}
+	
+	private void clearErrorText() {
+		lblError.setText("");
 	}
 	
 	public Gaveaeske getGaveæske() {

@@ -1,12 +1,16 @@
 package view;
 
 import controller.Controller;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import model.Kunde;
 import storage.Storage;
 
@@ -16,6 +20,7 @@ public class KundeTab extends GridPane implements ReloadableTab {
 	private TextField txfNavn, txfTlf;
 	private TextArea txaAddresse;
 	private Button btnOpdater, btnOpret, btnSlet;
+	private Label lblError;
 	
 	@Override
 	public void reload() {
@@ -26,7 +31,14 @@ public class KundeTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
-		this.setGridLinesVisible(false);		
+		
+		// Clear error label on mouse event;
+		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				clearErrorText();
+			}
+		});
 	}
 	
 	public KundeTab() {
@@ -37,6 +49,10 @@ public class KundeTab extends GridPane implements ReloadableTab {
 		lvwKunder = new ListView<Kunde>();
 		lvwKunder.setOnMouseClicked(e -> lvwKunderAction());
 		this.add(lvwKunder, 0, 1, 1, 10);
+		
+		lblError = new Label();
+		lblError.setTextFill(Color.RED);
+		this.add(lblError, 0, 12);
 		
 		// Column 1
 		ViewHelper.label(this, 1, 0, "Navn:");
@@ -92,6 +108,8 @@ public class KundeTab extends GridPane implements ReloadableTab {
 		if (selected != null) {
 			Storage.removeKunde(selected);
 			updateLvwKunder();
+		} else {
+			setErrorText("Kunde skal vælges.");
 		}
 	}
 
@@ -105,7 +123,18 @@ public class KundeTab extends GridPane implements ReloadableTab {
 		if (selected != null) {
 			Controller.updateKunde(selected, txfNavn.getText(), txaAddresse.getText(), txfTlf.getText());
 			updateLvwKunder();
+		} else {
+			setErrorText("Kunde skal vælges.");
 		}
+	}
+	
+	// Error Label;
+	private void setErrorText(String text) {
+		lblError.setText(text);
+	}
+	
+	private void clearErrorText() {
+		lblError.setText("");
 	}
 	
 }
