@@ -27,7 +27,7 @@ public class MainApp extends Application {
 		initTabPane(pane);
 		
 		Scene scene = new Scene(pane);
-		scene.getStylesheets().add("style_jbootx.css");
+		scene.getStylesheets().add("style.css");
 		stage.setScene(scene);
 		stage.setHeight(600);
 		stage.setWidth(1000);
