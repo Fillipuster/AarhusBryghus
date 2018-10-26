@@ -57,7 +57,7 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 		
 		ViewHelper.label(this, 1, 6, "Emballage:");
 		lvwEmballage = new ListView<GaveaeskeEmballage>();
-		this.add(lvwEmballage, 1, 7);
+		this.add(lvwEmballage, 1, 7, 1, 3);
 		
 		// Column 2
 		btnOpdater = new Button("Opdater");
@@ -73,15 +73,15 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 		this.add(btnSlet, 2, 3);
 		
 		txfEmballageNavn = new TextField("EMBALLAGE NAVN");
-		this.add(txfEmballageNavn, 2, 4, 2, 1);
+		this.add(txfEmballageNavn, 2, 7, 2, 1);
 		
 		btnOpretEmballage = new Button("Opret Emballage");
 		btnOpretEmballage.setOnAction(e -> btnOpretEmballageAction());
-		this.add(btnOpretEmballage, 2, 5);
+		this.add(btnOpretEmballage, 2, 8);
 		
 		btnSletEmballage = new Button("Slet Emballage");
 		btnSletEmballage.setOnAction(e -> btnSletEmballageAction());
-		this.add(btnSletEmballage, 3, 5);
+		this.add(btnSletEmballage, 3, 8);
 	}
 
 	// Node updater methods;
@@ -157,6 +157,7 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 		GaveaeskeEmballage selected = lvwEmballage.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			Storage.removeGaveaeskeEmballage(selected);
+			updateLvwEmballage();
 		}
 	}
 	

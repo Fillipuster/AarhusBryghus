@@ -40,7 +40,7 @@ public class GaveaeskeWindow extends Stage {
 
 		Scene scene = new Scene(pane);
 		this.setScene(scene);
-		scene.getStylesheets().add("style_jbootx.css");
+		scene.getStylesheets().add("style.css");
 	}
 
 	private void setUpPane(GridPane pane) {
