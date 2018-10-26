@@ -130,8 +130,21 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	private void btnAddAction() {
 		UdlejningsProdukt selected = lvwUdlejligeProdukter.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			Controller.createProduktLinje(salg, selected, null, 1, 0d);
+			ProduktLinje match = null;
+			for (ProduktLinje pl : salg.getProduktLinjer()) {
+				if (pl.getProdukt() == selected && pl.getRabat() == 0d) {
+					match = pl;
+				}
+			}
+			
+			if (match != null) {
+				Controller.updateProduktLinje(match, match.getAntal() + 1, 0d);
+			} else {
+				Controller.createProduktLinje(salg, selected, null, 1, 0d);
+			}
 			updateLvwProduktLinjer();
+		} else {
+			setErrorText("Produkt skal vælges.");
 		}
 	}
 

@@ -181,7 +181,6 @@ public class SalgTab extends GridPane implements ReloadableTab {
 				}
 			}
 			if (match == null) {
-
 				Controller.createProduktLinje(salg, selected.produkt,
 						cboxPrisKategorier.getSelectionModel().getSelectedItem(), 1, 0d);
 			} else {

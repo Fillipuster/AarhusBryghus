@@ -36,4 +36,14 @@ public class UdlejningsSalg extends Salg {
 		return sum;
 	}
 	
+	public double getTilbageleveringsTotal() {
+		double sum = 0d;
+		for (ProduktLinje pl : super.getProduktLinjer()) {
+			sum += pl.getPris();
+			sum -= pl.getPant();
+		}
+		
+		return sum;
+	}
+	
 }

@@ -9,13 +9,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import model.Kunde;
 import model.ProduktLinje;
-import model.Salg;
 import model.UdlejningsSalg;
 import storage.Storage;
 
 public class UdlejningerTab extends GridPane implements ReloadableTab {
 
-	private UdlejningsSalg salg;
 	private ListView<Kunde> lvwKunder;
 	private ListView<UdlejningsSalg> lvwUdlejningsSalg;
 	private ListView<ProduktLinje> lvwProduktLinje;
@@ -93,10 +91,13 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		}
 	}
 	
-	private void updateLablAction() {
-		lblPant.setText(String.format("PANT: %.2f kr.", salg.getTotalPant()));
-		lblTotal.setText(String.format("TOTAL: %.2f kr.", salg.getTotalPris()));
-		lblAtBetale.setText(String.format("AT BETALE: %.2f kr.", salg.getTotalPris() + salg.getTotalPant()));
+	private void updateLblAction() {
+		UdlejningsSalg selected = lvwUdlejningsSalg.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			lblPant.setText(String.format("PANT: %.2f kr.", selected.getTotalPant()));
+			lblTotal.setText(String.format("TOTAL: %.2f kr.", selected.getTotalPris()));
+			lblAtBetale.setText(String.format("AT BETALE: %.2f kr.", selected.getTilbageleveringsTotal()));			
+		}
 	}
 
 	private void updateLvwProduktLinjer() {
@@ -104,7 +105,7 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		if (selected != null) {
 			lvwProduktLinje.getItems().setAll(selected.getProduktLinjer());
 		}
-		updateLablAction();
+		updateLblAction();
 	}
 	
 	// Node action methods;
@@ -127,7 +128,9 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		ProduktLinje selected = lvwProduktLinje.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			try {
-				Controller.setProduktLinjeAntalUbrugt(selected, Integer.parseInt(txfAntalUbrugt.getText()));				
+				Controller.setProduktLinjeAntalUbrugt(selected, Integer.parseInt(txfAntalUbrugt.getText()));
+				updateLblAction();
+				updateLvwProduktLinjer();
 			} catch (NumberFormatException e) {
 				return;
 			}

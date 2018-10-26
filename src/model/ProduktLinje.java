@@ -93,7 +93,12 @@ public class ProduktLinje {
 			prisStr = Double.toString(produkt.getPris(prisKategori));
 		}
 		
-		return String.format("%s x %d af %s kr.%n = %s kr. %s", produkt.getNavn(), antal, prisStr, total, rabatStr);
+		String ubrugtStr = "";
+		if (antalUbrugt > 0) {
+			ubrugtStr = "(" + antalUbrugt + " ubrugt)";
+		}
+		
+		return String.format("%s x %d af %s kr.%n = %s kr. %s %s", produkt.getNavn(), antal, prisStr, total, rabatStr, ubrugtStr);
 	}
 	
 	
