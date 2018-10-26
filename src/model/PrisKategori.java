@@ -1,7 +1,5 @@
 package model;
 
-import com.sun.org.apache.xpath.internal.operations.Equals;
-
 public class PrisKategori {
 
 	private String navn;
