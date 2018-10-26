@@ -23,11 +23,11 @@ import controller.Controller;
 
 public class SalgTab extends GridPane implements ReloadableTab {
 	
+	private Salg salg;
 	private ListView<ProduktMedKategoriFormatter> lvwProdukter;
 	private ListView<ProduktLinje> lvwProduktLinjer;
 	private Button btnAdd, btnDelete, btnAnuller, btnKøb, btnOpretGaveæske;
 	private ComboBox<PrisKategori> cboxPrisKategorier;
-	private Salg salg;
 	private TextField txfAntal, txfRabat;
 	private Label lblTotal, lblError;
 	private ComboBox<BetalingsMetode> cboxBetalingsMetoder;

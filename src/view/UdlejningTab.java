@@ -1,7 +1,5 @@
 package view;
 
-import com.sun.glass.ui.View;
-
 import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -12,22 +10,20 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import model.Kunde;
-import model.Produkt;
 import model.ProduktKategori;
 import model.ProduktLinje;
-import model.Salg;
 import model.UdlejningsProdukt;
 import model.UdlejningsSalg;
 import storage.Storage;
-import sun.invoke.util.BytecodeName;
 
 public class UdlejningTab extends GridPane implements ReloadableTab {
+	
+	private UdlejningsSalg salg;
 	private ListView<Kunde> lvwKunder;
 	private ListView<UdlejningsProdukt> lvwUdlejligeProdukter;
 	private ListView<ProduktLinje> lvwProduktLinjer;
 	private TextField txfAntal;
 	private Label lblTotal, lblPant, lblError;
-	private UdlejningsSalg salg;
 	private Button btnAdd, btnDelete, btnAnnuler, btnGennemførSalg;
 	private ComboBox<ProduktKategori> cboxProduktKategori;
 
@@ -40,11 +36,11 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
-		this.setGridLinesVisible(false);
 	}
 
 	public UdlejningTab() {
 		setUpPane();
+		
 		salg = Controller.createUdlejningsSalg();
 
 		// Column 0
@@ -101,10 +97,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		this.add(btnGennemførSalg, 4, 8);
 	}
 
-	private void setErrorText(String text) {
-		lblError.setText(text);
-	}
-
+	// Node updater methods;
 	private void updateLvwKunder() {
 		lvwKunder.getItems().setAll(Storage.getKunder());
 	}
@@ -126,6 +119,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		}
 	}
 
+	// Node action methods;
 	private void cboxProduktKategoriAction() {
 		updateLvwUdlejligeProdukter();
 	}
@@ -144,7 +138,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 			Controller.sletUdlejligProduktLinje(salg, selected);
 			updateLvwProduktLinjer();
 		} else {
-			setErrorText("NAAAAAAJ!");
+			setErrorText("Produktlinje skal være valgt.");
 		}
 	}
 
@@ -158,6 +152,11 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 			}
 		}
 		updateLvwProduktLinjer();
+	}
+
+	// Error label related;
+	private void setErrorText(String text) {
+		lblError.setText(text);
 	}
 
 }
