@@ -47,7 +47,6 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 				clearErrorText();
 			}
 		});
-		
 	}
 
 	public ProduktTab() {
@@ -65,6 +64,10 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		lvwProdukter.setOnMouseClicked(e -> lvwProdukterAction());
 		this.add(lvwProdukter, 0, 2, 1, 11);
 
+		lblError = new Label();
+		lblError.setTextFill(Color.RED);
+		this.add(lblError, 0, 13);
+		
 		// Column 1
 		ViewHelper.label(this, 1, 1, "Produktnavn:");
 		txfProduktNavn = new TextField("PRODUKT NAVN");
@@ -112,10 +115,6 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		btnSætPris = new Button("Sæt Pris");
 		btnSætPris.setOnAction(e -> btnSætPris());
 		this.add(btnSætPris, 3, 14);
-		
-		lblError = new Label();
-		lblError.setTextFill(Color.RED);
-		this.add(lblError, 0, 13);
 		
 		// Column 4
 		ViewHelper.label(this, 4, 1, "For udlejningsprodukter:");

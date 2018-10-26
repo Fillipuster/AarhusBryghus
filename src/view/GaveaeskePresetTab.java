@@ -1,9 +1,11 @@
 package view;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import model.GaveaeskeEmballage;
 import model.GaveaeskePreset;
 import storage.Storage;
@@ -16,6 +18,7 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 	private ListView<GaveaeskeEmballage> lvwEmballage;
 	private TextField txfØl, txfGlas, txfPris, txfEmballageNavn;
 	private Button btnOpdater, btnSlet, btnOpret, btnOpretEmballage, btnSletEmballage;
+	private Label lblError;
 
 	public void reload() {
 		updateLvwGaveaeskePresets();
@@ -38,6 +41,10 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 		lvwGaveaeskePresets = new ListView<GaveaeskePreset>();
 		lvwGaveaeskePresets.setOnMouseClicked(e -> lvwGaveaeskePresetsAction());
 		this.add(lvwGaveaeskePresets, 0, 1, 1, 11);
+		
+		lblError = new Label();
+		lblError.setTextFill(Color.RED);
+		this.add(lblError, 0, 13);
 		
 		// Column 1
 		ViewHelper.label(this, 1, 0, "Ølflasker i æske:");
@@ -119,9 +126,11 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 				Controller.updateGaveaeskePreset(selected, Integer.parseInt(txfØl.getText()),
 						Integer.parseInt(txfGlas.getText()), Double.parseDouble(txfPris.getText()), lvwEmballage.getSelectionModel().getSelectedItem());
 			} catch (NumberFormatException e) {
-				// TODO: Set error text.
+				setErrorText("Pris skal være et tal.");
 			}
 			updateLvwGaveaeskePresets();
+		} else {
+			setErrorText("Preset skal vælges.");
 		}
 	}
 	
@@ -132,11 +141,11 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 				Controller.createGaveaeskePreset(Integer.parseInt(txfØl.getText()), Integer.parseInt(txfGlas.getText()),
 						Double.parseDouble(txfPris.getText()), selected);			
 			} catch (NumberFormatException e) {
-				// TODO: Set error text.
+				setErrorText("Pris skal være et tal.");
 			}
 			updateLvwGaveaeskePresets();			
 		} else {
-			// TODO: Set error text.
+			setErrorText("Emballage skal være valgt.");
 		}
 	}
 	
@@ -144,8 +153,10 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 		GaveaeskePreset selected = lvwGaveaeskePresets.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			Storage.removeGaveaeskePreset(selected);
+			updateLvwGaveaeskePresets();
+		} else {
+			setErrorText("Preset skal være valgt.");
 		}
-		updateLvwGaveaeskePresets();
 	}
 	
 	private void btnOpretEmballageAction() {
@@ -158,7 +169,14 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 		if (selected != null) {
 			Storage.removeGaveaeskeEmballage(selected);
 			updateLvwEmballage();
+		} else {
+			setErrorText("Emballage skal vælges.");
 		}
+	}
+	
+	// Error Label;
+	private void setErrorText(String text) {
+		lblError.setText(text);
 	}
 	
 }

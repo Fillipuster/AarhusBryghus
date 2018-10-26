@@ -1,22 +1,26 @@
 package view;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import model.Produkt;
 import model.ProduktKategori;
 import storage.Storage;
 import controller.Controller;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 
 public class ProduktKategoriTab extends GridPane implements ReloadableTab {
 
 	private ListView<ProduktKategori> lvwKategorier;
 	private ListView<Produkt> lvwProdukter;
-	
 	private TextField txfKategoriNavn;
 	private Button btnOpdaterKategori, btnSletKategori, btnOpretKategori;
+	private Label lblError;
 
 	public void reload() {
 		updateLvwKategorier();
@@ -26,7 +30,14 @@ public class ProduktKategoriTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
-		this.setGridLinesVisible(false);
+		
+		// Clear error label on mouse event;
+		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				clearErrorText();
+			}
+		});
 	}
 
 	public ProduktKategoriTab() {
@@ -37,6 +48,10 @@ public class ProduktKategoriTab extends GridPane implements ReloadableTab {
 		lvwKategorier = new ListView<ProduktKategori>();
 		lvwKategorier.setOnMouseClicked(e -> lvwKategorierAction());
 		this.add(lvwKategorier, 0, 1, 1, 5);
+		
+		lblError = new Label();
+		lblError.setTextFill(Color.RED);
+		this.add(lblError, 0, 6);
 		
 		// Column 1
 		ViewHelper.label(this, 1, 0, "Kategori navn:");
@@ -86,30 +101,39 @@ public class ProduktKategoriTab extends GridPane implements ReloadableTab {
 		if (selected != null) {
 			updateLvwProdukter();
 			txfKategoriNavn.setText(selected.getNavn());
-		} else {
-			// TODO: err label?
 		}
 	}
 	
 	private void btnOpdaterKategoriAction() {
-		if (!ViewHelper.listViewHasSelected(lvwKategorier)) {
-			return;
+		if (ViewHelper.listViewHasSelected(lvwKategorier)) {
+			Controller.updateProduktKategori(lvwKategorier.getSelectionModel().getSelectedItem(), txfKategoriNavn.getText());
+			updateLvwKategorier();			
+		} else {
+			setErrorText("Kategori skal vælges.");
 		}
-		
-		Controller.updateProduktKategori(lvwKategorier.getSelectionModel().getSelectedItem(), txfKategoriNavn.getText());
-		updateLvwKategorier();
 	}
 	
 	private void btnSletKategoriAction() {
-		if (!ViewHelper.listViewHasSelected(lvwKategorier));
-		
-		Storage.removeProduktKategori(lvwKategorier.getSelectionModel().getSelectedItem());
-		updateLvwKategorier();
+		if (ViewHelper.listViewHasSelected(lvwKategorier)) {
+			Storage.removeProduktKategori(lvwKategorier.getSelectionModel().getSelectedItem());
+			updateLvwKategorier();			
+		} else {
+			setErrorText("Kategori skal vælges.");
+		}
 	}
 	
 	private void btnOpretKategoriAction() {
 		Controller.createProduktKategori(txfKategoriNavn.getText());
 		updateLvwKategorier();
+	}
+	
+	// Error Label;
+	private void setErrorText(String text) {
+		lblError.setText(text);
+	}
+	
+	private void clearErrorText() {
+		lblError.setText("");
 	}
 	
 }
