@@ -6,7 +6,7 @@ import storage.Storage;
 
 public class Gaveaeske extends Produkt {
 	
-	private GaveaeskePakning pakning;
+	private GaveaeskeEmballage emballage;
 	private ArrayList<Produkt> produkter = new ArrayList<>();
 	
 	public Gaveaeske() {
@@ -33,12 +33,12 @@ public class Gaveaeske extends Produkt {
 		updateNavnBeskrivelse();
 	}
 	
-	public GaveaeskePakning getPakning() {
-		return pakning;
+	public GaveaeskeEmballage getEmballage() {
+		return emballage;
 	}
 	
-	public void setPakning(GaveaeskePakning pakning) {
-		this.pakning = pakning;
+	public void setEmballage(GaveaeskeEmballage emballage) {
+		this.emballage = emballage;
 	}
 	
 	private GaveaeskePreset getPreset() {
@@ -51,7 +51,7 @@ public class Gaveaeske extends Produkt {
 			}
 		}
 
-		return new GaveaeskePreset(flasker, glas, -1d, getPakning());
+		return new GaveaeskePreset(flasker, glas, -1d, getEmballage());
 	}
 	
 	public double getPris() {

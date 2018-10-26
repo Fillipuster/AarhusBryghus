@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import controller.Controller;
 import model.BetalingsMetode;
-import model.GaveaeskePakning;
+import model.GaveaeskeEmballage;
 import model.GaveaeskePreset;
 import model.Kunde;
 import model.PrisKategori;
@@ -27,6 +27,7 @@ public class Storage {
 	private static ArrayList<BetalingsMetode> betalingsMetoder = new ArrayList<>();
 	private static ArrayList<GaveaeskePreset> gaveaeskePresets = new ArrayList<>();
 	private static ArrayList<Kunde> kunder = new ArrayList<>();
+	private static ArrayList<GaveaeskeEmballage> gaveaeskeEmballager = new ArrayList<>();
 
 	public static void initializeStorage() {
 		// Kategorier nødvendige for at gaveæsker fungerer;
@@ -34,14 +35,19 @@ public class Storage {
 		glasProduktKategori = Controller.createProduktKategori("Glas");
 		flaskeølProduktKategori = Controller.createProduktKategori("Flaske Øl");
 		
+		GaveaeskeEmballage ge1 = Controller.createGaveaeskeEmballage("Gaveæske");
+		GaveaeskeEmballage ge2 = Controller.createGaveaeskeEmballage("Trækasse");
+		GaveaeskeEmballage ge3 = Controller.createGaveaeskeEmballage("Gavekurv");
+		GaveaeskeEmballage ge4 = Controller.createGaveaeskeEmballage("Papkasse");
+		
 		// Almen test data (ikke nødvendig);
-		Controller.createGaveaeskePreset(2, 2, 100d, GaveaeskePakning.Gaveæske);
-		Controller.createGaveaeskePreset(4, 0, 130d, GaveaeskePakning.Gaveæske);
-		Controller.createGaveaeskePreset(6, 0, 240d, GaveaeskePakning.Trækasse);
-		Controller.createGaveaeskePreset(6, 2, 250d, GaveaeskePakning.Gavekurv);
-		Controller.createGaveaeskePreset(6, 6, 290d, GaveaeskePakning.Trækasse);
-		Controller.createGaveaeskePreset(12, 0, 390d, GaveaeskePakning.Trækasse);
-		Controller.createGaveaeskePreset(12, 0, 360d, GaveaeskePakning.Papkasse);
+		Controller.createGaveaeskePreset(2, 2, 100d, ge1);
+		Controller.createGaveaeskePreset(4, 0, 130d, ge1);
+		Controller.createGaveaeskePreset(6, 0, 240d, ge2);
+		Controller.createGaveaeskePreset(6, 2, 250d, ge3);
+		Controller.createGaveaeskePreset(6, 6, 290d, ge2);
+		Controller.createGaveaeskePreset(12, 0, 390d, ge2);
+		Controller.createGaveaeskePreset(12, 0, 360d, ge4);
 		
 		ProduktKategori fadøl = Controller.createProduktKategori("Fadøl");
 		ProduktKategori fustager = Controller.createProduktKategori("Fustager");
@@ -175,6 +181,19 @@ public class Storage {
 	
 	public static void removeGaveaeskePreset(GaveaeskePreset gp) {
 		gaveaeskePresets.remove(gp);
+	}
+	
+	// GaveaeskeEmballage
+	public static ArrayList<GaveaeskeEmballage> getGaveaeskeEmballager() {
+		return new ArrayList<>(gaveaeskeEmballager);
+	}
+	
+	public static void addGaveaeskeEmballage(GaveaeskeEmballage ge) {
+		gaveaeskeEmballager.add(ge);
+	}
+	
+	public static void removeGaveaeskeEmballage(GaveaeskeEmballage ge) {
+		gaveaeskeEmballager.remove(ge);
 	}
 
 	// Kunde

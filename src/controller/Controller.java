@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import model.BetalingsMetode;
 import model.Gaveaeske;
-import model.GaveaeskePakning;
+import model.GaveaeskeEmballage;
 import model.GaveaeskePreset;
 import model.Kunde;
 import model.PrisKategori;
@@ -51,8 +51,6 @@ public class Controller {
 		if (beskrivelse == null) {
 			throw new IllegalArgumentException("Beskrivelse kan ikke være null");
 		}
-		// TODO LAV FUCKING KLIPPRISEN SÅ DEN FUCKING IKKE KAN VÆRE FUCKING NEGATIV
-		// (jonas :D)
 
 		produkt.setProduktKategori(produktKategori);
 		produkt.setNavn(navn);
@@ -282,23 +280,30 @@ public class Controller {
 		return g;
 	}
 
-	public static void setGaveaeskePakning(Gaveaeske gaveaeske, GaveaeskePakning pakning) {
-		gaveaeske.setPakning(pakning);
+	public static void setGaveaeskeEmballage(Gaveaeske gaveaeske, GaveaeskeEmballage emballage) {
+		gaveaeske.setEmballage(emballage);
 	}
 
 	// GaveæskePreset
-	public static GaveaeskePreset createGaveaeskePreset(int øl, int glas, double pris, GaveaeskePakning pakning) {
-		GaveaeskePreset gp = new GaveaeskePreset(øl, glas, pris, pakning);
+	public static GaveaeskePreset createGaveaeskePreset(int øl, int glas, double pris, GaveaeskeEmballage emballage) {
+		GaveaeskePreset gp = new GaveaeskePreset(øl, glas, pris, emballage);
 		Storage.addGaveaeskePreset(gp);
 		return gp;
 	}
 
 	public static void updateGaveaeskePreset(GaveaeskePreset preset, int øl, int glas, double pris,
-			GaveaeskePakning pakning) {
+			GaveaeskeEmballage emballage) {
 		preset.setØl(øl);
 		preset.setGlas(glas);
 		preset.setPris(pris);
-		preset.setPakning(pakning);
+		preset.setEmballage(emballage);
+	}
+	
+	// GaveaeskeEmballage
+	public static GaveaeskeEmballage createGaveaeskeEmballage(String navn) {
+		GaveaeskeEmballage ge = new GaveaeskeEmballage(navn);
+		Storage.addGaveaeskeEmballage(ge);
+		return ge;
 	}
 
 	// Kunde

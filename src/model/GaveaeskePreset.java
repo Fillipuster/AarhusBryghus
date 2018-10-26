@@ -4,13 +4,13 @@ public class GaveaeskePreset {
 	
 	private int øl, glas;
 	private double pris;
-	private GaveaeskePakning pakning;
+	private GaveaeskeEmballage emballage;
 	
-	public GaveaeskePreset(int øl, int glas, double pris, GaveaeskePakning pakning) {
+	public GaveaeskePreset(int øl, int glas, double pris, GaveaeskeEmballage emballage) {
 		setØl(øl);
 		setGlas(glas);
 		setPris(pris);
-		setPakning(pakning);
+		setEmballage(emballage);
 	}
 
 	public int getØl() {
@@ -37,19 +37,19 @@ public class GaveaeskePreset {
 		this.pris = pris;
 	}
 	
-	public GaveaeskePakning getPakning() {
-		return pakning;
+	public GaveaeskeEmballage getEmballage() {
+		return emballage;
 	}
 	
-	public void setPakning(GaveaeskePakning pakning) {
-		this.pakning = pakning;
+	public void setEmballage(GaveaeskeEmballage emballage) {
+		this.emballage = emballage;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof GaveaeskePreset) {
 			GaveaeskePreset comp = (GaveaeskePreset) obj;
-			if (getØl() == comp.getØl() && getGlas() == comp.getGlas() && getPakning() == comp.getPakning()) {
+			if (getØl() == comp.getØl() && getGlas() == comp.getGlas() && getEmballage() == comp.getEmballage()) {
 				return true;
 			}
 		}
@@ -59,7 +59,7 @@ public class GaveaeskePreset {
 	
 	@Override
 	public String toString() {
-		return getPakning().toString() + " (" + øl + "/" + glas + ")";
+		return getEmballage() + " (" + øl + "/" + glas + ")";
 	}
 
 }
