@@ -249,6 +249,21 @@ public class Controller {
 	// ProduktLinje
 	public static ProduktLinje createProduktLinje(Salg salg, Produkt produkt, PrisKategori prisKategori, int antal,
 			double rabat) {
+		if (produkt == null) {
+			throw new IllegalArgumentException("Produkt kan ikke være null");
+		}
+		if (prisKategori == null) {
+			throw new IllegalArgumentException("Priskategori kan ikke være null");
+		}
+		if (antal < 0) {
+			throw new IllegalArgumentException("Antal kan ikke være negativt");
+		}
+		if (antal == 0) {
+			throw new IllegalArgumentException("Antal kan ikke være 0");
+		}
+		if (rabat < 0) {
+			throw new IllegalArgumentException("Rabat kan ikke være negativt");
+		}
 		return salg.opretProduktLinje(produkt, prisKategori, antal, rabat);
 	}
 
@@ -263,6 +278,9 @@ public class Controller {
 
 	// BetalingsMetode
 	public static BetalingsMetode createBetalingsMetode(String navn, boolean brugerKlip) {
+		if (navn == null) {
+			throw new IllegalArgumentException("Navn må ikke være null");
+		}
 		BetalingsMetode bm = new BetalingsMetode(navn, brugerKlip);
 		Storage.addBetalingsMetode(bm);
 
@@ -270,6 +288,13 @@ public class Controller {
 	}
 
 	public static void updateBetalingsMetode(BetalingsMetode bm, String navn) {
+		if (navn == null) {
+			throw new IllegalArgumentException("Navn må ikke være null");
+		}
+		
+		if (bm == null) {
+			throw new IllegalArgumentException("Betalingsmetode må ikke være null");
+		}
 		bm.setNavn(navn);
 	}
 
