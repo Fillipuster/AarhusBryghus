@@ -61,12 +61,10 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		// Column 2
 		btnAdd = new Button("→");
 		btnAdd.setOnAction(e -> btnAddAction());
-		btnAdd.setPrefWidth(200d);
 		this.add(btnAdd, 2, 5);
 
 		btnDelete = new Button("←");
 		btnDelete.setOnAction(e -> btnDeleteAction());
-		btnDelete.setPrefWidth(200d);
 		this.add(btnDelete, 2, 6);
 
 		lblError = new Label("");
@@ -78,18 +76,15 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		lvwProduktLinjer = new ListView<>();
 		this.add(lvwProduktLinjer, 3, 2, 1, 5);
 
-		lblTotal = ViewHelper.label(this, 3, 7, "TOTAL: 00,00 kr.");
+		lblTotal = ViewHelper.label(this, 3, 7, "TOTAL: 00.00 kr.\nderaf pant: 00.00 kr.");
 		lblTotal.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
-
-		lblPant = ViewHelper.label(this, 3, 8, "PANT: 00,00 kr.");
-		lblPant.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
 
 		// Column 4
 		txfAntal = new TextField("Antal");
 		txfAntal.setOnAction(e -> txfAntalAction());
 		this.add(txfAntal, 4, 5);
 
-		btnAnnuler = new Button("Annuler");
+		btnAnnuler = new Button("Annuller");
 		// btnAnnuler.setOnAction(e -> btnAnnulerAction);
 		this.add(btnAnnuler, 4, 7);
 
@@ -98,6 +93,10 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	}
 
 	// Node updater methods;
+	private void updateLblTotal() {
+		lblTotal.setText(String.format("TOTAL: %.2f kr.%nderaf pant: %.2f kr.", salg.getTotalPris() + salg.getTotalPant(), salg.getTotalPant()));
+	}
+	
 	private void updateLvwKunder() {
 		lvwKunder.getItems().setAll(Storage.getKunder());
 	}
@@ -108,7 +107,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 
 	private void updateLvwProduktLinjer() {
 		lvwProduktLinjer.getItems().setAll(salg.getProduktLinjer());
-		lblTotal.setText(String.format("TOTAL: %.2f kr. \n%s", salg.getTotalPris()));
+		updateLblTotal();
 	}
 
 	private void updateLvwUdlejligeProdukter() {
