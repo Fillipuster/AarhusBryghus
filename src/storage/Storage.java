@@ -44,6 +44,8 @@ public class Storage {
 		Controller.createGaveaeskePreset(12, 0, 360d, GaveaeskePakning.Papkasse);
 		
 		ProduktKategori fadøl = Controller.createProduktKategori("Fadøl");
+		ProduktKategori fustager = Controller.createProduktKategori("Fustager");
+		ProduktKategori anlæg = Controller.createProduktKategori("Anlæg");
 
 		Produkt p0 = Controller.createProdukt(flaskeølProduktKategori, "Klosterbryg", "Fyldig", 1);
 		Produkt p1 = Controller.createProdukt(flaskeølProduktKategori, "IPA", "Indian Pale Ale\nFrugtig.", 0);
@@ -52,6 +54,12 @@ public class Storage {
 		Produkt p3 = Controller.createProdukt(fadøl, "Pilsner", "Klassiker, fra fad.", 1);
 		Produkt p4 = Controller.createProdukt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad.", 0);
 		Produkt p5 = Controller.createProdukt(fadøl, "Blonde", "Frisk, fra fad.", 3);
+		
+		Produkt p6 = Controller.createUdlejningsProdukt(fustager, "IPA", "25L\nCrisp og frugtig.", 250d, 100d);
+		Produkt p7 = Controller.createUdlejningsProdukt(fustager, "Pilsner", "20L\nStandard, god til pizza.", 200d, 100d);
+		
+		Produkt p8 = Controller.createUdlejningsProdukt(anlæg, "2-hane Anlæg", "Fadølsanlæg med 2 haner.", 500d, 0d);
+		Produkt p9 = Controller.createUdlejningsProdukt(anlæg, "4-hane Anlæg", "Fadølsanlæg med 4 haner.", 800d, 0d);
 		
 		PrisKategori pk1 = Controller.createPrisKategori("Bar");
 		
