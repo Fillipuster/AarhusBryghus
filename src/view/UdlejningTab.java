@@ -23,8 +23,8 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	private ListView<UdlejningsProdukt> lvwUdlejligeProdukter;
 	private ListView<ProduktLinje> lvwProduktLinjer;
 	private TextField txfAntal;
-	private Label lblTotal, lblPant, lblError;
-	private Button btnAdd, btnDelete, btnAnnuler, btnGennemførSalg;
+	private Label lblTotal, lblError;
+	private Button btnAdd, btnDelete, btnAnnuller, btnGennemførSalg;
 	private ComboBox<ProduktKategori> cboxProduktKategori;
 
 	public void reload() {
@@ -44,19 +44,22 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		salg = Controller.createUdlejningsSalg();
 
 		// Column 0
-		ViewHelper.label(this, 0, 1, "Kunder");
+		ViewHelper.label(this, 0, 1, "Vælg kunde:");
 		lvwKunder = new ListView<Kunde>();
-		this.add(lvwKunder, 0, 2, 1, 5);
+		this.add(lvwKunder, 0, 2, 1, 10);
 
+		lblError = new Label();
+		lblError.setTextFill(Color.RED);
+		this.add(lblError, 0, 13);
+		
 		// Column 1
-		ViewHelper.label(this, 1, 0, "Produkt kategori:");
+		ViewHelper.label(this, 1, 0, "Vælg produktkategori:");
 		cboxProduktKategori = new ComboBox<>();
 		cboxProduktKategori.setOnAction(e -> cboxProduktKategoriAction());
 		this.add(cboxProduktKategori, 1, 1);
 
-		ViewHelper.label(this, 2, 0, "Produkter");
 		lvwUdlejligeProdukter = new ListView<UdlejningsProdukt>();
-		this.add(lvwUdlejligeProdukter, 1, 2, 1, 5);
+		this.add(lvwUdlejligeProdukter, 1, 2, 1, 10);
 
 		// Column 2
 		btnAdd = new Button("→");
@@ -67,28 +70,27 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		btnDelete.setOnAction(e -> btnDeleteAction());
 		this.add(btnDelete, 2, 6);
 
-		lblError = new Label("");
-		lblError.setTextFill(Color.RED);
-		this.add(lblError, 2, 7);
-
 		// Column 3
-		ViewHelper.label(this, 3, 0, "Valgte Produkter");
+		ViewHelper.label(this, 3, 1, "Produkter i udlejning:");
 		lvwProduktLinjer = new ListView<>();
-		this.add(lvwProduktLinjer, 3, 2, 1, 5);
+		this.add(lvwProduktLinjer, 3, 2, 1, 10);
 
-		lblTotal = ViewHelper.label(this, 3, 7, "TOTAL: 00.00 kr.\nderaf pant: 00.00 kr.");
+		lblTotal = ViewHelper.label(this, 3, 13, "TOTAL: 00.00 kr.\nderaf pant: 00.00 kr.");
 		lblTotal.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
 
 		// Column 4
-		txfAntal = new TextField("Antal");
+		ViewHelper.label(this, 4, 1, "Produktmængde:");
+		txfAntal = new TextField("1");
 		txfAntal.setOnAction(e -> txfAntalAction());
-		this.add(txfAntal, 4, 5);
+		ViewHelper.textFieldRestrictInt(txfAntal);
+		this.add(txfAntal, 4, 2);
 
-		btnAnnuler = new Button("Annuller");
-		// btnAnnuler.setOnAction(e -> btnAnnulerAction);
-		this.add(btnAnnuler, 4, 7);
+		btnAnnuller = new Button("Annuller");
+		btnAnnuller.setOnAction(e -> btnAnnullerAction());
+		this.add(btnAnnuller, 4, 7);
 
 		btnGennemførSalg = new Button("Gennemfør Salg");
+		btnGennemførSalg.setOnAction(e -> btnGennemførSalgAction());
 		this.add(btnGennemførSalg, 4, 8);
 	}
 
@@ -147,10 +149,20 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 			try {
 				Controller.updateProduktLinje(selected, Integer.parseInt(txfAntal.getText()), 0d);
 			} catch (NumberFormatException nfe) {
-				setErrorText("Produktmængden skal være et heltal");
+				setErrorText("Produktmængden skal være et tal.");
 			}
 		}
 		updateLvwProduktLinjer();
+	}
+	
+	private void btnAnnullerAction() {
+		salg = Controller.createUdlejningsSalg();
+		updateLvwProduktLinjer();
+	}
+	
+	private void btnGennemførSalgAction() {
+		Controller.saveSalg(salg);
+		btnAnnullerAction();
 	}
 
 	// Error label related;
