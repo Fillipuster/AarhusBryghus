@@ -284,6 +284,12 @@ public class Controller {
 	}
 
 	public static void updateProduktLinje(ProduktLinje produktLinje, int antal, double rabat) {
+		if(antal < 0) {
+			throw new IllegalArgumentException("Antal må ikke være negativ");
+		}
+		if(rabat < 0) {
+			throw new IllegalArgumentException("Rabat må ikke være negativ");
+		}
 		produktLinje.setAntal(antal);
 		produktLinje.setRabat(rabat);
 	}

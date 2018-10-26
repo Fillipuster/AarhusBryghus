@@ -8,38 +8,50 @@ import org.junit.Test;
 import controller.Controller;
 import model.Produkt;
 import model.ProduktKategori;
-import sun.net.www.content.text.plain;
 import model.PrisKategori;
 
 public class produktTest {
 
 //	Produkt p;
-	ProduktKategori pk1 = Controller.createProduktKategori("Fadøl");
-	Produkt p1 = Controller.createProdukt(pk1, "Pilsner", "God øl", 1);
 	
-
+	ProduktKategori pk1;
+	Produkt p1;
+	PrisKategori prisK1;
+	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
+		pk1 = new ProduktKategori("Fadøl");
+		p1 = new Produkt(pk1, "Pilsner", "God øl", 1);
+		prisK1 = new PrisKategori("Bar");
 	}
-
+	
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for getProdukt
+	
 	@Test
-	public void TC1_getProduktKategori() {
-		ProduktKategori actual;
-		actual = p1.getProduktKategori();
-		assertEquals("Fadøl", actual);
+	public void testGetProduktTC1() {
+		assertEquals(p1.getProduktKategori(), pk1);
 	}
-
-	@Test(expected = NullPointerException.class)	
-	public void TC1_setPris() {
-		p1.setPris(null, 50);
+	
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for setPris
+	
+	@Test
+	public void testSetPrisTC1() {
+		try {
+		p1.setPris(null, 1);
+		fail();
+		} catch (IllegalArgumentException iea) {
+			assertEquals(iea.getMessage(), "Priskategori må ikke være null");
+		}
 		
 	}
-//
-//	@Test
-//	public void TC3_setPris() {
-//		PrisKategori PK = new PrisKategori("Pilsner");
-//		p.setPris(PK, 50);
-//		assertEquals(PK, p.getPris(PK));
-//	}
-
+	
+	@Test 
+	public void testSetPrisTC2() {
+		p1.setPris(prisK1, 50d);
+		assertEquals(50d, p1.getPris(prisK1), 0.0);
+	}
+	
+	
 }
