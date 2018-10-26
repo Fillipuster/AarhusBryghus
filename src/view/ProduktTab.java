@@ -192,24 +192,29 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnOpretProduktAction() {
-		if (cbUdlejlig.isSelected()) {
-			try {
-				Controller.createUdlejningsProdukt(cboxProduktKategorier.getValue(), txfProduktNavn.getText(),
-						txaProduktBeskrivelse.getText(), Double.parseDouble(txfUdlejligPris.getText()),
-						Double.parseDouble(txfUdlejligPant.getText()));
-				updateLvwProdukter();
-			} catch (NumberFormatException e) {
-				setErrorText("Pris og pant skal være tal.");
-			}
+		ProduktKategori selected = cboxProduktKategorier.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			if (cbUdlejlig.isSelected()) {
+				try {
+					Controller.createUdlejningsProdukt(selected, txfProduktNavn.getText(),
+							txaProduktBeskrivelse.getText(), Double.parseDouble(txfUdlejligPris.getText()),
+							Double.parseDouble(txfUdlejligPant.getText()));
+					updateLvwProdukter();
+				} catch (NumberFormatException e) {
+					setErrorText("Pris og pant skal være tal.");
+				}
+			} else {
+				try {
+					Controller.createProdukt(selected, txfProduktNavn.getText(),
+							txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()));
+					updateLvwProdukter();
+				}
+				catch(NumberFormatException e) {
+					setErrorText("Klippris skal være et tal.");
+				}
+			}			
 		} else {
-			try {
-			Controller.createProdukt(cboxProduktKategorier.getValue(), txfProduktNavn.getText(),
-					txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()));
-			updateLvwProdukter();
-			}
-			catch(NumberFormatException e) {
-				setErrorText("Klippris skal være et tal.");
-			}
+			setErrorText("Kategori skal vælges.");
 		}
 	}
 
