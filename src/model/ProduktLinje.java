@@ -51,15 +51,19 @@ public class ProduktLinje {
 		if (produkt instanceof UdlejningsProdukt) {
 			return (antal - antalUbrugt) * ((UdlejningsProdukt) produkt).getPris() * (1 - rabat);
 		} else {
-			return antal * produkt.getPris(prisKategori) * (1 - rabat);
+			if (prisKategori != null) {
+				return antal * produkt.getPris(prisKategori) * (1 - rabat);				
+			}
 		}
+		
+		return Double.NaN;
 	}
 
 	public double getPant() {
 		if (produkt instanceof UdlejningsProdukt) {
 			return ((UdlejningsProdukt) produkt).getPant() * antal;
 		} else {
-			return 0;
+			return Double.NaN;
 		}
 	}
 
