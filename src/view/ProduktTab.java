@@ -25,21 +25,21 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	private ListView<ProduktPrisKategoriFormat> lvwPriser;
 	private ComboBox<ProduktKategori> cboxProduktKategorier;
 	private Label lblError;
-	private TextField txfProduktNavn, txfPris, txfKlipPris, txfUdlejligPris, txfUdlejligPant; 
+	private TextField txfProduktNavn, txfPris, txfKlipPris, txfUdlejligPris, txfUdlejligPant;
 	private TextArea txaProduktBeskrivelse;
 	private Button btnOpdaterProdukt, btnSletProdukt, btnOpretProdukt, btnSætPris;
 	private CheckBox cbUdlejlig;
-	
+
 	public void reload() {
 		updateCboxProduktKategorier();
 	}
-	
+
 	private void setUpPane() {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
 		this.setGridLinesVisible(false);
-		
+
 		// Clear error label on mouse event;
 		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 			@Override
@@ -51,7 +51,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 
 	public ProduktTab() {
 		setUpPane();
-		
+
 		// Column 0
 		ViewHelper.label(this, 0, 0, "Vælg produktkategori for at se produkter:");
 		cboxProduktKategorier = new ComboBox<>();
@@ -67,7 +67,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		lblError = new Label();
 		lblError.setTextFill(Color.RED);
 		this.add(lblError, 0, 13);
-		
+
 		// Column 1
 		ViewHelper.label(this, 1, 1, "Produktnavn:");
 		txfProduktNavn = new TextField("PRODUKT NAVN");
@@ -78,10 +78,10 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		txaProduktBeskrivelse = new TextArea("BESKRIVELSE");
 		txaProduktBeskrivelse.setPrefWidth(200);
 		this.add(txaProduktBeskrivelse, 1, 4, 1, 3);
-		
+
 		ViewHelper.label(this, 1, 7, "Pris i klippekort klip:");
 		txfKlipPris = new TextField("1");
-		txfKlipPris .setPrefWidth(200);
+		txfKlipPris.setPrefWidth(200);
 		ViewHelper.textFieldRestrictInt(txfKlipPris);
 		this.add(txfKlipPris, 1, 8);
 
@@ -106,7 +106,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		lvwPriser.setStyle("-fx-font-family: monospace;");
 		lvwPriser.setOnMouseClicked(e -> lvwPriserAction());
 		this.add(lvwPriser, 2, 2, 2, 11);
-		
+
 		txfPris = new TextField("59.95");
 		ViewHelper.textFieldRestrictDouble(txfPris);
 		this.add(txfPris, 2, 14);
@@ -115,19 +115,19 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		btnSætPris = new Button("Sæt Pris");
 		btnSætPris.setOnAction(e -> btnSætPris());
 		this.add(btnSætPris, 3, 14);
-		
+
 		// Column 4
 		ViewHelper.label(this, 4, 1, "For udlejningsprodukter:");
 		cbUdlejlig = new CheckBox("Udlejligt Produkt");
 		cbUdlejlig.setOnAction(e -> cbUdlejligAction());
 		this.add(cbUdlejlig, 4, 2);
-		
+
 		ViewHelper.label(this, 4, 3, "Udlejlig pris:");
 		txfUdlejligPris = new TextField("295.85");
 		txfUdlejligPris.setDisable(true);
 		ViewHelper.textFieldRestrictDouble(txfUdlejligPris);
 		this.add(txfUdlejligPris, 4, 4);
-		
+
 		ViewHelper.label(this, 4, 5, "Udlejlig pant:");
 		txfUdlejligPant = new TextField("109.50");
 		txfUdlejligPant.setDisable(true);
@@ -138,37 +138,37 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	// Node updater methods;
 	private void updateLvwProdukter() {
 		lvwProdukter.getItems().removeAll(lvwProdukter.getItems());
-		
+
 		ProduktKategori selected = cboxProduktKategorier.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			lvwProdukter.getItems().addAll(Controller.getProdukterIKategori(selected));
 		}
 	}
-	
+
 	private void updateLvwPriser() {
 		lvwPriser.getItems().removeAll(lvwPriser.getItems());
-		
+
 		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			for (PrisKategori pk : Storage.getPrisKategorier()) {
 				lvwPriser.getItems().add(new ProduktPrisKategoriFormat(selected, pk));
-			}			
+			}
 		}
 	}
-	
+
 	private void updateCboxProduktKategorier() {
 		cboxProduktKategorier.getItems().removeAll(cboxProduktKategorier.getItems());
 		cboxProduktKategorier.getItems().addAll(Storage.getProduktKategorier());
 	}
-	
-	// Node action methods;	
+
+	// Node action methods;
 	private void lvwProdukterAction() {
 		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			if (selected instanceof UdlejningsProdukt) {
 				cbUdlejlig.setSelected(true);
-				txfUdlejligPris.setText(Double.toString(((UdlejningsProdukt)selected).getPris()));
-				txfUdlejligPant.setText(Double.toString(((UdlejningsProdukt)selected).getPant()));
+				txfUdlejligPris.setText(Double.toString(((UdlejningsProdukt) selected).getPris()));
+				txfUdlejligPant.setText(Double.toString(((UdlejningsProdukt) selected).getPant()));
 			} else {
 				cbUdlejlig.setSelected(false);
 				txfKlipPris.setText(Integer.toString(selected.getKlipPris()));
@@ -179,7 +179,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 			cbUdlejligAction();
 		}
 	}
-	
+
 	private void lvwPriserAction() {
 		ProduktPrisKategoriFormat selected = lvwPriser.getSelectionModel().getSelectedItem();
 		if (selected != null) {
@@ -205,71 +205,88 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 				}
 			} else {
 				try {
-					Controller.createProdukt(selected, txfProduktNavn.getText(),
-							txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()));
+					Controller.createProdukt(selected, txfProduktNavn.getText(), txaProduktBeskrivelse.getText(),
+							Integer.parseInt(txfKlipPris.getText()));
 					updateLvwProdukter();
-				}
-				catch(NumberFormatException e) {
+				} catch (NumberFormatException e) {
 					setErrorText("Klippris skal være et tal.");
 				}
-			}			
+			}
 		} else {
 			setErrorText("Kategori skal vælges.");
 		}
 	}
 
 	private void btnOpdaterProduktAction() {
-		if (!ViewHelper.listViewHasSelected(lvwProdukter)) {return;}
-		
-		if (cbUdlejlig.isSelected() && lvwProdukter.getSelectionModel().getSelectedItem() instanceof UdlejningsProdukt) {
-			try {
-				Controller.updateUdlejningsProdukt((UdlejningsProdukt)lvwProdukter.getSelectionModel().getSelectedItem(), cboxProduktKategorier.getValue(), txfProduktNavn.getText(), txaProduktBeskrivelse.getText(), Double.parseDouble(txfUdlejligPris.getText()), Double.parseDouble(txfUdlejligPant.getText()));
-			} catch (NumberFormatException e) {
-				setErrorText("Pris og pant skal være tal.");
+		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
+
+		if (selected != null) {
+			if (cbUdlejlig.isSelected()
+					&& lvwProdukter.getSelectionModel().getSelectedItem() instanceof UdlejningsProdukt) {
+				try {
+					Controller.updateUdlejningsProdukt(
+							(UdlejningsProdukt) selected,
+							cboxProduktKategorier.getValue(), txfProduktNavn.getText(), txaProduktBeskrivelse.getText(),
+							Double.parseDouble(txfUdlejligPris.getText()),
+							Double.parseDouble(txfUdlejligPant.getText()));
+				} catch (NumberFormatException e) {
+					setErrorText("Pris og pant skal være tal.");
+				}
+			} else {
+				try {
+					Controller.updateProdukt(selected,
+							cboxProduktKategorier.getValue(), txfProduktNavn.getText(), txaProduktBeskrivelse.getText(),
+							Integer.parseInt(txfKlipPris.getText()));
+					updateLvwProdukter();
+				} catch (NumberFormatException e) {
+					setErrorText("Klippris skal være et tal.");
+				}
 			}
 		} else {
-			try {
-				Controller.updateProdukt(lvwProdukter.getSelectionModel().getSelectedItem(), cboxProduktKategorier.getValue(),
-						txfProduktNavn.getText(), txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()));
-				updateLvwProdukter();			
-			} catch(NumberFormatException e) {
-				setErrorText("Klippris skal være et tal.");
-			}			
+			setErrorText("Produkt skal være valgt.");
 		}
 	}
 
 	private void btnSletProduktAction() {
-		if (!ViewHelper.listViewHasSelected(lvwProdukter)) {return;}
-		
+		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
+		if (selected == null) {
+			setErrorText("Produkt skal være valgt");
+			return;
+		}
+
 		Storage.removeProdukt(lvwProdukter.getSelectionModel().getSelectedItem());
 		updateLvwProdukter();
 	}
-	
+
 	private void btnSætPris() {
-		if (!ViewHelper.listViewHasSelected(lvwProdukter)) {return;}
-		if (!ViewHelper.listViewHasSelected(lvwPriser)) {return;}
-		
+		if (!ViewHelper.listViewHasSelected(lvwProdukter)) {
+			return;
+		}
+		if (!ViewHelper.listViewHasSelected(lvwPriser)) {
+			return;
+		}
+
 		Controller.addPrisToProdukt(lvwProdukter.getSelectionModel().getSelectedItem(),
 				lvwPriser.getSelectionModel().getSelectedItem().prisKategori, Double.parseDouble(txfPris.getText()));
 		updateLvwPriser();
 	}
-	
+
 	private void cbUdlejligAction() {
 		boolean checked = cbUdlejlig.isSelected();
 		lvwPriser.setDisable(checked);
 		txfPris.setDisable(checked);
 		txfKlipPris.setDisable(checked);
 		btnSætPris.setDisable(checked);
-		
+
 		txfUdlejligPris.setDisable(!checked);
 		txfUdlejligPant.setDisable(!checked);
 	}
-	
+
 	// Error Label;
 	private void setErrorText(String text) {
 		lblError.setText(text);
 	}
-	
+
 	private void clearErrorText() {
 		lblError.setText("");
 	}
@@ -278,16 +295,16 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	private class ProduktPrisKategoriFormat {
 		public Produkt produkt;
 		public PrisKategori prisKategori;
-		
+
 		public ProduktPrisKategoriFormat(Produkt produkt, PrisKategori prisKategori) {
 			this.produkt = produkt;
 			this.prisKategori = prisKategori;
 		}
-		
+
 		@Override
 		public String toString() {
 			return String.format("%-10s : %10.2f", prisKategori.getNavn(), produkt.getPris(prisKategori));
 		}
 	}
-	
+
 }
