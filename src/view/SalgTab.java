@@ -259,7 +259,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	private void btnKøbAction() {
 		BetalingsMetode betalingsMetode = cboxBetalingsMetoder.getValue();
 		if (betalingsMetode != null) {
-			if (salg.getTotalKlipPris() < 0 && betalingsMetode.isBrugerKlip()) {
+			if (salg.getTotalKlipPris() <= 0 && betalingsMetode.isBrugerKlip()) {
 				setErrorText("Produkt kan ikke betales med klippekort.");
 				return;
 			}

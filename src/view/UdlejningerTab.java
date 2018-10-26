@@ -3,21 +3,25 @@ package view;
 import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import model.Kunde;
 import model.ProduktLinje;
+import model.Salg;
 import model.UdlejningsSalg;
 import storage.Storage;
 
 public class UdlejningerTab extends GridPane implements ReloadableTab {
 
+	private UdlejningsSalg salg;
 	private ListView<Kunde> lvwKunder;
 	private ListView<UdlejningsSalg> lvwUdlejningsSalg;
 	private ListView<ProduktLinje> lvwProduktLinje;
 	private TextField txfAntalUbrugt;
-	private Button btnSætUbrugt;
+	private Button btnSætUbrugt, btnTilbagelever;
+	private Label lblTotal, lblPant, lblAtBetale;
 	
 	@Override
 	public void reload() {
@@ -61,6 +65,20 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		btnSætUbrugt = new Button("Sæt Ubrugt");
 		btnSætUbrugt.setOnAction(e -> txfAntalUbrugtAction());
 		this.add(btnSætUbrugt, 3, 2);
+		
+		lblPant = ViewHelper.label(this, 3, 4, "PANT TILBAGE: 00.00 kr.");
+		lblPant.setStyle("-fx-font-size: 12;\n-fx-font-family: monospace;");
+
+		lblTotal = ViewHelper.label(this, 3, 5, "TOTAL: 0.00 kr.");
+		lblTotal.setStyle("-fx-font-size: 12;\n-fx-font-family: monospace;");
+
+		lblAtBetale = ViewHelper.label(this, 3, 6, "TOTAL BETALING: 0.00 kr");
+		lblAtBetale.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
+
+		
+		btnTilbagelever = new Button("Tilbagelever varer");
+		btnTilbagelever.setOnAction(e -> btnTilbageleverAction());
+		this.add(btnTilbagelever, 3, 8);
 	}
 	
 	// Node updater methods;
@@ -71,15 +89,22 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 	private void updateLvwUdlejningsSalg() {
 		Kunde selected = lvwKunder.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			lvwUdlejningsSalg.getItems().setAll(Controller.getKundeUdlejningsSalg(selected));	
+			lvwUdlejningsSalg.getItems().setAll(Controller.getKundeAktiveUdlejningsSalg(selected));	
 		}
 	}
 	
+	private void updateLablAction() {
+		lblPant.setText(String.format("PANT: %.2f kr.", salg.getTotalPant()));
+		lblTotal.setText(String.format("TOTAL: %.2f kr.", salg.getTotalPris()));
+		lblAtBetale.setText(String.format("AT BETALE: %.2f kr.", salg.getTotalPris() + salg.getTotalPant()));
+	}
+
 	private void updateLvwProduktLinjer() {
 		UdlejningsSalg selected = lvwUdlejningsSalg.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			lvwProduktLinje.getItems().setAll(selected.getProduktLinjer());
 		}
+		updateLablAction();
 	}
 	
 	// Node action methods;
@@ -106,6 +131,16 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 			} catch (NumberFormatException e) {
 				return;
 			}
+		}
+	}
+	
+	private void btnTilbageleverAction() {
+		UdlejningsSalg selected = lvwUdlejningsSalg.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			Controller.saveUdlejningsSalg(selected);
+			updateLvwUdlejningsSalg();
+			updateLvwProduktLinjer();
+			lvwProduktLinje.getItems().clear();
 		}
 	}
 	

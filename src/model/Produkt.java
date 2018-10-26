@@ -46,7 +46,7 @@ public class Produkt {
 		return klipPris;
 	}
 
-	public void setKlipPris(int klipPris) {
+	public void setKlipPris(int klipPris) {		
 		this.klipPris = klipPris;
 	}
 

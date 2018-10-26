@@ -51,8 +51,8 @@ public class Salg {
 	public int getTotalKlipPris() {
 		int total = 0;
 		for (ProduktLinje pl : produktLinjer) {
-			if (pl.getKlipPris() < 0) {
-				return -1;
+			if (pl.getKlipPris() <= 0) {
+				return 0;
 			}
 			
 			total += pl.getKlipPris();

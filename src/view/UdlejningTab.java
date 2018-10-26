@@ -122,7 +122,9 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 
 	// Node action methods;
 	private void cboxProduktKategoriAction() {
-		updateLvwUdlejligeProdukter();
+		if (cboxProduktKategori.getSelectionModel().getSelectedItem() != null) {
+			updateLvwUdlejligeProdukter();
+		}
 	}
 
 	private void btnAddAction() {
@@ -161,8 +163,16 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void btnGennemførSalgAction() {
-		Controller.saveSalg(salg);
-		btnAnnullerAction();
+		Kunde selected = lvwKunder.getSelectionModel().getSelectedItem();
+		
+		if (selected != null && !lvwProduktLinjer.getItems().isEmpty()) {
+			Controller.saveSalg(salg);
+			Controller.setUdlejningsSalgKunde(salg, selected);
+			btnAnnullerAction();
+			lblError.setText("");
+		} else {
+			lblError.setText("Vælg venligst en kunde og et eller flere \nprodukter for at gennemføre salget");
+		}
 	}
 
 	// Error label related;

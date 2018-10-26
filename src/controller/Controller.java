@@ -215,6 +215,10 @@ public class Controller {
 	public static UdlejningsSalg createUdlejningsSalg() {
 		return new UdlejningsSalg();
 	}
+	
+	public static void saveUdlejningsSalg(UdlejningsSalg salg) {
+		salg.setRetuneringsDato(LocalDate.now());
+	}
 
 	public static ArrayList<UdlejningsSalg> getUdlejningsSalg() {
 		ArrayList<UdlejningsSalg> result = new ArrayList<>();
@@ -237,7 +241,22 @@ public class Controller {
 
 		return result;
 	}
+	
+	public static ArrayList<UdlejningsSalg> getKundeAktiveUdlejningsSalg(Kunde kunde) {
+		ArrayList<UdlejningsSalg> result = new ArrayList<>();
+		for (UdlejningsSalg us : getKundeUdlejningsSalg(kunde)) {
+			if (us.getRetuneringsDato() == null) {
+				result.add(us);
+			}
+		}
+		
+		return result;
+	}
 
+	public static void setUdlejningsSalgKunde(UdlejningsSalg udlejningsSalg, Kunde kunde) {
+		udlejningsSalg.setKunde(kunde);
+	}
+	
 	public static void tilbageleverUdlejningsSalg(UdlejningsSalg salg) {
 		salg.setRetuneringsDato(LocalDate.now());
 	}
@@ -251,9 +270,6 @@ public class Controller {
 			double rabat) {
 		if (produkt == null) {
 			throw new IllegalArgumentException("Produkt kan ikke være null");
-		}
-		if (prisKategori == null) {
-			throw new IllegalArgumentException("Priskategori kan ikke være null");
 		}
 		if (antal < 0) {
 			throw new IllegalArgumentException("Antal kan ikke være negativt");

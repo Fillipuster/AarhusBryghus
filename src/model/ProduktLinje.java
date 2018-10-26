@@ -69,7 +69,7 @@ public class ProduktLinje {
 
 	public int getKlipPris() {
 		if (produkt instanceof UdlejningsProdukt) {
-			return -1;
+			return 0;
 		} else {
 			return getProdukt().getKlipPris() * getAntal();
 		}
