@@ -149,7 +149,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 	}
 
 	private void updateLvwProduktLinjer(ProduktLinje newSelection) {
-		lvwProduktLinjer.getItems().setAll(lvwProduktLinjer.getItems());
+		lvwProduktLinjer.getItems().setAll(salg.getProduktLinjer());
 
 		if (newSelection != null && lvwProduktLinjer.getItems().contains(newSelection)) {
 			lvwProduktLinjer.getSelectionModel().select(newSelection);
