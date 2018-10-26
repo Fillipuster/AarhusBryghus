@@ -46,4 +46,9 @@ public class UdlejningsSalg extends Salg {
 		return sum;
 	}
 	
+	@Override
+	public String toString() {
+		return super.getDato().toString();
+	}
+	
 }
