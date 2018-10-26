@@ -33,7 +33,8 @@ public class Storage {
 		butikPrisKategori = Controller.createPrisKategori("Butik");
 		glasProduktKategori = Controller.createProduktKategori("Glas");
 		flaskeølProduktKategori = Controller.createProduktKategori("Flaske Øl");
-
+		
+		// Almen test data (ikke nødvendig);
 		Controller.createGaveaeskePreset(2, 2, 100d, GaveaeskePakning.Gaveæske);
 		Controller.createGaveaeskePreset(4, 0, 130d, GaveaeskePakning.Gaveæske);
 		Controller.createGaveaeskePreset(6, 0, 240d, GaveaeskePakning.Trækasse);
@@ -42,25 +43,17 @@ public class Storage {
 		Controller.createGaveaeskePreset(12, 0, 390d, GaveaeskePakning.Trækasse);
 		Controller.createGaveaeskePreset(12, 0, 360d, GaveaeskePakning.Papkasse);
 		
-		ProduktKategori fadøl = new ProduktKategori("Fadøl");
-		produktKategorier.add(fadøl);
+		ProduktKategori fadøl = Controller.createProduktKategori("Fadøl");
 
-		Produkt p0 = new Produkt(flaskeølProduktKategori, "Klosterbryg", "Fyldig", 1);
-		produkter.add(p0);
-		Produkt p1 = new Produkt(flaskeølProduktKategori, "IPA", "Indian Pale Ale\nFrugtig", -1);
-		produkter.add(p1);
-		Produkt p2 = new Produkt(flaskeølProduktKategori, "Blonde", "Frisk", 2);
-		produkter.add(p2);
+		Produkt p0 = Controller.createProdukt(flaskeølProduktKategori, "Klosterbryg", "Fyldig", 1);
+		Produkt p1 = Controller.createProdukt(flaskeølProduktKategori, "IPA", "Indian Pale Ale\nFrugtig.", 0);
+		Produkt p2 = Controller.createProdukt(flaskeølProduktKategori, "Blonde", "Frisk", 2);
 
-		Produkt p3 = new Produkt(fadøl, "Pilsner", "Klassiker, fra fad.", 1);
-		produkter.add(p3);
-		Produkt p4 = new Produkt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad.", -1);
-		produkter.add(p4);
-		Produkt p5 = new Produkt(fadøl, "Blonde", "Frisk, fra fad.", 3);
-		produkter.add(p5);
+		Produkt p3 = Controller.createProdukt(fadøl, "Pilsner", "Klassiker, fra fad.", 1);
+		Produkt p4 = Controller.createProdukt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad.", 0);
+		Produkt p5 = Controller.createProdukt(fadøl, "Blonde", "Frisk, fra fad.", 3);
 		
-		PrisKategori pk1 = new PrisKategori("Bar");
-		prisKategorier.add(pk1);
+		PrisKategori pk1 = Controller.createPrisKategori("Bar");
 		
 		Controller.addPrisToProdukt(p0, butikPrisKategori, 1);
 		Controller.addPrisToProdukt(p0, pk1, 2);
