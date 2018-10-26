@@ -65,6 +65,7 @@ public class controllerProduktKategoriTest {
 	public void testUpdateProduktKategoriTC3() {
 		try {
 			Controller.updateProduktKategori(pk1, null);
+			fail();
 		} catch (IllegalArgumentException iae) {
 			assertEquals(iae.getMessage(), "Navn må ikke være null");
 		}
