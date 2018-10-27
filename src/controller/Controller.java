@@ -11,6 +11,7 @@ import model.Kunde;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
+import model.ProduktKategoriType;
 import model.ProduktLinje;
 import model.Salg;
 import model.UdlejningsProdukt;
@@ -147,18 +148,29 @@ public class Controller {
 	}
 
 	// ProduktKategori
-	public static ProduktKategori createProduktKategori(String navn) {
+	public static ArrayList<ProduktKategori> getProduktKategorierAfType(ProduktKategoriType type) {
+		ArrayList<ProduktKategori> result = new ArrayList<>();
+		for (ProduktKategori pk : Storage.getProduktKategorier()) {
+			if (pk.getType().equals(type)) {
+				result.add(pk);
+			}
+		}
+		
+		return result;
+	}
+
+	public static ProduktKategori createProduktKategori(String navn, ProduktKategoriType type) {
 		if (navn == null) {
 			throw new IllegalArgumentException("Navn må ikke være null");
 		}
 
-		ProduktKategori pk = new ProduktKategori(navn);
+		ProduktKategori pk = new ProduktKategori(navn, type);
 		Storage.addProduktKategori(pk);
 
 		return pk;
 	}
 
-	public static void updateProduktKategori(ProduktKategori kategori, String navn) {
+	public static void updateProduktKategori(ProduktKategori kategori, String navn, ProduktKategoriType type) {
 		if (kategori == null) {
 			throw new IllegalArgumentException("Kategori må ikke være null");
 		}
@@ -167,6 +179,7 @@ public class Controller {
 		}
 
 		kategori.setNavn(navn);
+		kategori.setType(type);
 	}
 
 	// PrisKategori

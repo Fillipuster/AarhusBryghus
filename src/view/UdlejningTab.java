@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import model.Kunde;
 import model.ProduktKategori;
+import model.ProduktKategoriType;
 import model.ProduktLinje;
 import model.UdlejningsProdukt;
 import model.UdlejningsSalg;
@@ -104,7 +105,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	}
 
 	private void updateCboxProduktKategori() {
-		cboxProduktKategori.getItems().setAll(Storage.getProduktKategorier());
+		cboxProduktKategori.getItems().setAll(Controller.getProduktKategorierAfType(ProduktKategoriType.UDLEJNING));
 	}
 
 	private void updateLvwProduktLinjer() {

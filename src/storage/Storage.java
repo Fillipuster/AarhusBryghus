@@ -10,6 +10,7 @@ import model.Kunde;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
+import model.ProduktKategoriType;
 import model.Salg;
 
 public class Storage {
@@ -32,8 +33,8 @@ public class Storage {
 	public static void initializeStorage() {
 		// Kategorier nødvendige for at gaveæsker fungerer;
 		butikPrisKategori = Controller.createPrisKategori("Butik");
-		glasProduktKategori = Controller.createProduktKategori("Glas");
-		flaskeølProduktKategori = Controller.createProduktKategori("Flaske Øl");
+		glasProduktKategori = Controller.createProduktKategori("Glas", ProduktKategoriType.STANDARD);
+		flaskeølProduktKategori = Controller.createProduktKategori("Flaske Øl", ProduktKategoriType.STANDARD);
 		
 		GaveaeskeEmballage ge1 = Controller.createGaveaeskeEmballage("Gaveæske");
 		GaveaeskeEmballage ge2 = Controller.createGaveaeskeEmballage("Trækasse");
@@ -49,9 +50,9 @@ public class Storage {
 		Controller.createGaveaeskePreset(12, 0, 390d, ge2);
 		Controller.createGaveaeskePreset(12, 0, 360d, ge4);
 		
-		ProduktKategori fadøl = Controller.createProduktKategori("Fadøl");
-		ProduktKategori fustager = Controller.createProduktKategori("Fustager");
-		ProduktKategori anlæg = Controller.createProduktKategori("Anlæg");
+		ProduktKategori fadøl = Controller.createProduktKategori("Fadøl", ProduktKategoriType.STANDARD);
+		ProduktKategori fustager = Controller.createProduktKategori("Fustager", ProduktKategoriType.UDLEJNING);
+		ProduktKategori anlæg = Controller.createProduktKategori("Anlæg", ProduktKategoriType.UDLEJNING);
 
 		Produkt p0 = Controller.createProdukt(flaskeølProduktKategori, "Klosterbryg", "Fyldig", 1);
 		Produkt p1 = Controller.createProdukt(flaskeølProduktKategori, "IPA", "Indian Pale Ale\nFrugtig.", 0);
