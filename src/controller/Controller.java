@@ -3,6 +3,8 @@ package controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.security.auth.callback.NameCallback;
+
 import model.BetalingsMetode;
 import model.Gaveaeske;
 import model.GaveaeskeEmballage;
@@ -11,6 +13,7 @@ import model.Kunde;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
+import model.ProduktKategoriFindesException;
 import model.ProduktLinje;
 import model.Salg;
 import model.UdlejningsProdukt;
@@ -147,7 +150,12 @@ public class Controller {
 	}
 
 	// ProduktKategori
-	public static ProduktKategori createProduktKategori(String navn) {
+	public static ProduktKategori createProduktKategori(String navn) throws ProduktKategoriFindesException {
+		for (ProduktKategori pk : Storage.getProduktKategorier()) {
+			if (navn.equals(pk.getNavn())) {
+				throw new ProduktKategoriFindesException();
+			}
+		}
 		if (navn == null) {
 			throw new IllegalArgumentException("Navn må ikke være null");
 		}

@@ -4,12 +4,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import model.GaveaeskeEmballage;
 import model.GaveaeskePreset;
 import storage.Storage;
 import controller.Controller;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 
 public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
@@ -30,6 +32,13 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 		this.setHgap(20);
 		this.setVgap(10);
 		this.setGridLinesVisible(false);
+		
+		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				clearErrorText();
+			}
+		});
 	}
 
 	public GaveaeskePresetTab() {
@@ -40,11 +49,11 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 
 		lvwGaveaeskePresets = new ListView<GaveaeskePreset>();
 		lvwGaveaeskePresets.setOnMouseClicked(e -> lvwGaveaeskePresetsAction());
-		this.add(lvwGaveaeskePresets, 0, 1, 1, 11);
+		this.add(lvwGaveaeskePresets, 0, 1, 1, 9);
 
 		lblError = new Label();
 		lblError.setTextFill(Color.RED);
-		this.add(lblError, 0, 13);
+		this.add(lblError, 0, 12);
 
 		// Column 1
 		ViewHelper.label(this, 1, 0, "Ølflasker i æske:");
@@ -181,6 +190,10 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 	// Error Label;
 	private void setErrorText(String text) {
 		lblError.setText(text);
+	}
+	
+	private void clearErrorText() {
+		lblError.setText("");
 	}
 
 }

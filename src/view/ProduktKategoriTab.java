@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import model.Produkt;
 import model.ProduktKategori;
+import model.ProduktKategoriFindesException;
 import storage.Storage;
 import controller.Controller;
 import javafx.event.EventHandler;
@@ -38,7 +39,7 @@ public class ProduktKategoriTab extends GridPane implements ReloadableTab {
 				clearErrorText();
 			}
 		});
-	}
+	}	
 
 	public ProduktKategoriTab() {
 		setUpPane();
@@ -123,7 +124,11 @@ public class ProduktKategoriTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void btnOpretKategoriAction() {
+		try {
 		Controller.createProduktKategori(txfKategoriNavn.getText());
+		} catch (ProduktKategoriFindesException e) {
+			lblError.setText("Produkt findes allered");
+		}
 		updateLvwKategorier();
 	}
 	

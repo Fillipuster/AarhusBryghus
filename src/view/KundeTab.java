@@ -32,13 +32,13 @@ public class KundeTab extends GridPane implements ReloadableTab {
 		this.setHgap(20);
 		this.setVgap(10);
 		
-		// Clear error label on mouse event;
 		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				clearErrorText();
 			}
 		});
+		
 	}
 	
 	public KundeTab() {
@@ -67,7 +67,7 @@ public class KundeTab extends GridPane implements ReloadableTab {
 		
 		ViewHelper.label(this, 1, 5, "Telefon Nr:");
 		txfTlf = new TextField("00000000");
-//		ViewHelper.textFieldRestrictInt(txfTlf);
+		ViewHelper.textFieldRestrictInt(txfTlf);
 		this.add(txfTlf, 1, 6);
 
 		// Column 2
@@ -136,5 +136,4 @@ public class KundeTab extends GridPane implements ReloadableTab {
 	private void clearErrorText() {
 		lblError.setText("");
 	}
-	
 }

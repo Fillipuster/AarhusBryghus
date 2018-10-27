@@ -1,12 +1,15 @@
 package view;
 
 import controller.Controller;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import model.Kunde;
 import model.ProduktLinje;
 import model.UdlejningsSalg;
@@ -19,7 +22,7 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 	private ListView<ProduktLinje> lvwProduktLinje;
 	private TextField txfAntalUbrugt;
 	private Button btnSætUbrugt, btnTilbagelever;
-	private Label lblTotal, lblPant, lblAtBetale;
+	private Label lblTotal, lblPant, lblAtBetale, lblError;
 	
 	@Override
 	public void reload() {
@@ -30,6 +33,13 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
+		
+		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				clearErrorText();
+			}
+		});
 	}
 	
 	public UdlejningerTab() {
@@ -40,6 +50,10 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		lvwKunder = new ListView<Kunde>();
 		lvwKunder.setOnMouseClicked(e -> lvwKunderAction());
 		this.add(lvwKunder, 0, 1, 1, 10);
+		
+		lblError = new Label("");
+		lblError.setTextFill(Color.RED);
+		this.add(lblError, 0, 11);
 		
 		// Column 1
 		ViewHelper.label(this, 1, 0, "Kundens udlejninger:");
@@ -144,7 +158,13 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 			updateLvwUdlejningsSalg();
 			updateLvwProduktLinjer();
 			lvwProduktLinje.getItems().clear();
+		} else {
+			lblError.setText("Vælg venligst en kunde");
 		}
+	}
+	
+	private void clearErrorText() {
+		lblError.setText("");
 	}
 	
 }

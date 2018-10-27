@@ -1,12 +1,14 @@
 package view;
 
 import controller.Controller;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import model.Kunde;
@@ -36,6 +38,14 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
+		
+		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				clearErrorText();
+			}
+		});
+		
 	}
 
 	public UdlejningTab() {
@@ -191,6 +201,10 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	// Error label related;
 	private void setErrorText(String text) {
 		lblError.setText(text);
+	}
+	
+	private void clearErrorText() {
+		lblError.setText("");
 	}
 
 }
