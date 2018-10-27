@@ -8,7 +8,7 @@ import org.junit.Test;
 import controller.Controller;
 import model.PrisKategori;
 
-public class controllerPrisKategoriTest {
+public class ControllerPrisKategoriTest {
 
 	PrisKategori pk1;
 

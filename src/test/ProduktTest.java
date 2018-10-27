@@ -10,7 +10,7 @@ import model.Produkt;
 import model.ProduktKategori;
 import model.PrisKategori;
 
-public class produktTest {
+public class ProduktTest {
 
 //	Produkt p;
 	

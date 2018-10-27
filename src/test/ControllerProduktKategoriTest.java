@@ -8,7 +8,7 @@ import org.junit.Test;
 import controller.Controller;
 import model.ProduktKategori;
 
-public class controllerProduktKategoriTest {
+public class ControllerProduktKategoriTest {
 
 	ProduktKategori pk1;
 

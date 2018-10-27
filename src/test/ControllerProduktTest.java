@@ -12,7 +12,7 @@ import model.Produkt;
 import model.ProduktKategori;
 import storage.Storage;
 
-public class controllerProduktTest {
+public class ControllerProduktTest {
 
 	PrisKategori priskat0;
 	ProduktKategori produktkat0;
