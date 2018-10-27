@@ -7,7 +7,7 @@ import org.junit.Test;
 import controller.Controller;
 import model.Gaveaeske;
 
-public class controllerGaveaeskeTest {
+public class ControllerGaveaeskeTest {
 
 	// -------------------------------------------------------------------------------------------------------------------------
 	// Test cases for createGaveæske

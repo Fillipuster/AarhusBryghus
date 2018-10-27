@@ -17,7 +17,7 @@ import model.Salg;
 
 
 
-public class controllerProduktLinjeTest {
+public class ControllerProduktLinjeTest {
 	
 	BetalingsMetode bm1;
 	Salg s1;

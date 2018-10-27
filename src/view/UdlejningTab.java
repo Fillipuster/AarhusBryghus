@@ -8,6 +8,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -69,6 +70,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		this.add(cboxProduktKategori, 1, 1);
 
 		lvwUdlejligeProdukter = new ListView<UdlejningsProdukt>();
+		lvwUdlejligeProdukter.setOnMouseClicked((MouseEvent) -> lvwUdlejligeProdukterAction(MouseEvent));
 		this.add(lvwUdlejligeProdukter, 1, 2, 1, 10);
 
 		// Column 2
@@ -114,7 +116,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	}
 
 	private void updateCboxProduktKategori() {
-		cboxProduktKategori.getItems().setAll(Storage.getProduktKategorier());
+		cboxProduktKategori.getItems().setAll(Controller.getUdlejligeProduktKategorier());
 	}
 
 	private void updateLvwProduktLinjer() {
@@ -195,6 +197,14 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 			lblError.setText("");
 		} else {
 			lblError.setText("Vælg venligst en kunde og et eller flere \nprodukter for at gennemføre salget");
+		}
+	}
+	
+	private void lvwUdlejligeProdukterAction(MouseEvent e) {
+		if (e.getButton().equals(MouseButton.PRIMARY)) {
+			if (e.getClickCount() >= 2) {
+				btnAddAction();
+			}
 		}
 	}
 

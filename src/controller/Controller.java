@@ -2,9 +2,6 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
-import javax.security.auth.callback.NameCallback;
-
 import model.BetalingsMetode;
 import model.Gaveaeske;
 import model.GaveaeskeEmballage;
@@ -150,6 +147,20 @@ public class Controller {
 	}
 
 	// ProduktKategori
+	public static ArrayList<ProduktKategori> getUdlejligeProduktKategorier() {
+		ArrayList<ProduktKategori> result = new ArrayList<>();
+		for (ProduktKategori pk : Storage.getProduktKategorier()) {
+			for (Produkt p : getProdukterIKategori(pk)) {
+				if (p instanceof UdlejningsProdukt) {
+					if (!result.contains(pk)) {
+						result.add(pk);
+					}
+				}
+			}
+		}
+		
+		return result;
+	}
 	public static ProduktKategori createProduktKategori(String navn) throws ProduktKategoriFindesException {
 		for (ProduktKategori pk : Storage.getProduktKategorier()) {
 			if (navn.equals(pk.getNavn())) {

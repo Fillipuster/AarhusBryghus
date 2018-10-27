@@ -15,7 +15,7 @@ import model.ProduktKategori;
 import model.Salg;
 import storage.Storage;
 
-public class controllerBetalingsMetodeTest {
+public class ControllerBetalingsMetodeTest {
 
 	BetalingsMetode bm1;
 	Salg s1;
