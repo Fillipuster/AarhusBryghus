@@ -147,6 +147,21 @@ public class Controller {
 	}
 
 	// ProduktKategori
+	public static ArrayList<ProduktKategori> getUdlejligeProduktKategorier() {
+		ArrayList<ProduktKategori> result = new ArrayList<>();
+		for (ProduktKategori pk : Storage.getProduktKategorier()) {
+			for (Produkt p : getProdukterIKategori(pk)) {
+				if (p instanceof UdlejningsProdukt) {
+					if (!result.contains(pk)) {
+						result.add(pk);
+					}
+				}
+			}
+		}
+		
+		return result;
+	}
+	
 	public static ProduktKategori createProduktKategori(String navn) {
 		if (navn == null) {
 			throw new IllegalArgumentException("Navn må ikke være null");

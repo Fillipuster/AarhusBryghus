@@ -104,7 +104,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	}
 
 	private void updateCboxProduktKategori() {
-		cboxProduktKategori.getItems().setAll(Storage.getProduktKategorier());
+		cboxProduktKategori.getItems().setAll(Controller.getUdlejligeProduktKategorier());
 	}
 
 	private void updateLvwProduktLinjer() {
