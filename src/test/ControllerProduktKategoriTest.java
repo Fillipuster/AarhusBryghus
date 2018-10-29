@@ -17,6 +17,7 @@ public class ControllerProduktKategoriTest {
 		pk1 = new ProduktKategori("Fadøl");
 
 	}
+	
 	// -------------------------------------------------------------------------------------------------------------------------
 	// Test cases for createProduktKategori
 
