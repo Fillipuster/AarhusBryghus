@@ -6,10 +6,10 @@ public class Produkt {
 
 	private ProduktKategori produktKategori;
 	private HashMap<PrisKategori, Double> priser = new HashMap<>();
-
 	private String navn;
 	private String beskrivelse;
 	private int klipPris;
+	private int udstedteKlip;
 
 	public Produkt(ProduktKategori produktKategori, String navn, String beskrivelse, int klipPris) {
 		this.setProduktKategori(produktKategori);
@@ -48,6 +48,14 @@ public class Produkt {
 
 	public void setKlipPris(int klipPris) {		
 		this.klipPris = klipPris;
+	}
+
+	public int getUdstedteKlip() {
+		return udstedteKlip;
+	}
+
+	public void setUdstedteKlip(int udstedteKlip) {
+		this.udstedteKlip = udstedteKlip;
 	}
 
 	public void setPris(PrisKategori kategori, double pris) {

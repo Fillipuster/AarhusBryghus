@@ -4,7 +4,6 @@ public class ProduktLinje {
 	
 	private Produkt produkt;
 	private PrisKategori prisKategori;
-
 	private int antal, antalUbrugt;
 	private double rabat;
 

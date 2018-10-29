@@ -1,11 +1,8 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Kunde {
 	
 	private String navn, addresse, telefonNr;
-	private ArrayList<UdlejningsSalg> udlejningsSalg = new ArrayList<>();
 	
 	public Kunde(String navn, String addresse, String tlf) {
 		setNavn(navn);
@@ -35,14 +32,6 @@ public class Kunde {
 
 	public void setTelefonNr(String telefonNr) {
 		this.telefonNr = telefonNr;
-	}
-
-	public ArrayList<UdlejningsSalg> getUdlejningssalg() {
-		return udlejningsSalg;
-	}
-
-	public void setUdlejningssalg(ArrayList<UdlejningsSalg> udlejningssalg) {
-		this.udlejningsSalg = udlejningssalg;
 	}
 	
 	@Override
