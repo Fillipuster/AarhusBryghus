@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import model.GaveaeskeEmballage;
 import model.GaveaeskePreset;
+import model.NavnFindesAlleredeException;
 import storage.Storage;
 import controller.Controller;
 import javafx.event.EventHandler;
@@ -155,6 +156,8 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 						Double.parseDouble(txfPris.getText()), selected);
 			} catch (NumberFormatException e) {
 				setErrorText("Pris skal være et tal.");
+			} catch (NavnFindesAlleredeException e) {
+				setErrorText("Gaveæske findes allerede");
 			}
 			updateLvwGaveaeskePresets();
 		} else {
@@ -173,7 +176,12 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnOpretEmballageAction() {
-		Controller.createGaveaeskeEmballage(txfEmballageNavn.getText());
+		try {
+			Controller.createGaveaeskeEmballage(txfEmballageNavn.getText());
+		} catch (NavnFindesAlleredeException e) {
+			setErrorText("Emballage findes allerede");
+		}
+		
 		updateLvwEmballage();
 	}
 
