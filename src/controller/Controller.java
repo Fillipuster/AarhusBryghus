@@ -137,6 +137,15 @@ public class Controller {
 
 	public static UdlejningsProdukt createUdlejningsProdukt(ProduktKategori produktKategori, String navn,
 			String beskrivelse, double pris, double pant) {
+		if(produktKategori == null) {
+			throw new IllegalArgumentException("Produkt kategori må ikke være null");
+		}
+		if(navn == null) {
+			throw new IllegalArgumentException("Navn må ikke være null");
+		}
+		if(beskrivelse == null) {
+			throw new IllegalArgumentException("Beskrivelse må ikke være null");
+		}
 		UdlejningsProdukt up = new UdlejningsProdukt(produktKategori, navn, beskrivelse, pris, pant);
 		Storage.addProdukt(up);
 		return up;
@@ -144,6 +153,19 @@ public class Controller {
 
 	public static void updateUdlejningsProdukt(UdlejningsProdukt udlejningsProdukt, ProduktKategori produktKategori,
 			String navn, String beskrivelse, double pris, double pant) {
+		if(udlejningsProdukt == null) {
+			throw new IllegalArgumentException("Udlejningsprodukt må ikke være null");
+		}
+		if(produktKategori == null) {
+			throw new IllegalArgumentException("Produkt kategori må ikke være null");
+		}
+		if(navn == null) {
+			throw new IllegalArgumentException("Navn må ikke være null");
+		}
+		if(beskrivelse == null) {
+			throw new IllegalArgumentException("Beskrivelse må ikke være null");
+		}
+		
 		udlejningsProdukt.setProduktKategori(produktKategori);
 		udlejningsProdukt.setNavn(navn);
 		udlejningsProdukt.setBeskrivelse(beskrivelse);
