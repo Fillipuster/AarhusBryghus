@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import model.NavnFindesAlleredeException;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
@@ -202,6 +203,8 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 					updateLvwProdukter();
 				} catch (NumberFormatException e) {
 					setErrorText("Pris og pant skal være tal.");
+				} catch (NavnFindesAlleredeException e) {
+					setErrorText("Produkt findes allerede.");
 				}
 			} else {
 				try {
@@ -210,13 +213,14 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 					updateLvwProdukter();
 				} catch (NumberFormatException e) {
 					setErrorText("Klippris skal være et tal.");
+				} catch (NavnFindesAlleredeException e) {
+					setErrorText("Produkt findes allerede.");
 				}
 			}
 		} else {
 			setErrorText("Kategori skal vælges.");
 		}
 	}
-
 
 	private void btnOpdaterProduktAction() {
 		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();

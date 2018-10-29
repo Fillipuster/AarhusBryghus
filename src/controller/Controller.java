@@ -10,7 +10,7 @@ import model.Kunde;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
-import model.ProduktKategoriFindesException;
+import model.NavnFindesAlleredeException;
 import model.ProduktLinje;
 import model.Salg;
 import model.UdlejningsProdukt;
@@ -20,7 +20,12 @@ import storage.Storage;
 public class Controller {
 
 	// Produkt
-	public static Produkt createProdukt(ProduktKategori kategori, String navn, String beskrivelse, int klipPris) {
+	public static Produkt createProdukt(ProduktKategori kategori, String navn, String beskrivelse, int klipPris) throws NavnFindesAlleredeException {
+		for (Produkt p : Storage.getProdukter()) {
+			if (p.getProduktKategori().equals(kategori) && p.getNavn().equals(navn)) {
+				throw new NavnFindesAlleredeException("Produkt findes allerede");
+			}
+		}
 		if (kategori == null) {
 			throw new IllegalArgumentException("Kategori kan ikke være null");
 		}
@@ -158,13 +163,14 @@ public class Controller {
 				}
 			}
 		}
-		
+
 		return result;
 	}
-	public static ProduktKategori createProduktKategori(String navn) throws ProduktKategoriFindesException {
+
+	public static ProduktKategori createProduktKategori(String navn) throws NavnFindesAlleredeException {
 		for (ProduktKategori pk : Storage.getProduktKategorier()) {
 			if (navn.equals(pk.getNavn())) {
-				throw new ProduktKategoriFindesException();
+				throw new NavnFindesAlleredeException("Produkt kategori findes allerede");
 			}
 		}
 		if (navn == null) {
@@ -234,7 +240,7 @@ public class Controller {
 	public static UdlejningsSalg createUdlejningsSalg() {
 		return new UdlejningsSalg();
 	}
-	
+
 	public static void saveUdlejningsSalg(UdlejningsSalg salg) {
 		salg.setRetuneringsDato(LocalDate.now());
 	}
@@ -260,7 +266,7 @@ public class Controller {
 
 		return result;
 	}
-	
+
 	public static ArrayList<UdlejningsSalg> getKundeAktiveUdlejningsSalg(Kunde kunde) {
 		ArrayList<UdlejningsSalg> result = new ArrayList<>();
 		for (UdlejningsSalg us : getKundeUdlejningsSalg(kunde)) {
@@ -268,18 +274,18 @@ public class Controller {
 				result.add(us);
 			}
 		}
-		
+
 		return result;
 	}
 
 	public static void setUdlejningsSalgKunde(UdlejningsSalg udlejningsSalg, Kunde kunde) {
 		udlejningsSalg.setKunde(kunde);
 	}
-	
+
 	public static void tilbageleverUdlejningsSalg(UdlejningsSalg salg) {
 		salg.setRetuneringsDato(LocalDate.now());
 	}
-	
+
 	public static void sletUdlejligProduktLinje(UdlejningsSalg udlejningsSalg, ProduktLinje produktLinje) {
 		udlejningsSalg.sletProduktLinje(produktLinje);
 	}
@@ -303,10 +309,10 @@ public class Controller {
 	}
 
 	public static void updateProduktLinje(ProduktLinje produktLinje, int antal, double rabat) {
-		if(antal < 0) {
+		if (antal < 0) {
 			throw new IllegalArgumentException("Antal må ikke være negativ");
 		}
-		if(rabat < 0) {
+		if (rabat < 0) {
 			throw new IllegalArgumentException("Rabat må ikke være negativ");
 		}
 		produktLinje.setAntal(antal);
@@ -332,7 +338,7 @@ public class Controller {
 		if (navn == null) {
 			throw new IllegalArgumentException("Navn må ikke være null");
 		}
-		
+
 		if (bm == null) {
 			throw new IllegalArgumentException("Betalingsmetode må ikke være null");
 		}
@@ -364,7 +370,7 @@ public class Controller {
 		preset.setPris(pris);
 		preset.setEmballage(emballage);
 	}
-	
+
 	// GaveaeskeEmballage
 	public static GaveaeskeEmballage createGaveaeskeEmballage(String navn) {
 		GaveaeskeEmballage ge = new GaveaeskeEmballage(navn);
