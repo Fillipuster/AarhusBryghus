@@ -20,14 +20,14 @@ public class Storage {
 	private static ProduktKategori flaskeølProduktKategori;
 	
 	// Lister;
-	private static ArrayList<Produkt> produkter = new ArrayList<>();
-	private static ArrayList<ProduktKategori> produktKategorier = new ArrayList<>();
-	private static ArrayList<PrisKategori> prisKategorier = new ArrayList<>();
-	private static ArrayList<Salg> salg = new ArrayList<>();
-	private static ArrayList<BetalingsMetode> betalingsMetoder = new ArrayList<>();
-	private static ArrayList<GaveaeskePreset> gaveaeskePresets = new ArrayList<>();
-	private static ArrayList<Kunde> kunder = new ArrayList<>();
-	private static ArrayList<GaveaeskeEmballage> gaveaeskeEmballager = new ArrayList<>();
+	private static ArrayList<Produkt> 				produkter 			= new ArrayList<>();
+	private static ArrayList<ProduktKategori> 		produktKategorier 	= new ArrayList<>();
+	private static ArrayList<PrisKategori> 			prisKategorier 		= new ArrayList<>();
+	private static ArrayList<Salg> 					salg 				= new ArrayList<>();
+	private static ArrayList<BetalingsMetode> 		betalingsMetoder 	= new ArrayList<>();
+	private static ArrayList<GaveaeskePreset> 		gaveaeskePresets 	= new ArrayList<>();
+	private static ArrayList<Kunde> 				kunder 				= new ArrayList<>();
+	private static ArrayList<GaveaeskeEmballage> 	gaveaeskeEmballager = new ArrayList<>();
 
 	public static void initializeStorage() {
 		// Kategorier nødvendige for at gaveæsker fungerer;
