@@ -71,7 +71,6 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		this.add(lvwProdukter, 0, 2, 1, 10);
 
 		lblError = new Label("");
-		// lblError.setStyle("-fx-text-color: red;");
 		lblError.setTextFill(Color.RED);
 		this.add(lblError, 0, 13);
 
@@ -91,7 +90,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		this.add(btnDelete, 1, 10);
 
 		// Column 2
-		ViewHelper.label(this, 2, 1, "Produkter i Indkøbskurv");
+		ViewHelper.label(this, 2, 1, "Produkter i indkøbskurv:");
 		lvwProduktLinjer = new ListView<>();
 		lvwProduktLinjer.setOnMouseClicked(e -> lvwProduktLinjerAction());
 		lvwProduktLinjer.setStyle("-fx-font-family: monospace;");
@@ -101,19 +100,21 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		lblTotal.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
 
 		// Column 6
-		ViewHelper.label(this, 6, 2, "Produktmængde");
-		txfAntal = new TextField("1");
+		ViewHelper.label(this, 6, 2, "Antal produkter:");
+		txfAntal = new TextField();
+		txfAntal.setPromptText("Produktmængde");
 		txfAntal.setOnAction(e -> txfAntalAction());
 		ViewHelper.textFieldRestrictInt(txfAntal);
 		this.add(txfAntal, 6, 3, 2, 1);
 
-		ViewHelper.label(this, 6, 4, "Rabat (%)");
-		txfRabat = new TextField("0.0");
+		ViewHelper.label(this, 6, 4, "Rabat (%):");
+		txfRabat = new TextField();
+		txfRabat.setPromptText("Rabat (%)");
 		txfRabat.setOnAction(e -> txfRabatAction());
 		ViewHelper.textFieldRestrictDouble(txfRabat);
 		this.add(txfRabat, 6, 5, 2, 1);
 
-		ViewHelper.label(this, 6, 8, "Vælg Betalingsmetode:");
+		ViewHelper.label(this, 6, 8, "Vælg betalingsmetode:");
 		cboxBetalingsMetoder = new ComboBox<>();
 		this.add(cboxBetalingsMetoder, 6, 10);
 

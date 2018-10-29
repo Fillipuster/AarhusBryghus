@@ -54,7 +54,8 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 		
 		// Column 1
 		ViewHelper.label(this, 1, 0, "Kategori navn:");
-		txfKategoriNavn = new TextField("KATEGORI NAVN");
+		txfKategoriNavn = new TextField();
+		txfKategoriNavn.setPromptText("Priskategori Navn");
 		this.add(txfKategoriNavn, 1, 1);
 		
 		btnOpdaterKategori = new Button("Opdater");

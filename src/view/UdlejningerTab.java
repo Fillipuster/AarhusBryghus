@@ -69,7 +69,8 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		
 		// Column 3
 		ViewHelper.label(this, 3, 0, "Antal ubrugt produkter:");
-		txfAntalUbrugt = new TextField("0");
+		txfAntalUbrugt = new TextField();
+		txfAntalUbrugt.setPromptText("Mængde Ubrugt");
 		txfAntalUbrugt.setOnAction(e -> txfAntalUbrugtAction());
 		ViewHelper.textFieldRestrictInt(txfAntalUbrugt);
 		this.add(txfAntalUbrugt, 3, 1);

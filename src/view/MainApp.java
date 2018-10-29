@@ -29,7 +29,7 @@ public class MainApp extends Application {
 		Scene scene = new Scene(pane);
 		scene.getStylesheets().add("style.css");
 		stage.setScene(scene);
-		stage.setHeight(620);
+		stage.setHeight(720);
 		stage.setWidth(1080);
 		stage.show();
 	}

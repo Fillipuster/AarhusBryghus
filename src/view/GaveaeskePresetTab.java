@@ -58,17 +58,20 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 
 		// Column 1
 		ViewHelper.label(this, 1, 0, "Ølflasker i æske:");
-		txfØl = new TextField("4");
+		txfØl = new TextField();
+		txfØl.setPromptText("Øl Mængde");
 		ViewHelper.textFieldRestrictInt(txfØl);
 		this.add(txfØl, 1, 1);
 
 		ViewHelper.label(this, 1, 2, "Glas i æske:");
-		txfGlas = new TextField("2");
+		txfGlas = new TextField();
+		txfGlas.setPromptText("Glas Mængde");
 		ViewHelper.textFieldRestrictInt(txfGlas);
 		this.add(txfGlas, 1, 3);
 
 		ViewHelper.label(this, 1, 4, "Pris på æske:");
-		txfPris = new TextField("299.95");
+		txfPris = new TextField();
+		txfPris.setPromptText("Gaveæskepris");
 		ViewHelper.textFieldRestrictDouble(txfPris);
 		this.add(txfPris, 1, 5);
 
@@ -89,7 +92,8 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 		btnSlet.setOnAction(e -> btnSletAction());
 		this.add(btnSlet, 2, 3);
 
-		txfEmballageNavn = new TextField("EMBALLAGE NAVN");
+		txfEmballageNavn = new TextField();
+		txfEmballageNavn.setPromptText("Emballage Navn");
 		this.add(txfEmballageNavn, 2, 7, 2, 1);
 
 		btnOpretEmballage = new Button("Opret Emballage");

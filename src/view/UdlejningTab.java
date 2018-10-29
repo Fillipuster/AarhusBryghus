@@ -91,8 +91,9 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		lblTotal.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
 
 		// Column 4
-		ViewHelper.label(this, 4, 1, "Produktmængde:");
-		txfAntal = new TextField("1");
+		ViewHelper.label(this, 4, 1, "Antal vare:");
+		txfAntal = new TextField();
+		txfAntal.setPromptText("Produktmængde");
 		txfAntal.setOnAction(e -> txfAntalAction());
 		ViewHelper.textFieldRestrictInt(txfAntal);
 		this.add(txfAntal, 4, 2);

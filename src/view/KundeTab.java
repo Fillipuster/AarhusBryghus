@@ -19,7 +19,7 @@ public class KundeTab extends GridPane implements ReloadableTab {
 	
 	private ListView<Kunde> lvwKunder;
 	private TextField txfNavn, txfTlf;
-	private TextArea txaAddresse;
+	private TextArea txaAdresse;
 	private Button btnOpdater, btnOpret, btnSlet;
 	private Label lblError;
 	
@@ -57,18 +57,21 @@ public class KundeTab extends GridPane implements ReloadableTab {
 		
 		// Column 1
 		ViewHelper.label(this, 1, 0, "Navn:");
-		txfNavn = new TextField("NAVN");
+		txfNavn = new TextField();
+		txfNavn.setPromptText("Kunde Navn");
 		this.add(txfNavn, 1, 1);
 		
-		ViewHelper.label(this, 1, 2, "Addresse");
-		txaAddresse = new TextArea("ADDRESSE");
-		txaAddresse.setPrefWidth(250d);
-		txaAddresse.setPrefHeight(75d);
-		this.add(txaAddresse, 1, 3, 1, 2);
+		ViewHelper.label(this, 1, 2, "Adresse");
+		txaAdresse = new TextArea();
+		txaAdresse.setPromptText("Kunde Adresse");
+		txaAdresse.setPrefWidth(250d);
+		txaAdresse.setPrefHeight(75d);
+		this.add(txaAdresse, 1, 3, 1, 2);
 		
 		ViewHelper.label(this, 1, 5, "Telefon Nr:");
-		txfTlf = new TextField("00000000");
-		ViewHelper.textFieldRestrictInt(txfTlf);
+		txfTlf = new TextField();
+		txfTlf.setPromptText("Kunde Telefon Nr.");
+//		ViewHelper.textFieldRestrictInt(txfTlf);
 		this.add(txfTlf, 1, 6);
 
 		// Column 2
@@ -99,7 +102,7 @@ public class KundeTab extends GridPane implements ReloadableTab {
 		Kunde selected = lvwKunder.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			txfNavn.setText(selected.getNavn());
-			txaAddresse.setText(selected.getAddresse());
+			txaAdresse.setText(selected.getAddresse());
 			txfTlf.setText(selected.getTelefonNr());
 		}
 	}
@@ -116,7 +119,7 @@ public class KundeTab extends GridPane implements ReloadableTab {
 
 	private void btnOpretAction() {
 		try {
-			Controller.createKunde(txfNavn.getText(), txaAddresse.getText(), txfTlf.getText());
+			Controller.createKunde(txfNavn.getText(), txaAdresse.getText(), txfTlf.getText());
 		} catch (NavnFindesAlleredeException e) {
 			setErrorText("Kunde findes allerede");
 		}
@@ -126,7 +129,7 @@ public class KundeTab extends GridPane implements ReloadableTab {
 	private void btnOpdaterAction() {
 		Kunde selected = lvwKunder.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			Controller.updateKunde(selected, txfNavn.getText(), txaAddresse.getText(), txfTlf.getText());
+			Controller.updateKunde(selected, txfNavn.getText(), txaAdresse.getText(), txfTlf.getText());
 			updateLvwKunder();
 		} else {
 			setErrorText("Kunde skal vælges.");
