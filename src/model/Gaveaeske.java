@@ -10,7 +10,7 @@ public class Gaveaeske extends Produkt {
 	private ArrayList<Produkt> produkter = new ArrayList<>();
 
 	public Gaveaeske() {
-		super(null, "", "", -1);
+		super(null, null, null, 0, 0);
 		updateNavnBeskrivelse();
 	}
 

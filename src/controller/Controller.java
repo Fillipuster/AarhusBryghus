@@ -20,7 +20,7 @@ import storage.Storage;
 public class Controller {
 
 	// Produkt
-	public static Produkt createProdukt(ProduktKategori kategori, String navn, String beskrivelse, int klipPris) throws NavnFindesAlleredeException {
+	public static Produkt createProdukt(ProduktKategori kategori, String navn, String beskrivelse, int klipPris, int udstedteKlip) throws NavnFindesAlleredeException {
 		for (Produkt p : Storage.getProdukter()) {
 			if (p.getProduktKategori().equals(kategori) && p.getNavn().equals(navn)) {
 				throw new NavnFindesAlleredeException("Produkt findes allerede");
@@ -36,7 +36,7 @@ public class Controller {
 			throw new IllegalArgumentException("Beskrivelse kan ikke være null");
 		}
 
-		Produkt p = new Produkt(kategori, navn, beskrivelse, klipPris);
+		Produkt p = new Produkt(kategori, navn, beskrivelse, klipPris, udstedteKlip);
 		Storage.addProdukt(p);
 
 		return p;

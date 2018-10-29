@@ -11,11 +11,12 @@ public class Produkt {
 	private int klipPris;
 	private int udstedteKlip;
 
-	public Produkt(ProduktKategori produktKategori, String navn, String beskrivelse, int klipPris) {
+	public Produkt(ProduktKategori produktKategori, String navn, String beskrivelse, int klipPris, int udstedteKlip) {
 		this.setProduktKategori(produktKategori);
 		this.setNavn(navn);
 		this.setBeskrivelse(beskrivelse);
 		this.setKlipPris(klipPris);
+		this.setUdstedteKlip(udstedteKlip);
 	}
 
 	public ProduktKategori getProduktKategori() {

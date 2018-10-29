@@ -26,7 +26,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	private ListView<ProduktPrisKategoriFormat> lvwPriser;
 	private ComboBox<ProduktKategori> cboxProduktKategorier;
 	private Label lblError;
-	private TextField txfProduktNavn, txfPris, txfKlipPris, txfUdlejligPris, txfUdlejligPant;
+	private TextField txfProduktNavn, txfPris, txfKlipPris, txfUdlejligPris, txfUdlejligPant, txfUdstedteKlip;
 	private TextArea txaProduktBeskrivelse;
 	private Button btnOpdaterProdukt, btnSletProdukt, btnOpretProdukt, btnSætPris;
 	private CheckBox cbUdlejlig;
@@ -63,11 +63,11 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 
 		lvwProdukter = new ListView<Produkt>();
 		lvwProdukter.setOnMouseClicked(e -> lvwProdukterAction());
-		this.add(lvwProdukter, 0, 2, 1, 11);
+		this.add(lvwProdukter, 0, 2, 1, 12);
 
 		lblError = new Label();
 		lblError.setTextFill(Color.RED);
-		this.add(lblError, 0, 13);
+		this.add(lblError, 0, 14);
 
 		// Column 1
 		ViewHelper.label(this, 1, 1, "Produktnavn:");
@@ -86,36 +86,43 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		ViewHelper.textFieldRestrictInt(txfKlipPris);
 		this.add(txfKlipPris, 1, 8);
 
+		ViewHelper.label(this, 1, 9, "Mængde udstedte klip (til klippekort):");
+		txfUdstedteKlip = new TextField();
+		txfUdstedteKlip.setPromptText("Udstedte Klip");
+		txfUdstedteKlip.setPrefWidth(200d);
+		ViewHelper.textFieldRestrictInt(txfUdstedteKlip);
+		this.add(txfUdstedteKlip, 1, 10);
+		
 		btnOpretProdukt = new Button("Opret");
 		btnOpretProdukt.setOnAction(e -> btnOpretProduktAction());
 		btnOpretProdukt.setPrefWidth(250);
-		this.add(btnOpretProdukt, 1, 9);
+		this.add(btnOpretProdukt, 1, 11);
 
 		btnOpdaterProdukt = new Button("Opdater");
 		btnOpdaterProdukt.setOnAction(e -> btnOpdaterProduktAction());
 		btnOpdaterProdukt.setPrefWidth(250);
-		this.add(btnOpdaterProdukt, 1, 10);
+		this.add(btnOpdaterProdukt, 1, 12);
 
 		btnSletProdukt = new Button("Slet");
 		btnSletProdukt.setOnAction(e -> btnSletProduktAction());
 		btnSletProdukt.setPrefWidth(250);
-		this.add(btnSletProdukt, 1, 11);
+		this.add(btnSletProdukt, 1, 13);
 
 		// Column 2
 		ViewHelper.label(this, 2, 1, "Produktpriser:");
 		lvwPriser = new ListView<ProduktTab.ProduktPrisKategoriFormat>();
 		lvwPriser.setStyle("-fx-font-family: monospace;");
 		lvwPriser.setOnMouseClicked(e -> lvwPriserAction());
-		this.add(lvwPriser, 2, 2, 2, 11);
+		this.add(lvwPriser, 2, 2, 2, 12);
 
 		txfPris = new TextField("59.95");
 		ViewHelper.textFieldRestrictDouble(txfPris);
-		this.add(txfPris, 2, 14);
+		this.add(txfPris, 2, 15);
 
 		// Column 3
 		btnSætPris = new Button("Sæt Pris");
 		btnSætPris.setOnAction(e -> btnSætPris());
-		this.add(btnSætPris, 3, 14);
+		this.add(btnSætPris, 3, 15);
 
 		// Column 4
 		ViewHelper.label(this, 4, 1, "For udlejningsprodukter:");
@@ -209,10 +216,10 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 			} else {
 				try {
 					Controller.createProdukt(selected, txfProduktNavn.getText(), txaProduktBeskrivelse.getText(),
-							Integer.parseInt(txfKlipPris.getText()));
+							Integer.parseInt(txfKlipPris.getText()), Integer.parseInt(txfUdstedteKlip.getText()));
 					updateLvwProdukter();
 				} catch (NumberFormatException e) {
-					setErrorText("Klippris skal være et tal.");
+					setErrorText("Klippris og udstedte klip skal være et tal.");
 				} catch (NavnFindesAlleredeException e) {
 					setErrorText("Produkt findes allerede.");
 				}
@@ -281,6 +288,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		lvwPriser.setDisable(checked);
 		txfPris.setDisable(checked);
 		txfKlipPris.setDisable(checked);
+		txfUdstedteKlip.setDisable(checked);
 		btnSætPris.setDisable(checked);
 
 		txfUdlejligPris.setDisable(!checked);

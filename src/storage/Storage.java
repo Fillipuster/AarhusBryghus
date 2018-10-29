@@ -35,12 +35,12 @@ public class Storage {
 		glasProduktKategori = Controller.createProduktKategori("Glas");
 		flaskeølProduktKategori = Controller.createProduktKategori("Flaske Øl");
 		
+		// Almen test data (ikke nødvendig);
 		GaveaeskeEmballage ge1 = Controller.createGaveaeskeEmballage("Gaveæske");
 		GaveaeskeEmballage ge2 = Controller.createGaveaeskeEmballage("Trækasse");
 		GaveaeskeEmballage ge3 = Controller.createGaveaeskeEmballage("Gavekurv");
 		GaveaeskeEmballage ge4 = Controller.createGaveaeskeEmballage("Papkasse");
 		
-		// Almen test data (ikke nødvendig);
 		Controller.createGaveaeskePreset(2, 2, 100d, ge1);
 		Controller.createGaveaeskePreset(4, 0, 130d, ge1);
 		Controller.createGaveaeskePreset(6, 0, 240d, ge2);
@@ -52,20 +52,23 @@ public class Storage {
 		ProduktKategori fadøl = Controller.createProduktKategori("Fadøl");
 		ProduktKategori fustager = Controller.createProduktKategori("Fustager");
 		ProduktKategori anlæg = Controller.createProduktKategori("Anlæg");
+		ProduktKategori klippekort = Controller.createProduktKategori("Klippekort");
 
-		Produkt p0 = Controller.createProdukt(flaskeølProduktKategori, "Klosterbryg", "Fyldig", 1);
-		Produkt p1 = Controller.createProdukt(flaskeølProduktKategori, "IPA", "Indian Pale Ale\nFrugtig.", 0);
-		Produkt p2 = Controller.createProdukt(flaskeølProduktKategori, "Blonde", "Frisk", 2);
+		Produkt p0 = Controller.createProdukt(flaskeølProduktKategori, "Klosterbryg", "Fyldig", 1, 0);
+		Produkt p1 = Controller.createProdukt(flaskeølProduktKategori, "IPA", "Indian Pale Ale\nFrugtig.", 0, 0);
+		Produkt p2 = Controller.createProdukt(flaskeølProduktKategori, "Blonde", "Frisk", 2, 0);
 
-		Produkt p3 = Controller.createProdukt(fadøl, "Pilsner", "Klassiker, fra fad.", 1);
-		Produkt p4 = Controller.createProdukt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad.", 0);
-		Produkt p5 = Controller.createProdukt(fadøl, "Blonde", "Frisk, fra fad.", 3);
+		Produkt p3 = Controller.createProdukt(fadøl, "Pilsner", "Klassiker, fra fad.", 1, 0);
+		Produkt p4 = Controller.createProdukt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad.", 0, 0);
+		Produkt p5 = Controller.createProdukt(fadøl, "Blonde", "Frisk, fra fad.", 3, 0);
 		
 		Produkt p6 = Controller.createUdlejningsProdukt(fustager, "IPA", "25L\nCrisp og frugtig.", 250d, 100d);
 		Produkt p7 = Controller.createUdlejningsProdukt(fustager, "Pilsner", "20L\nStandard, god til pizza.", 200d, 100d);
 		
 		Produkt p8 = Controller.createUdlejningsProdukt(anlæg, "2-hane Anlæg", "Fadølsanlæg med 2 haner.", 500d, 0d);
 		Produkt p9 = Controller.createUdlejningsProdukt(anlæg, "4-hane Anlæg", "Fadølsanlæg med 4 haner.", 800d, 0d);
+		
+		Produkt p10 = Controller.createProdukt(klippekort, "5x Klippekort", "Klippekort med 5 klip.", 0, 5);
 		
 		PrisKategori pk1 = Controller.createPrisKategori("Bar");
 		
@@ -81,6 +84,8 @@ public class Storage {
 		Controller.addPrisToProdukt(p4, pk1, 10);
 		Controller.addPrisToProdukt(p5, butikPrisKategori, 11);
 		Controller.addPrisToProdukt(p5, pk1, 12);
+		Controller.addPrisToProdukt(p10, butikPrisKategori, 150);
+		Controller.addPrisToProdukt(p10, pk1, 150);
 		
 		Controller.createBetalingsMetode("Kreditkort", false);
 		Controller.createBetalingsMetode("Kontant", false);
