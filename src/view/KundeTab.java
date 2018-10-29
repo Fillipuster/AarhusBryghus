@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import model.Kunde;
+import model.NavnFindesAlleredeException;
 import storage.Storage;
 
 public class KundeTab extends GridPane implements ReloadableTab {
@@ -114,7 +115,11 @@ public class KundeTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnOpretAction() {
-		Controller.createKunde(txfNavn.getText(), txaAddresse.getText(), txfTlf.getText());
+		try {
+			Controller.createKunde(txfNavn.getText(), txaAddresse.getText(), txfTlf.getText());
+		} catch (NavnFindesAlleredeException e) {
+			setErrorText("Kunde findes allerede");
+		}
 		updateLvwKunder();
 	}
 

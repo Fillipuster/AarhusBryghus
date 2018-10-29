@@ -195,7 +195,12 @@ public class Controller {
 	}
 
 	// PrisKategori
-	public static PrisKategori createPrisKategori(String navn) {
+	public static PrisKategori createPrisKategori(String navn) throws NavnFindesAlleredeException {
+		for (PrisKategori pk : Storage.getPrisKategorier()) {
+			if (navn.equals(pk.getNavn())) {
+				throw new NavnFindesAlleredeException("Pris kategorien findes allerede");
+			}
+		}
 		if (navn == null) {
 			throw new IllegalArgumentException("Navn må ikke være null");
 		}
@@ -358,6 +363,11 @@ public class Controller {
 
 	// GaveæskePreset
 	public static GaveaeskePreset createGaveaeskePreset(int øl, int glas, double pris, GaveaeskeEmballage emballage) {
+		for (GaveaeskePreset g : Storage.getGaveaeskePresets()) {
+			if (g.getEmballage().equals(emballage) && g.getØl() == øl && g.getGlas() == glas) {
+				throw new NavnFindesAlleredeException("Produkt Findes Allerede");
+			}
+		}
 		GaveaeskePreset gp = new GaveaeskePreset(øl, glas, pris, emballage);
 		Storage.addGaveaeskePreset(gp);
 		return gp;
@@ -373,6 +383,11 @@ public class Controller {
 
 	// GaveaeskeEmballage
 	public static GaveaeskeEmballage createGaveaeskeEmballage(String navn) {
+		for (GaveaeskeEmballage ge : Storage.getGaveaeskeEmballager()) {
+			if (ge.getNavn().equals(navn)) {
+				throw new NavnFindesAlleredeException("");
+			}
+		}
 		GaveaeskeEmballage ge = new GaveaeskeEmballage(navn);
 		Storage.addGaveaeskeEmballage(ge);
 		return ge;
@@ -380,6 +395,11 @@ public class Controller {
 
 	// Kunde
 	public static Kunde createKunde(String navn, String addresse, String tlf) {
+		for (Kunde k : Storage.getKunder()) {
+			if (k.getAddresse().equals(addresse) || k.getTelefonNr().equals(tlf)) {
+				throw new NavnFindesAlleredeException("");
+			}
+		}
 		Kunde k = new Kunde(navn, addresse, tlf);
 		Storage.addKunde(k);
 
