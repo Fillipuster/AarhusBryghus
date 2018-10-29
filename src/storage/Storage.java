@@ -62,11 +62,11 @@ public class Storage {
 		Produkt p4 = Controller.createProdukt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad.", 0, 0);
 		Produkt p5 = Controller.createProdukt(fadøl, "Blonde", "Frisk, fra fad.", 3, 0);
 		
-		Produkt p6 = Controller.createUdlejningsProdukt(fustager, "IPA", "25L\nCrisp og frugtig.", 250d, 100d);
-		Produkt p7 = Controller.createUdlejningsProdukt(fustager, "Pilsner", "20L\nStandard, god til pizza.", 200d, 100d);
+		/*Produkt p6 = */Controller.createUdlejningsProdukt(fustager, "IPA", "25L\nCrisp og frugtig.", 250d, 100d);
+		/*Produkt p7 = */Controller.createUdlejningsProdukt(fustager, "Pilsner", "20L\nStandard, god til pizza.", 200d, 100d);
 		
-		Produkt p8 = Controller.createUdlejningsProdukt(anlæg, "2-hane Anlæg", "Fadølsanlæg med 2 haner.", 500d, 0d);
-		Produkt p9 = Controller.createUdlejningsProdukt(anlæg, "4-hane Anlæg", "Fadølsanlæg med 4 haner.", 800d, 0d);
+		/*Produkt p8 = */Controller.createUdlejningsProdukt(anlæg, "2-hane Anlæg", "Fadølsanlæg med 2 haner.", 500d, 0d);
+		/*Produkt p9 = */Controller.createUdlejningsProdukt(anlæg, "4-hane Anlæg", "Fadølsanlæg med 4 haner.", 800d, 0d);
 		
 		Produkt p10 = Controller.createProdukt(klippekort, "5x Klippekort", "Klippekort med 5 klip.", 0, 5);
 		
