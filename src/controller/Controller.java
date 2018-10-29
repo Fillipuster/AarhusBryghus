@@ -417,6 +417,16 @@ public class Controller {
 
 	// Kunde
 	public static Kunde createKunde(String navn, String addresse, String tlf) {
+		if(navn == null) {
+			throw new IllegalArgumentException("Navn må ikke være null");
+		}
+		if(addresse == null) {
+			throw new IllegalArgumentException("Adresse må ikke være null");
+		}
+		if(tlf == null) {
+			throw new IllegalArgumentException("Telefonnummer må ikke være null");
+		}
+		
 		for (Kunde k : Storage.getKunder()) {
 			if (k.getAddresse().equals(addresse) || k.getTelefonNr().equals(tlf)) {
 				throw new NavnFindesAlleredeException("");
