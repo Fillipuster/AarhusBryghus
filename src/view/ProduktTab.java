@@ -17,7 +17,6 @@ import model.ProduktKategori;
 import model.UdlejningsProdukt;
 import storage.Storage;
 import controller.Controller;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 
