@@ -30,7 +30,7 @@ public class ControllerProduktLinjeTest {
 		s1 = new Salg();
 		bm1 = new BetalingsMetode("MobilePay", false);
 		pk1 = new ProduktKategori("Bar");
-		p1 = new Produkt(pk1, "Øl", "En god øl", 1);
+		p1 = new Produkt(pk1, "Øl", "En god øl", 1, 0);
 		PrK1 = new PrisKategori("Bar");
 	}
 	// -------------------------------------------------------------------------------------------------------------------------

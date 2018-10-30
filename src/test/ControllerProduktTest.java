@@ -27,8 +27,8 @@ public class ControllerProduktTest {
 	public void setUp() throws Exception {
 		priskat0 = new PrisKategori("Bar");
 		produktkat0 = new ProduktKategori("Fadøl");
-		p1 = new Produkt(produktkat0, "IPA", "Bedste øl", 1);
-		p3 = new Produkt(produktkat0, "Pils", "Frugtig", 2);
+		p1 = new Produkt(produktkat0, "IPA", "Bedste øl", 1, 0);
+		p3 = new Produkt(produktkat0, "Pils", "Frugtig", 2, 0);
 	}
 
 	// -------------------------------------------------------------------------------------------------------------------------
@@ -37,21 +37,21 @@ public class ControllerProduktTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateProduktTC1() {
 		Produkt actual = p1;
-		Produkt p = Controller.createProdukt(null, "IPA", "Bedste øl", 1);
+		Produkt p = Controller.createProdukt(null, "IPA", "Bedste øl", 1, 0 );
 		assertEquals(p, actual);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateProduktTC2() {
 		Produkt actual = p1;
-		Produkt p = Controller.createProdukt(produktkat0, null, "Bedste øl", 1);
+		Produkt p = Controller.createProdukt(produktkat0, null, "Bedste øl", 1, 0);
 		assertEquals(p, actual);
 	}
 
 	@Test
 	public void testCreateProduktTC3() {
 		Produkt actual = p1;
-		Produkt p2 = Controller.createProdukt(produktkat0, "IPA", "Bedste øl", 1);
+		Produkt p2 = Controller.createProdukt(produktkat0, "IPA", "Bedste øl", 1, 0);
 		assertEquals(p2, actual);
 	}
 
@@ -82,7 +82,7 @@ public class ControllerProduktTest {
 	public void testUpdateProduktTC3() {
 		Produkt actual = p1;
 		Controller.updateProdukt(p1, produktkat0, "IPA", "Bedre end bedste", 1);
-		Produkt p = new Produkt(produktkat0, "IPA", "Bedre end bedste", 1);
+		Produkt p = new Produkt(produktkat0, "IPA", "Bedre end bedste", 1, 0);
 		assertEquals(p, actual);
 	}
 
@@ -112,7 +112,7 @@ public class ControllerProduktTest {
 	@Test
 	public void testAddPrisToProduktTC3() {
 		Produkt actual = p1;
-		Produkt p = new Produkt(produktkat0, "IPA", "Bedste øl", 1);
+		Produkt p = new Produkt(produktkat0, "IPA", "Bedste øl", 1, 0);
 		p.setPris(priskat0, 21);
 		Controller.addPrisToProdukt(p1, priskat0, 21);
 
