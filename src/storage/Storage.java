@@ -95,6 +95,11 @@ public class Storage {
 		Controller.createKunde("Jonas Præstegaard", "Inger Christensens Gade 24, 8220 Brabrand", "50523263");
 		Controller.createKunde("Frederik Stræde", "Tordenkjoldsgade 21, 8200 Aarhus N", "25465501");
 		Controller.createKunde("Morten Faber", "Pottemagertoften 115, 8270 Højbjerg", "91554511");
+		
+		Salg s1 = Controller.createSalg();
+		Controller.setSalgBetalingsMetode(s1, Storage.getBetalingsMetoder().get(1));
+		s1.opretProduktLinje(p2, butikPrisKategori, 2, 0.05d);
+		Controller.saveSalg(s1);
 	}
 	
 	// Getters for essential categories;

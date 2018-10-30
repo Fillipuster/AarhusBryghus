@@ -1,6 +1,9 @@
 package view;
 
+import java.time.LocalDate;
+
 import controller.Controller;
+import controller.StatisticsController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -11,18 +14,20 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import model.BetalingsMetode;
 import model.PrisKategori;
 import model.ProduktLinje;
 import model.Salg;
 
 public class StatestikTab extends GridPane implements ReloadableTab {
-	private Salg salg;
+	private ListView<Salg> lvwSalg;
 	private ListView<ProduktLinje> lvwProduktLinjer;
-	private Button btnAdd, btnDelete, btnAnuller, btnKøb, btnOpretGaveæske;
+	private Button btnUdregnStatestik;
 	private ComboBox<PrisKategori> cboxPrisKategorier;
 	private TextField txfAntal, txfRabat;
-	private Label lblTotal, lblError;
+	private Label lblKlipBrugt, lblKlipSolgt, lblError, lblSalg, lblProduktLinje;
 	private ComboBox<BetalingsMetode> cboxBetalingsMetoder;
 	private DatePicker dpStart, dpSlut;
 
@@ -34,7 +39,7 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 	}
 
 	private void setUpPane() {
-		this.setPadding(new Insets(20));
+		this.setPadding(new Insets(40));
 		this.setHgap(20);
 		this.setVgap(10);
 
@@ -48,21 +53,81 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 	}
 
 	public StatestikTab() {
-		salg = Controller.createSalg();
-		
 		setUpPane();
 		this.setGridLinesVisible(false);
 
 		// Column 0
 		dpStart = new DatePicker();
 		this.add(dpStart, 0, 0);
-		
-}
 
+		dpSlut = new DatePicker();
+		this.add(dpSlut, 0, 1);
+
+		btnUdregnStatestik = new Button("Hent Statestik");
+		btnUdregnStatestik.setOnAction(e -> btnUdregnStatestikAction());
+		this.add(btnUdregnStatestik, 0, 2);
+
+		lblKlipBrugt = ViewHelper.label(this, 0, 3, "Klip Brugt:");
+		lblKlipBrugt.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
+		//
+		lblKlipSolgt = ViewHelper.label(this, 0, 4, "Klip Solgt:");
+		lblKlipSolgt.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
+
+		lblError = new Label("");
+		lblError.setTextFill(Color.RED);
+		this.add(lblError, 0, 6);
+
+		// Column 1
+		lblSalg = ViewHelper.label(this, 1, 0, "Salg i valgte periode:");
+
+		lvwSalg = new ListView<>();
+		lvwSalg.setOnMouseClicked(e -> lvwSalgAction());
+		this.add(lvwSalg, 1, 1, 1, 3);
+
+		// Column 2
+		lblProduktLinje = ViewHelper.label(this, 3, 0, "Produktlinjer:");
+
+		lvwProduktLinjer = new ListView<>();
+		this.add(lvwProduktLinjer, 3, 1, 1, 3);
+
+	}
+
+	private void updateLvwSalg() {
+		lvwSalg.getItems().setAll(StatisticsController.getSalgIPeriode());
+	}
+
+	private void updateLvwProduktLinje() {
+		Salg selected = lvwSalg.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			lvwProduktLinjer.getItems().setAll(selected.getProduktLinjer());
+		}
+		
+	}
+	
+	private void btnUdregnStatestikAction() {
+		LocalDate start = dpStart.getValue();
+		LocalDate slut = dpSlut.getValue();
+
+		if (start != null && slut != null) {
+			if (!start.isAfter(slut)) {
+				StatisticsController.calcStatistics(start, slut);
+				updateLvwSalg();
+			} else {
+				setErrorText("Slut dato skal være efter start.");
+			}
+		} else {
+			setErrorText("Vælg venligst datoer.");
+		}
+	}
+
+	private void lvwSalgAction() {
+		updateLvwProduktLinje();
+	}
+	
 	private void setErrorText(String text) {
 		lblError.setText(text);
 	}
-	
+
 	private void clearErrorText() {
 		lblError.setText("");
 	}

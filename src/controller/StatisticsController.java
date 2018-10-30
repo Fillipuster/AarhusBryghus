@@ -9,16 +9,14 @@ import storage.Storage;
 
 public class StatisticsController {
 
-	private static ArrayList<Salg> salgIPeriode;
+	private static ArrayList<Salg> salgIPeriode = new ArrayList<>();
 	private static int klipSolgtIPeriode, klipBrugtIPeriode;
 
 	public static void calcStatistics(LocalDate start, LocalDate end) {
-		ArrayList<Salg> salg = new ArrayList<>();
+		salgIPeriode.clear();
 		int klipSolgt = 0, klipBrugt = 0;
 		for (Salg s : Storage.getSalg()) {
 			if (s instanceof Salg && s.getDato().compareTo(start) >= 0 && s.getDato().compareTo(end) <= 0) {
-				salg.add(s);
-				
 				if (s.getBetalingsMetode().isBrugerKlip()) {
 					klipBrugt += s.getTotalKlipPris();
 				}
@@ -26,10 +24,10 @@ public class StatisticsController {
 				for (ProduktLinje pl : s.getProduktLinjer()) {
 					klipSolgt += pl.getProdukt().getUdstedteKlip();
 				}
+				salgIPeriode.add(s);
 			}
 		}
 		
-		salgIPeriode = salg;
 		klipSolgtIPeriode = klipSolgt;
 		klipBrugtIPeriode = klipBrugt;
 	}
