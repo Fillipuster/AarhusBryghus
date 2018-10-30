@@ -199,7 +199,6 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 					cbKanKøbesMedKlippekort.setSelected(true);
 				} else {
 					txfKlipPris.clear();
-//					txfKlipPris.setText("");
 					txfKlipPris.setDisable(true);
 					cbKanKøbesMedKlippekort.setSelected(false);
 				}
@@ -209,7 +208,6 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 					cbIsKlippekort.setSelected(true);
 				} else {
 					txfUdstedteKlip.clear();
-//					txfUdstedteKlip.setText("");
 					txfUdstedteKlip.setDisable(true);
 					cbIsKlippekort.setSelected(false);
 				}
