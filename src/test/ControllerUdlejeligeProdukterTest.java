@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -141,5 +143,42 @@ public class ControllerUdlejeligeProdukterTest {
 			assertEquals(iea.getMessage(), "Beskrivelse må ikke være null");
 		}
 	}
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for getUdlejningsProdukter
+	
+	@Test
+	public void testGetUdlejningsProdukterTC1() {
+		ArrayList<UdlejningsProdukt> expected = new ArrayList<>();
+		for (Produkt p : Storage.getProdukter()) {
+			if (p instanceof UdlejningsProdukt) {
+				expected.add((UdlejningsProdukt) p);
+			}
+		}
+		assertEquals(expected, Controller.getUdlejningsProdukter());
+	}
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for getUdlejningsProdukterIProduktKategori
 
+	@Test 
+	public void testGetUdlejningsProdukterIProduktKategoriTC1() {
+		ArrayList<UdlejningsProdukt> expected = new ArrayList<>();
+		for (UdlejningsProdukt up : Controller.getUdlejningsProdukter()) {
+			if (up.getProduktKategori() == pk1) {
+				expected.add(up);
+			}
+		}
+		assertEquals(expected, Controller.getUdlejningsProdukterIProduktKategori(pk1));
+	}
+	
+	@Test
+	public void testGetUdlejningsProdukterIProduktKategoriTC2() {
+		try {
+			Controller.getUdlejningsProdukterIProduktKategori(null);
+			fail();
+		} catch (IllegalArgumentException iea){
+			assertEquals(iea.getMessage(), "Kategori må ikke være null");
+		}
+	}
+	
+	
 }
