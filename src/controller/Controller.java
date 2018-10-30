@@ -137,6 +137,9 @@ public class Controller {
 	}
 
 	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukterIProduktKategori(ProduktKategori kategori) {
+		if(kategori == null) {
+			throw new IllegalArgumentException("Kategori må ikke være null");
+		}
 		ArrayList<UdlejningsProdukt> result = new ArrayList<>();
 		for (UdlejningsProdukt up : getUdlejningsProdukter()) {
 			if (up.getProduktKategori() == kategori) {
@@ -397,6 +400,19 @@ public class Controller {
 
 	// GaveæskePreset
 	public static GaveaeskePreset createGaveaeskePreset(int øl, int glas, double pris, GaveaeskeEmballage emballage) {
+		if(øl < 0) {
+			throw new IllegalArgumentException("Øl kan ikke være mindre end 0");
+		}
+		if(glas < 0) {
+			throw new IllegalArgumentException("Glas kan ikke være mindre end 0");
+		}
+		if(glas <= 0 && øl <= 0) {
+			throw new IllegalArgumentException("Der skal være et produkt i gaveæske");
+		}
+		if(emballage == null) {
+			throw new IllegalArgumentException("Emballage må ikke være null");
+		}
+		
 		for (GaveaeskePreset g : Storage.getGaveaeskePresets()) {
 			if (g.getEmballage().equals(emballage) && g.getØl() == øl && g.getGlas() == glas) {
 				throw new NavnFindesAlleredeException("Produkt Findes Allerede");
@@ -409,6 +425,21 @@ public class Controller {
 
 	public static void updateGaveaeskePreset(GaveaeskePreset preset, int øl, int glas, double pris,
 			GaveaeskeEmballage emballage) {
+		if(øl < 0) {
+			throw new IllegalArgumentException("Øl kan ikke være mindre end 0");
+		}
+		if(glas < 0) {
+			throw new IllegalArgumentException("Glas kan ikke være mindre end 0");
+		}
+		if(glas <= 0 && øl <= 0) {
+			throw new IllegalArgumentException("Der skal være et produkt i gaveæske");
+		}
+		if(emballage == null) {
+			throw new IllegalArgumentException("Emballage må ikke være null");
+		}
+		if(preset == null) {
+			throw new IllegalArgumentException("Gaveæske skal være valgt");
+		}
 		preset.setØl(øl);
 		preset.setGlas(glas);
 		preset.setPris(pris);
