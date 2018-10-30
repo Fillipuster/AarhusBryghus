@@ -245,26 +245,20 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 
 	private void btnOpdaterProduktAction() {
 		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
-
 		if (selected != null) {
 			if (cbUdlejlig.isSelected()
 					&& lvwProdukter.getSelectionModel().getSelectedItem() instanceof UdlejningsProdukt) {
-				try {
-					Controller.updateUdlejningsProdukt((UdlejningsProdukt) selected, cboxProduktKategorier.getValue(),
-							txfProduktNavn.getText(), txaProduktBeskrivelse.getText(),
-							Double.parseDouble(txfUdlejligPris.getText()),
-							Double.parseDouble(txfUdlejligPant.getText()));
-				} catch (NumberFormatException e) {
-					setErrorText("Pris og pant skal være tal.");
-				}
+
+				Controller.updateUdlejningsProdukt((UdlejningsProdukt) selected, cboxProduktKategorier.getValue(),
+						txfProduktNavn.getText(), txaProduktBeskrivelse.getText(),
+						Double.parseDouble(txfUdlejligPris.getText()), Double.parseDouble(txfUdlejligPant.getText()));
+
 			} else {
-				try {
-					Controller.updateProdukt(selected, cboxProduktKategorier.getValue(), txfProduktNavn.getText(),
-							txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()));
-					updateLvwProdukter();
-				} catch (NumberFormatException e) {
-					setErrorText("Klippris skal være et tal.");
-				}
+
+				Controller.updateProdukt(selected, cboxProduktKategorier.getValue(), txfProduktNavn.getText(),
+						txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()));
+				updateLvwProdukter();
+
 			}
 		} else {
 			setErrorText("Produkt skal være valgt.");
