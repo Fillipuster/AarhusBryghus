@@ -2,7 +2,6 @@ package view;
 
 import java.time.LocalDate;
 
-import controller.Controller;
 import controller.StatisticsController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -14,7 +13,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import model.BetalingsMetode;
 import model.PrisKategori;
@@ -25,10 +23,7 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 	private ListView<Salg> lvwSalg;
 	private ListView<ProduktLinje> lvwProduktLinjer;
 	private Button btnUdregnStatestik;
-	private ComboBox<PrisKategori> cboxPrisKategorier;
-	private TextField txfAntal, txfRabat;
 	private Label lblKlipBrugt, lblKlipSolgt, lblError, lblSalg, lblProduktLinje;
-	private ComboBox<BetalingsMetode> cboxBetalingsMetoder;
 	private DatePicker dpStart, dpSlut;
 
 	@Override
@@ -93,6 +88,11 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 	}
 
 	private void updateLvwSalg() {
+		int klipBrugt = StatisticsController.getKlipBrugtIPeriode();
+		int klipSolgt = StatisticsController.getKlipSolgtIPeriode();
+		
+		lblKlipBrugt.setText(String.format("Klip Brugt: %d", klipBrugt));
+		lblKlipSolgt.setText(String.format("Klip Solgt: %d", klipSolgt));
 		lvwSalg.getItems().setAll(StatisticsController.getSalgIPeriode());
 	}
 

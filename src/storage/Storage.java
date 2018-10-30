@@ -62,7 +62,7 @@ public class Storage {
 		Produkt p4 = Controller.createProdukt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad.", 0, 0);
 		Produkt p5 = Controller.createProdukt(fadøl, "Blonde", "Frisk, fra fad.", 3, 0);
 		
-		/*Produkt p6 = */Controller.createUdlejningsProdukt(fustager, "IPA", "25L\nCrisp og frugtig.", 250d, 100d);
+		Produkt p6 = Controller.createUdlejningsProdukt(fustager, "IPA", "25L\nCrisp og frugtig.", 250d, 100d);
 		/*Produkt p7 = */Controller.createUdlejningsProdukt(fustager, "Pilsner", "20L\nStandard, god til pizza.", 200d, 100d);
 		
 		/*Produkt p8 = */Controller.createUdlejningsProdukt(anlæg, "2-hane Anlæg", "Fadølsanlæg med 2 haner.", 500d, 0d);
@@ -87,19 +87,30 @@ public class Storage {
 		Controller.addPrisToProdukt(p10, butikPrisKategori, 150);
 		Controller.addPrisToProdukt(p10, pk1, 150);
 		
-		Controller.createBetalingsMetode("Kreditkort", false);
-		Controller.createBetalingsMetode("Kontant", false);
-		Controller.createBetalingsMetode("MobilePay", false);
-		Controller.createBetalingsMetode("Klippekort", true);
+		BetalingsMetode b0 = Controller.createBetalingsMetode("Kreditkort", false);
+		BetalingsMetode b1 = Controller.createBetalingsMetode("Kontant", false);
+		BetalingsMetode b2 = Controller.createBetalingsMetode("MobilePay", false);
+		BetalingsMetode b3 = Controller.createBetalingsMetode("Klippekort", true);
 		
 		Controller.createKunde("Jonas Præstegaard", "Inger Christensens Gade 24, 8220 Brabrand", "50523263");
 		Controller.createKunde("Frederik Stræde", "Tordenkjoldsgade 21, 8200 Aarhus N", "25465501");
 		Controller.createKunde("Morten Faber", "Pottemagertoften 115, 8270 Højbjerg", "91554511");
 		
+		Salg s0 = Controller.createSalg();
+		Controller.setSalgBetalingsMetode(s0, b0);
+		s0.opretProduktLinje(p2, butikPrisKategori, 2, 0.05d);
+		Controller.saveSalg(s0);
+
 		Salg s1 = Controller.createSalg();
-		Controller.setSalgBetalingsMetode(s1, Storage.getBetalingsMetoder().get(1));
-		s1.opretProduktLinje(p2, butikPrisKategori, 2, 0.05d);
+		Controller.setSalgBetalingsMetode(s1, b2);
+		s1.opretProduktLinje(p10, butikPrisKategori, 4, 0.0d);
 		Controller.saveSalg(s1);
+	
+		Salg s2 = Controller.createSalg();
+		Controller.setSalgBetalingsMetode(s2, b3);
+		s2.opretProduktLinje(p5, butikPrisKategori, 15, 0d);
+		Controller.saveSalg(s2);
+		
 	}
 	
 	// Getters for essential categories;
