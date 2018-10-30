@@ -60,5 +60,15 @@ public class Salg {
 		
 		return total;
 	}
+	
+	@Override
+	public String toString() {
+		int produkter = 0;
+		for (ProduktLinje pl : getProduktLinjer()) {
+			produkter += pl.getAntal();
+		}
+		
+		return String.format("%t (%d) %f kr.", getDato(), produkter, getTotalPris());
+	}
 
 }
