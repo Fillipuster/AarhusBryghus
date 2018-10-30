@@ -68,7 +68,7 @@ public class Salg {
 			produkter += pl.getAntal();
 		}
 		
-		return String.format("%t (%d) %f kr.", getDato(), produkter, getTotalPris());
+		return String.format("%s (%d) %.2f kr.", getDato(), produkter, getTotalPris());
 	}
 
 }
