@@ -234,26 +234,9 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		ProduktKategori selected = cboxProduktKategorier.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			if (cbUdlejlig.isSelected()) {
-				try {
-					Controller.createUdlejningsProdukt(selected, txfProduktNavn.getText(),
-							txaProduktBeskrivelse.getText(), Double.parseDouble(txfUdlejligPris.getText()),
-							Double.parseDouble(txfUdlejligPant.getText()));
-					updateLvwProdukter();
-				} catch (NumberFormatException e) {
-					setErrorText("Pris og pant skal være tal.");
-				} catch (NavnFindesAlleredeException e) {
-					setErrorText("Produkt findes allerede.");
-				}
-			} else {
-				try {
-					Controller.createProdukt(selected, txfProduktNavn.getText(), txaProduktBeskrivelse.getText(),
-							Integer.parseInt(txfKlipPris.getText()), Integer.parseInt(txfUdstedteKlip.getText()));
-					updateLvwProdukter();
-				} catch (NumberFormatException e) {
-					setErrorText("Klippris og udstedte klip skal være et tal.");
-				} catch (NavnFindesAlleredeException e) {
-					setErrorText("Produkt findes allerede.");
-				}
+				createUdlejligtProdukt(selected);
+			} else {	
+				createProdukt(selected);
 			}
 		} else {
 			setErrorText("Kategori skal vælges.");
@@ -345,6 +328,33 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	private void clearErrorText() {
 		lblError.setText("");
 	}
+	
+	// helper methods
+	private void createUdlejligtProdukt(ProduktKategori selected) {
+		try {
+			Controller.createUdlejningsProdukt(selected, txfProduktNavn.getText(),
+					txaProduktBeskrivelse.getText(), Double.parseDouble(txfUdlejligPris.getText()),
+					Double.parseDouble(txfUdlejligPant.getText()));
+			updateLvwProdukter();
+		} catch (NumberFormatException e) {
+			setErrorText("Pris og pant skal være tal.");
+		} catch (NavnFindesAlleredeException e) {
+			setErrorText("Produkt findes allerede.");
+		}
+	}
+	
+	private void createProdukt(ProduktKategori selected) {
+		int klipPris = (cbKanKøbesMedKlippekort.isSelected()) ? Integer.parseInt(txfKlipPris.getText()) : 0;
+		int klipUdstedte = (cbIsKlippekort.isSelected()) ? Integer.parseInt(txfUdstedteKlip.getText()) : 0;
+		
+		try {
+			Controller.createProdukt(selected, txfProduktNavn.getText(), txaProduktBeskrivelse.getText(), klipPris, klipUdstedte);
+			updateLvwProdukter();					
+		} catch (NavnFindesAlleredeException e) {
+			setErrorText("Produkt findes allerede.");
+		}
+	}
+
 
 	// ListView formatting classes;
 	private class ProduktPrisKategoriFormat {
