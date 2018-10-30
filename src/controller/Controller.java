@@ -21,11 +21,6 @@ public class Controller {
 
 	// Produkt
 	public static Produkt createProdukt(ProduktKategori kategori, String navn, String beskrivelse, int klipPris, int udstedteKlip) throws NavnFindesAlleredeException {
-		for (Produkt p : Storage.getProdukter()) {
-			if (p.getProduktKategori().equals(kategori) && p.getNavn().equals(navn)) {
-				throw new NavnFindesAlleredeException("Produkt findes allerede");
-			}
-		}
 		if (kategori == null) {
 			throw new IllegalArgumentException("Kategori kan ikke være null");
 		}
@@ -35,6 +30,23 @@ public class Controller {
 		if (beskrivelse == null) {
 			throw new IllegalArgumentException("Beskrivelse kan ikke være null");
 		}
+		if (udstedteKlip > 0 && klipPris > 0) {
+			throw new IllegalArgumentException("Klippris for klippekort skal være 0");
+		}
+		if (udstedteKlip < 0) {
+			throw new IllegalArgumentException("Udstedteklip skal være større eller ligmed 0");
+		}
+		if (klipPris < 0) {
+			throw new IllegalArgumentException("Klippris skal være større eller ligmed 0");
+		}
+		
+		
+		for (Produkt p : Storage.getProdukter()) {
+			if (p.getProduktKategori().equals(kategori) && p.getNavn().equals(navn)) {
+				throw new NavnFindesAlleredeException("Produkt findes allerede");
+			}
+		}
+		
 
 		Produkt p = new Produkt(kategori, navn, beskrivelse, klipPris, udstedteKlip);
 		Storage.addProdukt(p);
