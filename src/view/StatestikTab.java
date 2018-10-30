@@ -35,7 +35,7 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 
 	private void setUpPane() {
 		this.setPadding(new Insets(40));
-		this.setHgap(20);
+		this.setHgap(40);
 		this.setVgap(10);
 
 		// Clear error label on mouse event;
@@ -62,10 +62,10 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 		btnUdregnStatestik.setOnAction(e -> btnUdregnStatestikAction());
 		this.add(btnUdregnStatestik, 0, 2);
 
-		lblKlipBrugt = ViewHelper.label(this, 0, 3, "Klip Brugt:");
+		lblKlipBrugt = ViewHelper.label(this, 0, 6, "Klip Brugt:");
 		lblKlipBrugt.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
 		//
-		lblKlipSolgt = ViewHelper.label(this, 0, 4, "Klip Solgt:");
+		lblKlipSolgt = ViewHelper.label(this, 0, 7, "Klip Solgt:");
 		lblKlipSolgt.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
 
 		lblError = new Label("");
@@ -77,13 +77,13 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 
 		lvwSalg = new ListView<>();
 		lvwSalg.setOnMouseClicked(e -> lvwSalgAction());
-		this.add(lvwSalg, 1, 1, 1, 3);
+		this.add(lvwSalg, 1, 1, 1, 10);
 
 		// Column 2
 		lblProduktLinje = ViewHelper.label(this, 3, 0, "Produktlinjer:");
 
 		lvwProduktLinjer = new ListView<>();
-		this.add(lvwProduktLinjer, 3, 1, 1, 3);
+		this.add(lvwProduktLinjer, 3, 1, 1, 10);
 
 	}
 
