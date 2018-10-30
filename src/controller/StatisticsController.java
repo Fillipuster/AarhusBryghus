@@ -15,6 +15,7 @@ public class StatisticsController {
 	public static void calcStatistics(LocalDate start, LocalDate end) {
 		salgIPeriode.clear();
 		int klipSolgt = 0, klipBrugt = 0;
+		
 		for (Salg s : Storage.getSalg()) {
 			if (s instanceof Salg && s.getDato().compareTo(start) >= 0 && s.getDato().compareTo(end) <= 0) {
 				if (s.getBetalingsMetode().isBrugerKlip()) {
