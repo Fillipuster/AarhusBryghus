@@ -71,7 +71,6 @@ public class KundeTab extends GridPane implements ReloadableTab {
 		ViewHelper.label(this, 1, 5, "Telefon Nr:");
 		txfTlf = new TextField();
 		txfTlf.setPromptText("Kunde Telefon Nr.");
-//		ViewHelper.textFieldRestrictInt(txfTlf);
 		this.add(txfTlf, 1, 6);
 
 		// Column 2
@@ -118,6 +117,10 @@ public class KundeTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnOpretAction() {
+		if (txfNavn.getText().isEmpty() || txaAdresse.getText().isEmpty() || txfTlf.getText().isEmpty()) {
+			setErrorText("Udfyld alt data om kunden.");
+			return;
+		}
 		try {
 			Controller.createKunde(txfNavn.getText(), txaAdresse.getText(), txfTlf.getText());
 		} catch (NavnFindesAlleredeException e) {

@@ -6,16 +6,12 @@ import controller.StatisticsController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import model.BetalingsMetode;
-import model.PrisKategori;
 import model.ProduktLinje;
 import model.Salg;
 
@@ -70,7 +66,7 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 
 		lblError = new Label("");
 		lblError.setTextFill(Color.RED);
-		this.add(lblError, 0, 6);
+		this.add(lblError, 0, 9);
 
 		// Column 1
 		lblSalg = ViewHelper.label(this, 1, 0, "Salg i valgte periode:");
