@@ -443,5 +443,39 @@ public class Controller {
 		k.setAddresse(addresse);
 		k.setTelefonNr(tlf);
 	}
+	
+	// Statestik
+	public static ArrayList<Salg> getSalgIPeriode(LocalDate start, LocalDate end) {
+		ArrayList<Salg> result = new ArrayList<>();
+		for (Salg s : Storage.getSalg()) {
+			if (s instanceof Salg && s.getDato().compareTo(start) >= 0 && s.getDato().compareTo(end) <= 0) {
+				result.add(s);
+			}
+		}
+		
+		return result;
+	}
+	
+	public static int getSolgteKlipIPeriode(LocalDate start, LocalDate end) {
+		int sum = 0;
+		for (Salg s : Storage.getSalg()) {
+			for (ProduktLinje pl : s.getProduktLinjer()) {
+				sum += pl.getProdukt().getUdstedteKlip();
+			}
+		}
+		
+		return sum;
+	}
+	
+	public static int getBrugteKlipIPeriode(LocalDate start, LocalDate end) {
+		int sum = 0;
+		for (Salg s : Storage.getSalg()) {
+			if (s.getBetalingsMetode().isBrugerKlip()) {
+				sum += s.getTotalKlipPris();
+			}
+		}
+		
+		return sum;
+	}
 
 }
