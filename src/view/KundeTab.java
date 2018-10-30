@@ -118,7 +118,7 @@ public class KundeTab extends GridPane implements ReloadableTab {
 
 	private void btnOpretAction() {
 		if (txfNavn.getText().isEmpty() || txaAdresse.getText().isEmpty() || txfTlf.getText().isEmpty()) {
-			setErrorText("Udfyld alt data om kunden.");
+			setErrorText("Alle felter skal udfyldes.");
 			return;
 		}
 		try {
