@@ -23,7 +23,7 @@ public class StatisticsController {
 				}
 				
 				for (ProduktLinje pl : s.getProduktLinjer()) {
-					klipSolgt += pl.getProdukt().getUdstedteKlip();
+					klipSolgt += pl.getProdukt().getUdstedteKlip() * pl.getAntal();
 				}
 				salgIPeriode.add(s);
 			}
