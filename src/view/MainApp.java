@@ -72,6 +72,10 @@ public class MainApp extends Application {
 		Tab tabKunder = new Tab("Kunder");
 		tabKunder.setContent(new KundeTab());
 		tabPane.getTabs().add(tabKunder);
+		
+		Tab tabStatestik = new Tab("Statestik");
+		tabStatestik.setContent(new StatestikTab());
+		tabPane.getTabs().add(tabStatestik);
 	}
 	
 	private void tabChangeListener(Tab oldValue, Tab newValue) {
