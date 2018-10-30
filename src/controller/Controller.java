@@ -399,14 +399,14 @@ public class Controller {
 	}
 
 	// GaveæskePreset
-	public static GaveaeskePreset createGaveaeskePreset(int øl, int glas, double pris, GaveaeskeEmballage emballage) {
+	public static GaveaeskePreset createGaveaeskePreset(int øl, int glas, double pris, GaveaeskeEmballage emballage) throws IllegalArgumentException {
 		if(øl < 0) {
 			throw new IllegalArgumentException("Øl kan ikke være mindre end 0");
 		}
 		if(glas < 0) {
 			throw new IllegalArgumentException("Glas kan ikke være mindre end 0");
 		}
-		if(glas <= 0 && øl <= 0) {
+		if(glas == 0 && øl == 0) {
 			throw new IllegalArgumentException("Der skal være et produkt i gaveæske");
 		}
 		if(emballage == null) {

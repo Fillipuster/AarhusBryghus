@@ -161,14 +161,15 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 			} catch (NumberFormatException e) {
 				setErrorText("Pris skal være et tal.");
 			} catch (NavnFindesAlleredeException e) {
-				setErrorText("Gaveæske findes allerede");
+				setErrorText("Gaveæske findes allerede.");
+			} catch (IllegalArgumentException e) {
+				setErrorText("Sammenpakning må ikke tom.");
 			}
 			updateLvwGaveaeskePresets();
 		} else {
 			setErrorText("Emballage skal være valgt.");
 		}
 	}
-
 	private void btnSletAction() {
 		GaveaeskePreset selected = lvwGaveaeskePresets.getSelectionModel().getSelectedItem();
 		if (selected != null) {
