@@ -21,7 +21,7 @@ public class ProduktTest {
 	@Before
 	public void setUp() {
 		pk1 = new ProduktKategori("Fadøl");
-		p1 = new Produkt(pk1, "Pilsner", "God øl", 1);
+		p1 = new Produkt(pk1, "Pilsner", "God øl", 1, 0);
 		prisK1 = new PrisKategori("Bar");
 	}
 	
