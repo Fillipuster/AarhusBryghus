@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import model.NavnFindesAlleredeException;
+import model.DataFindesAlleredeException;
 import model.PrisKategori;
 import storage.Storage;
 import controller.Controller;
@@ -111,7 +111,7 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 	private void btnOpretKategoriAction() {
 		try {
 			Controller.createPrisKategori(txfKategoriNavn.getText());
-		} catch (NavnFindesAlleredeException e) {
+		} catch (DataFindesAlleredeException e) {
 			setErrorText("Pris kategori findes allerede");
 		}
 		

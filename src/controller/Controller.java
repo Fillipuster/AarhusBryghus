@@ -10,7 +10,7 @@ import model.Kunde;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
-import model.NavnFindesAlleredeException;
+import model.DataFindesAlleredeException;
 import model.ProduktLinje;
 import model.Salg;
 import model.UdlejningsProdukt;
@@ -19,34 +19,55 @@ import storage.Storage;
 
 public class Controller {
 
+	// Argument validation methods;
+	private static void validateArgNull(Object arg, String argName) {
+		if (arg == null) {
+			throw new IllegalArgumentException(argName + " må ikke være null.");
+		}
+	}
+	
+	private static void validateArgPositiveInt(int arg, String argName) {
+		if (arg <= 0) {
+			throw new IllegalArgumentException(argName + " skal være > 0");
+		}
+	}
+
+	private static void validateArgPositiveZeroInt(int arg, String argName) {
+		if (arg < 0) {
+			throw new IllegalArgumentException(argName + " skal være >= 0.");
+		}
+	}
+	
+	private static void validateArgPositiveDouble(double arg, String argName) {
+		if (arg <= 0) {
+			throw new IllegalArgumentException(argName + " skal være > 0.");
+		}
+	}
+	
+	private static void validateArgPositiveZeroDouble(double arg, String argName) {
+		if (arg < 0) {
+			throw new IllegalArgumentException(argName + " skal være >= 0.");
+		}
+	}
+
 	// Produkt
-	public static Produkt createProdukt(ProduktKategori kategori, String navn, String beskrivelse, int klipPris, int udstedteKlip) throws NavnFindesAlleredeException {
-		if (kategori == null) {
-			throw new IllegalArgumentException("Kategori kan ikke være null");
-		}
-		if (navn == null) {
-			throw new IllegalArgumentException("Navn kan ikke være null");
-		}
-		if (beskrivelse == null) {
-			throw new IllegalArgumentException("Beskrivelse kan ikke være null");
-		}
+	public static Produkt createProdukt(ProduktKategori kategori, String navn, String beskrivelse, int klipPris,
+			int udstedteKlip) throws DataFindesAlleredeException {
 		if (udstedteKlip > 0 && klipPris > 0) {
-			throw new IllegalArgumentException("Klippris for klippekort skal være 0");
+			throw new IllegalArgumentException("Klippris for klippekort skal være 0.");
 		}
-		if (udstedteKlip < 0) {
-			throw new IllegalArgumentException("Udstedteklip skal være større eller ligmed 0");
-		}
-		if (klipPris < 0) {
-			throw new IllegalArgumentException("Klippris skal være større eller ligmed 0");
-		}
-		
-		
+		validateArgNull(kategori, "ProduktKategori");
+		validateArgNull(navn, "Navn");
+		validateArgNull(beskrivelse, "Beskrivelse");
+		validateArgPositiveZeroInt(udstedteKlip, "UdstedteKlip");
+		validateArgPositiveZeroInt(klipPris, "KlipPris");
+
+		// Implementation;
 		for (Produkt p : Storage.getProdukter()) {
 			if (p.getProduktKategori().equals(kategori) && p.getNavn().equals(navn)) {
-				throw new NavnFindesAlleredeException("Produkt findes allerede");
+				throw new DataFindesAlleredeException("Produkt findes allerede");
 			}
 		}
-		
 
 		Produkt p = new Produkt(kategori, navn, beskrivelse, klipPris, udstedteKlip);
 		Storage.addProdukt(p);
@@ -56,19 +77,12 @@ public class Controller {
 
 	public static void updateProdukt(Produkt produkt, ProduktKategori produktKategori, String navn, String beskrivelse,
 			int klipPris) {
-		if (produkt == null) {
-			throw new IllegalArgumentException("Produkt kan ikke være null");
-		}
-		if (produktKategori == null) {
-			throw new IllegalArgumentException("ProduktKategori kan ikke være null");
-		}
-		if (navn == null) {
-			throw new IllegalArgumentException("Navn kan ikke være null");
-		}
-		if (beskrivelse == null) {
-			throw new IllegalArgumentException("Beskrivelse kan ikke være null");
-		}
+		validateArgNull(produkt, "Produkt");
+		validateArgNull(produktKategori, "ProduktKategori");
+		validateArgNull(navn, "Navn");
+		validateArgNull(beskrivelse, "Beskrivelse");
 
+		// Implementation;
 		produkt.setProduktKategori(produktKategori);
 		produkt.setNavn(navn);
 		produkt.setBeskrivelse(beskrivelse);
@@ -76,29 +90,19 @@ public class Controller {
 	}
 
 	public static void addPrisToProdukt(Produkt produkt, PrisKategori prisKategori, double pris) {
-		if (produkt == null) {
-			throw new IllegalArgumentException("Produkt kan ikke være null");
-		}
-		if (prisKategori == null) {
-			throw new IllegalArgumentException("Priskategori kan ikke være null");
-		}
-		if (pris < 0) {
-			throw new IllegalArgumentException("pris kan ikke være negativt");
-		}
-		if (pris == 0) {
-			throw new IllegalArgumentException("Prisen kan ikke være 0");
-		}
+		validateArgNull(produkt, "Produkt");
+		validateArgNull(prisKategori, "PrisKategori");
+		validateArgPositiveDouble(pris, "Pris");
 
+		// Implementation;
 		produkt.setPris(prisKategori, pris);
 	}
 
 	public static ArrayList<Produkt> getProdukterIKategori(ProduktKategori kategori) {
-		if (kategori == null) {
-			throw new IllegalArgumentException("Produktkategori kan ikke være null");
-		}
+		validateArgNull(kategori, "ProduktKategori");
 
+		// Implementation;
 		ArrayList<Produkt> result = new ArrayList<>();
-
 		for (Produkt p : Storage.getProdukter()) {
 			if (p.getProduktKategori() == kategori) {
 				result.add(p);
@@ -109,12 +113,9 @@ public class Controller {
 	}
 
 	public static ArrayList<Produkt> getProdukterIPrisKategori(PrisKategori prisKategori) {
-		if (prisKategori == null) {
-			throw new IllegalArgumentException("Produktkategori kan ikke være null");
-		}
+		validateArgNull(prisKategori, "PrisKategori");
 
 		ArrayList<Produkt> result = new ArrayList<>();
-
 		for (Produkt p : Storage.getProdukter()) {
 			if (!Double.isNaN(p.getPris(prisKategori))) {
 				result.add(p);
@@ -125,7 +126,7 @@ public class Controller {
 	}
 
 	// Udlejligt Produkt
-	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukter() {
+	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukter() {		
 		ArrayList<UdlejningsProdukt> result = new ArrayList<>();
 		for (Produkt p : Storage.getProdukter()) {
 			if (p instanceof UdlejningsProdukt) {
@@ -137,9 +138,9 @@ public class Controller {
 	}
 
 	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukterIProduktKategori(ProduktKategori kategori) {
-		if(kategori == null) {
-			throw new IllegalArgumentException("Kategori må ikke være null");
-		}
+		validateArgNull(kategori, "ProduktKategori");
+		
+		// Implementation;
 		ArrayList<UdlejningsProdukt> result = new ArrayList<>();
 		for (UdlejningsProdukt up : getUdlejningsProdukter()) {
 			if (up.getProduktKategori() == kategori) {
@@ -152,15 +153,11 @@ public class Controller {
 
 	public static UdlejningsProdukt createUdlejningsProdukt(ProduktKategori produktKategori, String navn,
 			String beskrivelse, double pris, double pant) {
-		if(produktKategori == null) {
-			throw new IllegalArgumentException("Produkt kategori må ikke være null");
-		}
-		if(navn == null) {
-			throw new IllegalArgumentException("Navn må ikke være null");
-		}
-		if(beskrivelse == null) {
-			throw new IllegalArgumentException("Beskrivelse må ikke være null");
-		}
+		validateArgNull(produktKategori, "ProudktKategori");
+		validateArgNull(navn, "Navn");
+		validateArgNull(beskrivelse, "Beskrivelse");
+		
+		// Implementation;
 		UdlejningsProdukt up = new UdlejningsProdukt(produktKategori, navn, beskrivelse, pris, pant);
 		Storage.addProdukt(up);
 		return up;
@@ -168,19 +165,12 @@ public class Controller {
 
 	public static void updateUdlejningsProdukt(UdlejningsProdukt udlejningsProdukt, ProduktKategori produktKategori,
 			String navn, String beskrivelse, double pris, double pant) {
-		if(udlejningsProdukt == null) {
-			throw new IllegalArgumentException("Udlejningsprodukt må ikke være null");
-		}
-		if(produktKategori == null) {
-			throw new IllegalArgumentException("Produkt kategori må ikke være null");
-		}
-		if(navn == null) {
-			throw new IllegalArgumentException("Navn må ikke være null");
-		}
-		if(beskrivelse == null) {
-			throw new IllegalArgumentException("Beskrivelse må ikke være null");
-		}
+		validateArgNull(udlejningsProdukt, "UdlejningsProdukt");
+		validateArgNull(produktKategori, "ProduktKategori");
+		validateArgNull(navn, "Navn");
+		validateArgNull(beskrivelse, "Beskrivelse");
 		
+		// Implementation;
 		udlejningsProdukt.setProduktKategori(produktKategori);
 		udlejningsProdukt.setNavn(navn);
 		udlejningsProdukt.setBeskrivelse(beskrivelse);
@@ -204,16 +194,15 @@ public class Controller {
 		return result;
 	}
 
-	public static ProduktKategori createProduktKategori(String navn) throws NavnFindesAlleredeException {
+	public static ProduktKategori createProduktKategori(String navn) throws DataFindesAlleredeException {
 		for (ProduktKategori pk : Storage.getProduktKategorier()) {
 			if (navn.equals(pk.getNavn())) {
-				throw new NavnFindesAlleredeException("Produkt kategori findes allerede");
+				throw new DataFindesAlleredeException("Produkt kategori findes allerede");
 			}
 		}
-		if (navn == null) {
-			throw new IllegalArgumentException("Navn må ikke være null");
-		}
+		validateArgNull(navn, "Navn");
 
+		// Implementation;
 		ProduktKategori pk = new ProduktKategori(navn);
 		Storage.addProduktKategori(pk);
 
@@ -221,26 +210,23 @@ public class Controller {
 	}
 
 	public static void updateProduktKategori(ProduktKategori kategori, String navn) {
-		if (kategori == null) {
-			throw new IllegalArgumentException("Kategori må ikke være null");
-		}
-		if (navn == null) {
-			throw new IllegalArgumentException("Navn må ikke være null");
-		}
-
+		validateArgNull(kategori, "ProduktKategori");
+		validateArgNull(navn, "Navn");
+		
+		// Implementation,
 		kategori.setNavn(navn);
 	}
 
 	// PrisKategori
-	public static PrisKategori createPrisKategori(String navn) throws NavnFindesAlleredeException {
+	public static PrisKategori createPrisKategori(String navn) throws DataFindesAlleredeException {
 		for (PrisKategori pk : Storage.getPrisKategorier()) {
 			if (navn.equals(pk.getNavn())) {
-				throw new NavnFindesAlleredeException("Pris kategorien findes allerede");
+				throw new DataFindesAlleredeException("Pris kategorien findes allerede");
 			}
 		}
-		if (navn == null) {
-			throw new IllegalArgumentException("Navn må ikke være null");
-		}
+		validateArgNull(navn, "Navn");
+		
+		// Implementation;
 		PrisKategori pk = new PrisKategori(navn);
 		Storage.addPrisKategori(pk);
 
@@ -248,13 +234,10 @@ public class Controller {
 	}
 
 	public static void updatePrisKategori(PrisKategori kategori, String navn) {
-		if (kategori == null) {
-			throw new IllegalArgumentException("Kategori må ikke være null");
-		}
-		if (navn == null) {
-			throw new IllegalArgumentException("Navn må ikke være null");
-		}
+		validateArgNull(kategori, "PrisKategori");
+		validateArgNull(navn, "Navn");
 
+		// Implementation;
 		kategori.setNavn(navn);
 	}
 
@@ -264,17 +247,18 @@ public class Controller {
 	}
 
 	public static void saveSalg(Salg salg) {
-		if (salg == null) {
-			throw new IllegalArgumentException("Salg må ikke være null");
-		}
+		validateArgNull(salg, "Salg");
+		
+		// Implementation;
 		salg.setDato(LocalDate.now());
 		Storage.addSalg(salg);
 	}
 
 	public static void setSalgBetalingsMetode(Salg salg, BetalingsMetode betalingsMetode) {
-		if (betalingsMetode == null) {
-			throw new IllegalArgumentException("Betalingsmetode må ikke være null");
-		}
+		validateArgNull(salg, "Salg");
+		validateArgNull(betalingsMetode, "BetalingsMetode");
+		
+		// Implementation;
 		salg.setBetalingsMetode(betalingsMetode);
 	}
 
@@ -284,6 +268,9 @@ public class Controller {
 	}
 
 	public static void saveUdlejningsSalg(UdlejningsSalg salg) {
+		validateArgNull(salg, "UdlejningsSalg");
+		
+		// Implementation;
 		salg.setRetuneringsDato(LocalDate.now());
 	}
 
@@ -299,6 +286,9 @@ public class Controller {
 	}
 
 	public static ArrayList<UdlejningsSalg> getKundeUdlejningsSalg(Kunde kunde) {
+		validateArgNull(kunde, "Kunde");
+		
+		// Implementation;
 		ArrayList<UdlejningsSalg> result = new ArrayList<>();
 		for (UdlejningsSalg us : getUdlejningsSalg()) {
 			if (us.getKunde() == kunde) {
@@ -310,6 +300,9 @@ public class Controller {
 	}
 
 	public static ArrayList<UdlejningsSalg> getKundeAktiveUdlejningsSalg(Kunde kunde) {
+		validateArgNull(kunde, "Kunde");
+		
+		// Implementation;
 		ArrayList<UdlejningsSalg> result = new ArrayList<>();
 		for (UdlejningsSalg us : getKundeUdlejningsSalg(kunde)) {
 			if (us.getRetuneringsDato() == null) {
@@ -321,55 +314,61 @@ public class Controller {
 	}
 
 	public static void setUdlejningsSalgKunde(UdlejningsSalg udlejningsSalg, Kunde kunde) {
+		validateArgNull(udlejningsSalg, "UdlejningsSalg");
+		validateArgNull(kunde, "Kunde");
+		
+		// Implementation;
 		udlejningsSalg.setKunde(kunde);
 	}
 
 	public static void tilbageleverUdlejningsSalg(UdlejningsSalg salg) {
+		validateArgNull(salg, "UdlejningsSalg");
+		
+		// Implementation;
 		salg.setRetuneringsDato(LocalDate.now());
 	}
 
 	public static void sletUdlejligProduktLinje(UdlejningsSalg udlejningsSalg, ProduktLinje produktLinje) {
+		validateArgNull(udlejningsSalg, "UdlejningsSalg");
+		validateArgNull(produktLinje, "ProduktLinje");
+		
+		// Implementation;
 		udlejningsSalg.sletProduktLinje(produktLinje);
 	}
 
 	// ProduktLinje
 	public static ProduktLinje createProduktLinje(Salg salg, Produkt produkt, PrisKategori prisKategori, int antal,
 			double rabat) {
-		if (produkt == null) {
-			throw new IllegalArgumentException("Produkt kan ikke være null");
-		}
-		if (antal < 0) {
-			throw new IllegalArgumentException("Antal kan ikke være negativt");
-		}
-		if (antal == 0) {
-			throw new IllegalArgumentException("Antal kan ikke være 0");
-		}
-		if (rabat < 0) {
-			throw new IllegalArgumentException("Rabat kan ikke være negativt");
-		}
+		validateArgNull(produkt, "Produkt");
+		validateArgPositiveInt(antal, "Antal");
+		validateArgPositiveZeroDouble(rabat, "Rabat");
+
+		// Implementation;
 		return salg.opretProduktLinje(produkt, prisKategori, antal, rabat);
 	}
 
 	public static void updateProduktLinje(ProduktLinje produktLinje, int antal, double rabat) {
-		if (antal < 0) {
-			throw new IllegalArgumentException("Antal må ikke være negativ");
-		}
-		if (rabat < 0) {
-			throw new IllegalArgumentException("Rabat må ikke være negativ");
-		}
+		validateArgPositiveInt(antal, "Antal");
+		validateArgPositiveZeroDouble(rabat, "Rabat");
+		
+		// Implementation;
 		produktLinje.setAntal(antal);
 		produktLinje.setRabat(rabat);
 	}
 
 	public static void setProduktLinjeAntalUbrugt(ProduktLinje produktLinje, int antalUbrugt) {
+		validateArgNull(produktLinje, "ProduktLinje");
+		validateArgPositiveZeroInt(antalUbrugt, "AntalUbrugt");
+		
+		// Implementation;
 		produktLinje.setAntalUbrugt(antalUbrugt);
 	}
 
 	// BetalingsMetode
 	public static BetalingsMetode createBetalingsMetode(String navn, boolean brugerKlip) {
-		if (navn == null) {
-			throw new IllegalArgumentException("Navn må ikke være null");
-		}
+		validateArgNull(navn, "Navn");
+		
+		// Implementation;
 		BetalingsMetode bm = new BetalingsMetode(navn, brugerKlip);
 		Storage.addBetalingsMetode(bm);
 
@@ -377,13 +376,10 @@ public class Controller {
 	}
 
 	public static void updateBetalingsMetode(BetalingsMetode bm, String navn) {
-		if (navn == null) {
-			throw new IllegalArgumentException("Navn må ikke være null");
-		}
-
-		if (bm == null) {
-			throw new IllegalArgumentException("Betalingsmetode må ikke være null");
-		}
+		validateArgNull(bm, "BetalingsMetode");
+		validateArgNull(navn, "Navn");
+		
+		// Implementation;
 		bm.setNavn(navn);
 	}
 
@@ -395,51 +391,46 @@ public class Controller {
 	}
 
 	public static void setGaveaeskeEmballage(Gaveaeske gaveaeske, GaveaeskeEmballage emballage) {
+		validateArgNull(gaveaeske, "Gaveaeske");
+		validateArgNull(emballage, "Emballage");
+		
+		// Implementation;
 		gaveaeske.setEmballage(emballage);
 	}
 
 	// GaveæskePreset
-	public static GaveaeskePreset createGaveaeskePreset(int øl, int glas, double pris, GaveaeskeEmballage emballage) throws IllegalArgumentException {
-		if(øl < 0) {
-			throw new IllegalArgumentException("Øl kan ikke være mindre end 0");
-		}
-		if(glas < 0) {
-			throw new IllegalArgumentException("Glas kan ikke være mindre end 0");
-		}
-		if(glas == 0 && øl == 0) {
+	public static GaveaeskePreset createGaveaeskePreset(int øl, int glas, double pris, GaveaeskeEmballage emballage)
+			throws IllegalArgumentException {
+		if (glas == 0 && øl == 0) {
 			throw new IllegalArgumentException("Der skal være et produkt i gaveæske");
 		}
-		if(emballage == null) {
-			throw new IllegalArgumentException("Emballage må ikke være null");
-		}
+		validateArgPositiveZeroInt(øl, "Øl");
+		validateArgPositiveZeroInt(glas, "Glas");
+		validateArgNull(emballage, "Emballage");
 		
+		// Implementation;
 		for (GaveaeskePreset g : Storage.getGaveaeskePresets()) {
 			if (g.getEmballage().equals(emballage) && g.getØl() == øl && g.getGlas() == glas) {
-				throw new NavnFindesAlleredeException("Produkt Findes Allerede");
+				throw new DataFindesAlleredeException("Produkt Findes Allerede");
 			}
 		}
 		GaveaeskePreset gp = new GaveaeskePreset(øl, glas, pris, emballage);
 		Storage.addGaveaeskePreset(gp);
+		
 		return gp;
 	}
 
 	public static void updateGaveaeskePreset(GaveaeskePreset preset, int øl, int glas, double pris,
 			GaveaeskeEmballage emballage) {
-		if(øl < 0) {
-			throw new IllegalArgumentException("Øl kan ikke være mindre end 0");
-		}
-		if(glas < 0) {
-			throw new IllegalArgumentException("Glas kan ikke være mindre end 0");
-		}
-		if(glas <= 0 && øl <= 0) {
+		if (glas <= 0 && øl <= 0) {
 			throw new IllegalArgumentException("Der skal være et produkt i gaveæske");
 		}
-		if(emballage == null) {
-			throw new IllegalArgumentException("Emballage må ikke være null");
-		}
-		if(preset == null) {
-			throw new IllegalArgumentException("Gaveæske skal være valgt");
-		}
+		validateArgPositiveZeroInt(øl, "Øl");
+		validateArgPositiveZeroInt(glas, "Glas");
+		validateArgNull(preset, "GaveaeskePreset");
+		validateArgNull(emballage, "Emballage");
+		
+		// Implementation;
 		preset.setØl(øl);
 		preset.setGlas(glas);
 		preset.setPris(pris);
@@ -450,9 +441,12 @@ public class Controller {
 	public static GaveaeskeEmballage createGaveaeskeEmballage(String navn) {
 		for (GaveaeskeEmballage ge : Storage.getGaveaeskeEmballager()) {
 			if (ge.getNavn().equals(navn)) {
-				throw new NavnFindesAlleredeException("");
+				throw new DataFindesAlleredeException("GaveaeskeEmballage findes allerede.");
 			}
 		}
+		validateArgNull(navn, "Navn");
+
+		// Implementation;
 		GaveaeskeEmballage ge = new GaveaeskeEmballage(navn);
 		Storage.addGaveaeskeEmballage(ge);
 		return ge;
@@ -460,19 +454,14 @@ public class Controller {
 
 	// Kunde
 	public static Kunde createKunde(String navn, String addresse, String tlf) {
-		if(navn == null) {
-			throw new IllegalArgumentException("Navn må ikke være null");
-		}
-		if(addresse == null) {
-			throw new IllegalArgumentException("Adresse må ikke være null");
-		}
-		if(tlf == null) {
-			throw new IllegalArgumentException("Telefonnummer må ikke være null");
-		}
+		validateArgNull(navn, "Navn");
+		validateArgNull(addresse, "Addresse");
+		validateArgNull(tlf, "Tlf");
 		
+		// Implementation;
 		for (Kunde k : Storage.getKunder()) {
 			if (k.getAddresse().equals(addresse) || k.getTelefonNr().equals(tlf)) {
-				throw new NavnFindesAlleredeException("");
+				throw new DataFindesAlleredeException("");
 			}
 		}
 		Kunde k = new Kunde(navn, addresse, tlf);
@@ -481,10 +470,16 @@ public class Controller {
 		return k;
 	}
 
-	public static void updateKunde(Kunde k, String navn, String addresse, String tlf) {
-		k.setNavn(navn);
-		k.setAddresse(addresse);
-		k.setTelefonNr(tlf);
+	public static void updateKunde(Kunde kunde, String navn, String addresse, String tlf) {
+		validateArgNull(kunde, "Kunde");
+		validateArgNull(navn, "Navn");
+		validateArgNull(addresse, "Addresse");
+		validateArgNull(tlf, "Tlf");
+		
+		// Implementation;
+		kunde.setNavn(navn);
+		kunde.setAddresse(addresse);
+		kunde.setTelefonNr(tlf);
 	}
 
 }

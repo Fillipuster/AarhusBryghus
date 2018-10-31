@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import model.NavnFindesAlleredeException;
+import model.DataFindesAlleredeException;
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
@@ -336,7 +336,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 					txaProduktBeskrivelse.getText(), Double.parseDouble(txfUdlejligPris.getText()),
 					Double.parseDouble(txfUdlejligPant.getText()));
 			updateLvwProdukter();
-		} catch (NavnFindesAlleredeException e) {
+		} catch (DataFindesAlleredeException e) {
 			setErrorText("Produkt findes allerede.");
 		}
 	}
@@ -350,7 +350,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 			updateLvwProdukter();
 		} catch (NumberFormatException e) {
 			setErrorText("Kun tal er accepteret.");
-		} catch (NavnFindesAlleredeException e) {
+		} catch (DataFindesAlleredeException e) {
 			setErrorText("Produkt findes allerede.");
 		}
 	}
