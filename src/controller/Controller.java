@@ -25,10 +25,10 @@ public class Controller {
 			throw new IllegalArgumentException(argName + " må ikke være null.");
 		}
 	}
-	
+
 	private static void validateArgPositiveInt(int arg, String argName) {
 		if (arg <= 0) {
-			throw new IllegalArgumentException(argName + " skal være > 0");
+			throw new IllegalArgumentException(argName + " skal være > 0.");
 		}
 	}
 
@@ -37,13 +37,13 @@ public class Controller {
 			throw new IllegalArgumentException(argName + " skal være >= 0.");
 		}
 	}
-	
+
 	private static void validateArgPositiveDouble(double arg, String argName) {
 		if (arg <= 0) {
 			throw new IllegalArgumentException(argName + " skal være > 0.");
 		}
 	}
-	
+
 	private static void validateArgPositiveZeroDouble(double arg, String argName) {
 		if (arg < 0) {
 			throw new IllegalArgumentException(argName + " skal være >= 0.");
@@ -128,7 +128,7 @@ public class Controller {
 	}
 
 	// Udlejligt Produkt
-	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukter() {		
+	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukter() {
 		ArrayList<UdlejningsProdukt> result = new ArrayList<>();
 		for (Produkt p : Storage.getProdukter()) {
 			if (p instanceof UdlejningsProdukt) {
@@ -141,7 +141,7 @@ public class Controller {
 
 	public static ArrayList<UdlejningsProdukt> getUdlejningsProdukterIProduktKategori(ProduktKategori kategori) {
 		validateArgNull(kategori, "ProduktKategori");
-		
+
 		// Implementation;
 		ArrayList<UdlejningsProdukt> result = new ArrayList<>();
 		for (UdlejningsProdukt up : getUdlejningsProdukter()) {
@@ -158,7 +158,7 @@ public class Controller {
 		validateArgNull(produktKategori, "ProudktKategori");
 		validateArgNull(navn, "Navn");
 		validateArgNull(beskrivelse, "Beskrivelse");
-		
+
 		// Implementation;
 		UdlejningsProdukt up = new UdlejningsProdukt(produktKategori, navn, beskrivelse, pris, pant);
 		Storage.addProdukt(up);
@@ -171,7 +171,7 @@ public class Controller {
 		validateArgNull(produktKategori, "ProduktKategori");
 		validateArgNull(navn, "Navn");
 		validateArgNull(beskrivelse, "Beskrivelse");
-		
+
 		// Implementation;
 		udlejningsProdukt.setProduktKategori(produktKategori);
 		udlejningsProdukt.setNavn(navn);
@@ -214,7 +214,7 @@ public class Controller {
 	public static void updateProduktKategori(ProduktKategori kategori, String navn) {
 		validateArgNull(kategori, "ProduktKategori");
 		validateArgNull(navn, "Navn");
-		
+
 		// Implementation,
 		kategori.setNavn(navn);
 	}
@@ -227,7 +227,7 @@ public class Controller {
 			}
 		}
 		validateArgNull(navn, "Navn");
-		
+
 		// Implementation;
 		PrisKategori pk = new PrisKategori(navn);
 		Storage.addPrisKategori(pk);
@@ -250,7 +250,7 @@ public class Controller {
 
 	public static void saveSalg(Salg salg) {
 		validateArgNull(salg, "Salg");
-		
+
 		// Implementation;
 		salg.setDato(LocalDate.now());
 		Storage.addSalg(salg);
@@ -259,7 +259,7 @@ public class Controller {
 	public static void setSalgBetalingsMetode(Salg salg, BetalingsMetode betalingsMetode) {
 		validateArgNull(salg, "Salg");
 		validateArgNull(betalingsMetode, "BetalingsMetode");
-		
+
 		// Implementation;
 		salg.setBetalingsMetode(betalingsMetode);
 	}
@@ -271,7 +271,7 @@ public class Controller {
 
 	public static void saveUdlejningsSalg(UdlejningsSalg salg) {
 		validateArgNull(salg, "UdlejningsSalg");
-		
+
 		// Implementation;
 		salg.setRetuneringsDato(LocalDate.now());
 	}
@@ -289,7 +289,7 @@ public class Controller {
 
 	public static ArrayList<UdlejningsSalg> getKundeUdlejningsSalg(Kunde kunde) {
 		validateArgNull(kunde, "Kunde");
-		
+
 		// Implementation;
 		ArrayList<UdlejningsSalg> result = new ArrayList<>();
 		for (UdlejningsSalg us : getUdlejningsSalg()) {
@@ -303,7 +303,7 @@ public class Controller {
 
 	public static ArrayList<UdlejningsSalg> getKundeAktiveUdlejningsSalg(Kunde kunde) {
 		validateArgNull(kunde, "Kunde");
-		
+
 		// Implementation;
 		ArrayList<UdlejningsSalg> result = new ArrayList<>();
 		for (UdlejningsSalg us : getKundeUdlejningsSalg(kunde)) {
@@ -318,14 +318,14 @@ public class Controller {
 	public static void setUdlejningsSalgKunde(UdlejningsSalg udlejningsSalg, Kunde kunde) {
 		validateArgNull(udlejningsSalg, "UdlejningsSalg");
 		validateArgNull(kunde, "Kunde");
-		
+
 		// Implementation;
 		udlejningsSalg.setKunde(kunde);
 	}
 
 	public static void tilbageleverUdlejningsSalg(UdlejningsSalg salg) {
 		validateArgNull(salg, "UdlejningsSalg");
-		
+
 		// Implementation;
 		salg.setRetuneringsDato(LocalDate.now());
 	}
@@ -333,7 +333,7 @@ public class Controller {
 	public static void sletUdlejligProduktLinje(UdlejningsSalg udlejningsSalg, ProduktLinje produktLinje) {
 		validateArgNull(udlejningsSalg, "UdlejningsSalg");
 		validateArgNull(produktLinje, "ProduktLinje");
-		
+
 		// Implementation;
 		udlejningsSalg.sletProduktLinje(produktLinje);
 	}
@@ -352,7 +352,7 @@ public class Controller {
 	public static void updateProduktLinje(ProduktLinje produktLinje, int antal, double rabat) {
 		validateArgPositiveInt(antal, "Antal");
 		validateArgPositiveZeroDouble(rabat, "Rabat");
-		
+
 		// Implementation;
 		produktLinje.setAntal(antal);
 		produktLinje.setRabat(rabat);
@@ -361,7 +361,7 @@ public class Controller {
 	public static void setProduktLinjeAntalUbrugt(ProduktLinje produktLinje, int antalUbrugt) {
 		validateArgNull(produktLinje, "ProduktLinje");
 		validateArgPositiveZeroInt(antalUbrugt, "AntalUbrugt");
-		
+
 		// Implementation;
 		produktLinje.setAntalUbrugt(antalUbrugt);
 	}
@@ -369,7 +369,7 @@ public class Controller {
 	// BetalingsMetode
 	public static BetalingsMetode createBetalingsMetode(String navn, boolean brugerKlip) {
 		validateArgNull(navn, "Navn");
-		
+
 		// Implementation;
 		BetalingsMetode bm = new BetalingsMetode(navn, brugerKlip);
 		Storage.addBetalingsMetode(bm);
@@ -380,7 +380,7 @@ public class Controller {
 	public static void updateBetalingsMetode(BetalingsMetode bm, String navn) {
 		validateArgNull(bm, "BetalingsMetode");
 		validateArgNull(navn, "Navn");
-		
+
 		// Implementation;
 		bm.setNavn(navn);
 	}
@@ -395,7 +395,7 @@ public class Controller {
 	public static void setGaveaeskeEmballage(Gaveaeske gaveaeske, GaveaeskeEmballage emballage) {
 		validateArgNull(gaveaeske, "Gaveaeske");
 		validateArgNull(emballage, "Emballage");
-		
+
 		// Implementation;
 		gaveaeske.setEmballage(emballage);
 	}
@@ -406,19 +406,19 @@ public class Controller {
 		if (glas == 0 && øl == 0) {
 			throw new IllegalArgumentException("Der skal være et produkt i gaveæske");
 		}
-		validateArgPositiveZeroInt(øl, "Øl");
-		validateArgPositiveZeroInt(glas, "Glas");
-		validateArgNull(emballage, "Emballage");
-		
-		// Implementation;
 		for (GaveaeskePreset g : Storage.getGaveaeskePresets()) {
 			if (g.getEmballage().equals(emballage) && g.getØl() == øl && g.getGlas() == glas) {
 				throw new DataFindesAlleredeException("Produkt Findes Allerede");
 			}
 		}
+		validateArgPositiveZeroInt(øl, "Øl");
+		validateArgPositiveZeroInt(glas, "Glas");
+		validateArgNull(emballage, "Emballage");
+
+		// Implementation;
 		GaveaeskePreset gp = new GaveaeskePreset(øl, glas, pris, emballage);
 		Storage.addGaveaeskePreset(gp);
-		
+
 		return gp;
 	}
 
@@ -431,7 +431,7 @@ public class Controller {
 		validateArgPositiveZeroInt(glas, "Glas");
 		validateArgNull(preset, "GaveaeskePreset");
 		validateArgNull(emballage, "Emballage");
-		
+
 		// Implementation;
 		preset.setØl(øl);
 		preset.setGlas(glas);
@@ -459,7 +459,7 @@ public class Controller {
 		validateArgNull(navn, "Navn");
 		validateArgNull(addresse, "Addresse");
 		validateArgNull(tlf, "Tlf");
-		
+
 		// Implementation;
 		for (Kunde k : Storage.getKunder()) {
 			if (k.getAddresse().equals(addresse) || k.getTelefonNr().equals(tlf)) {
@@ -477,7 +477,7 @@ public class Controller {
 		validateArgNull(navn, "Navn");
 		validateArgNull(addresse, "Addresse");
 		validateArgNull(tlf, "Tlf");
-		
+
 		// Implementation;
 		kunde.setNavn(navn);
 		kunde.setAddresse(addresse);
