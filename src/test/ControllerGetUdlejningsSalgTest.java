@@ -8,6 +8,10 @@ import model.Salg;
 import model.UdlejningsProdukt;
 import model.UdlejningsSalg;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -20,6 +24,9 @@ public class ControllerGetUdlejningsSalgTest {
 	private static ProduktKategori pk2; 
 	private static PrisKategori prisK0;
 	
+	private static UdlejningsSalg us0;
+	private static UdlejningsSalg us1;
+	private static Salg s1;
 	private static BetalingsMetode bm0; 
 	
 	private static Produkt p0;
@@ -41,17 +48,17 @@ public class ControllerGetUdlejningsSalgTest {
 		
 		bm0 = new BetalingsMetode("MobilePay", false);
 		
-		UdlejningsSalg us0 = Controller.createUdlejningsSalg();
+		 us0 = Controller.createUdlejningsSalg();
 		us0.opretProduktLinje(p0, prisK0, 1, 0);
 		Controller.setSalgBetalingsMetode(us0, bm0);
 		Controller.saveSalg(us0);
 		
-		UdlejningsSalg us1 = Controller.createUdlejningsSalg();
+		us1 = Controller.createUdlejningsSalg();
 		us1.opretProduktLinje(p1, prisK0, 2, 2);
 		Controller.setSalgBetalingsMetode(us1, bm0);
 		Controller.saveSalg(us1);
 		
-		Salg s1 = Controller.createUdlejningsSalg();
+		s1 = Controller.createSalg();
 		s1.opretProduktLinje(p3, prisK0, 1, 0);
 		Controller.setSalgBetalingsMetode(s1, bm0);
 		Controller.saveSalg(s1);
@@ -59,8 +66,12 @@ public class ControllerGetUdlejningsSalgTest {
 	
 	@Test
 	public void getUdlejnignsSalgTC1() {
+		ArrayList<UdlejningsSalg> expected = new ArrayList<>();
+		expected.add(us0);
+		expected.add(us1);
 		
+		assertEquals(expected, Controller.getUdlejningsSalg());
+
 	}
-	
 
 }
