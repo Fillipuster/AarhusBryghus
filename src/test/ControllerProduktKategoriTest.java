@@ -2,13 +2,19 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import controller.Controller;
+import model.Produkt;
 import model.ProduktKategori;
+import model.UdlejningsProdukt;
+import storage.Storage;
 
 public class ControllerProduktKategoriTest {
+//	TODO: getUdlejligeProduktKategorier, 
 
 	ProduktKategori pk1;
 
@@ -17,7 +23,7 @@ public class ControllerProduktKategoriTest {
 		pk1 = new ProduktKategori("Fadøl");
 
 	}
-	
+
 	// -------------------------------------------------------------------------------------------------------------------------
 	// Test cases for createProduktKategori
 
@@ -70,6 +76,6 @@ public class ControllerProduktKategoriTest {
 		} catch (IllegalArgumentException iae) {
 			assertEquals(iae.getMessage(), "Navn må ikke være null");
 		}
-	}
+	}	
 
 }
