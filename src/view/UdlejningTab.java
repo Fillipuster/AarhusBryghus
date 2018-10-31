@@ -44,7 +44,6 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 			@Override
 			public void handle(MouseEvent event) {
 				clearErrorText();
-				clearTxfAntal();
 			}
 		});
 		
@@ -218,9 +217,4 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	private void clearErrorText() {
 		lblError.setText("");
 	}
-	
-	private void clearTxfAntal() {
-		txfAntal.clear();
-	}
-
 }
