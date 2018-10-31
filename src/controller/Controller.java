@@ -77,6 +77,9 @@ public class Controller {
 
 	public static void updateProdukt(Produkt produkt, ProduktKategori produktKategori, String navn, String beskrivelse,
 			int klipPris, int udstedteKlip) {
+		if (klipPris > 0 && udstedteKlip > 0) {
+			throw new IllegalArgumentException("Klippris for klippekort skal være 0.");
+		}
 		validateArgNull(produkt, "Produkt");
 		validateArgNull(produktKategori, "ProduktKategori");
 		validateArgNull(navn, "Navn");
