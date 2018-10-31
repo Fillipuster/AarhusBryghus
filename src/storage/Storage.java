@@ -62,7 +62,7 @@ public class Storage {
 		Produkt p4 = Controller.createProdukt(fadøl, "IPA", "Indian Pale Ale\nFrugtig, fra fad.", 0, 0);
 		Produkt p5 = Controller.createProdukt(fadøl, "Blonde", "Frisk, fra fad.", 3, 0);
 		
-		Produkt p6 = Controller.createUdlejningsProdukt(fustager, "IPA", "25L\nCrisp og frugtig.", 250d, 100d);
+		/*Produkt p6 = /*Controller.createUdlejningsProdukt(fustager, "IPA", "25L\nCrisp og frugtig.", 250d, 100d);
 		/*Produkt p7 = */Controller.createUdlejningsProdukt(fustager, "Pilsner", "20L\nStandard, god til pizza.", 200d, 100d);
 		
 		/*Produkt p8 = */Controller.createUdlejningsProdukt(anlæg, "2-hane Anlæg", "Fadølsanlæg med 2 haner.", 500d, 0d);
@@ -88,7 +88,7 @@ public class Storage {
 		Controller.addPrisToProdukt(p10, pk1, 150);
 		
 		BetalingsMetode b0 = Controller.createBetalingsMetode("Kreditkort", false);
-		BetalingsMetode b1 = Controller.createBetalingsMetode("Kontant", false);
+		/*BetalingsMetode b1 = */Controller.createBetalingsMetode("Kontant", false);
 		BetalingsMetode b2 = Controller.createBetalingsMetode("MobilePay", false);
 		BetalingsMetode b3 = Controller.createBetalingsMetode("Klippekort", true);
 		
