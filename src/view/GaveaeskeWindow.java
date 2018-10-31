@@ -76,11 +76,11 @@ public class GaveaeskeWindow extends Stage {
 		// Column 1
 		btnTilføj = new Button("→");
 		btnTilføj.setOnAction(e -> btnTilføjAction());
-		pane.add(btnTilføj, 1, 5);
+		pane.add(btnTilføj, 1, 1);
 
 		btnFjern = new Button("←");
 		btnFjern.setOnAction(e -> btnFjernAction());
-		pane.add(btnFjern, 1, 6);
+		pane.add(btnFjern, 1, 2);
 
 		// Column 2
 		ViewHelper.label(pane, 2, 0, "Produkter i gaveæske:");
