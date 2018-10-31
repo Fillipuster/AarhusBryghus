@@ -1,7 +1,9 @@
 package test;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 import controller.Controller;
@@ -13,7 +15,7 @@ import storage.Storage;
 public class ControllerProduktTest {
 
 	PrisKategori priskat0;
-	ProduktKategori produktkat0;
+	ProduktKategori k1;
 	Produkt p1;
 	Produkt p2;
 	Produkt p3;
@@ -21,39 +23,68 @@ public class ControllerProduktTest {
 	@Before
 	public void setUp() throws Exception {
 		priskat0 = new PrisKategori("Bar");
-		produktkat0 = new ProduktKategori("Fadøl");
-		p1 = new Produkt(produktkat0, "IPA", "Bedste øl", 1, 0);
-		p3 = new Produkt(produktkat0, "Pils", "Frugtig", 2, 0);
+		k1 = new ProduktKategori("Øl");
+		p1 = new Produkt(k1, "IPA", "frugtig", 0, 0);
+		p3 = new Produkt(k1, "Pils", "Frugtig", 2, 0);
 	}
+	
+	@After
+	public void cleanUp() {
+		for(Produkt p : Storage.getProdukter()) {
+			Storage.removeProdukt(p);
+		}
+	}
+	
 
 	// -------------------------------------------------------------------------------------------------------------------------
 	// Test cases for createProdukt
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testCreateProduktTC1() {
 		Produkt actual = p1;
-		Produkt p = Controller.createProdukt(null, "IPA", "Bedste øl", 1, 0 );
-		assertEquals(p, actual);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testCreateProduktTC2() {
-		Produkt actual = p1;
-		Produkt p = Controller.createProdukt(produktkat0, null, "Bedste øl", 1, 0);
+		Produkt p = Controller.createProdukt(k1, "IPA", "frugtig", 0, 0);
 		assertEquals(p, actual);
 	}
 
 	@Test
-	public void testCreateProduktTC3() {
-		Produkt actual = p1;
-		Produkt p2 = Controller.createProdukt(produktkat0, "IPA", "Bedste øl", 1, 0);
-		assertEquals(p2, actual);
+	public void testCreateProduktTC2() {
+		Produkt actual = new Produkt(k1, "IPA", "frugtig", 1, 0);
+		Produkt p = Controller.createProdukt(k1, "IPA", "frugtig", 1, 0);
+		assertEquals(p, actual);
 	}
 	
 	@Test
-	public void TestCreateProduktTC4() {
-		
+	public void testCreateProduktTC3() {
+		Produkt actual = new Produkt(k1, "IPA", "frugtig", 0, 1);
+		Produkt p = Controller.createProdukt(k1, "IPA", "frugtig", 0, 1);
+		assertEquals(p, actual);
 	}
+	
+	@Test
+	public void testCreateProduktTC4() {
+		try {
+			Produkt p = Controller.createProdukt(k1, "IPA", "frugtig", 1, 1);
+		}catch (IllegalArgumentException iae) {
+			assertEquals(iae.getMessage(), "Klippris for klippekort skal være 0.");
+		}
+	}
+	
+	@Test
+	public void testCreateProduktTC5() {
+		try {
+			Produkt p = Controller.createProdukt(k1, "IPA", "frugtig", 1, 1);
+		}catch (IllegalArgumentException iae) {
+			assertEquals(iae.getMessage(), "Klippris for klippekort skal være 0.");
+		}
+	}
+	
+//
+//	@Test
+//	public void testCreateProduktTC3() {
+//		Produkt actual = p1;
+//		Produkt p2 = Controller.createProdukt(k1, "IPA", "Bedste øl", 1, 0);
+//		assertEquals(p2, actual);
+//	}
 
 	// -------------------------------------------------------------------------------------------------------------------------
 	// Test cases for updateProdukt
@@ -61,7 +92,7 @@ public class ControllerProduktTest {
 	@Test
 	public void testUpdateProduktTC1() {
 		try {
-			Controller.updateProdukt(null, produktkat0, "IPA", "Bedre end bedste", 1);
+			Controller.updateProdukt(null, k1, "IPA", "Bedre end bedste", 1);
 			fail();
 		} catch (IllegalArgumentException iae) {
 			assertEquals(iae.getMessage(), "Produkt må ikke være null.");
@@ -81,8 +112,8 @@ public class ControllerProduktTest {
 	@Test
 	public void testUpdateProduktTC3() {
 		Produkt actual = p1;
-		Controller.updateProdukt(p1, produktkat0, "IPA", "Bedre end bedste", 1);
-		Produkt p = new Produkt(produktkat0, "IPA", "Bedre end bedste", 1, 0);
+		Controller.updateProdukt(p1, k1, "IPA", "Bedre end bedste", 1);
+		Produkt p = new Produkt(k1, "IPA", "Bedre end bedste", 1, 0);
 		assertEquals(p, actual);
 	}
 
@@ -112,7 +143,7 @@ public class ControllerProduktTest {
 	@Test
 	public void testAddPrisToProduktTC3() {
 		Produkt actual = p1;
-		Produkt p = new Produkt(produktkat0, "IPA", "Bedste øl", 1, 0);
+		Produkt p = new Produkt(k1, "IPA", "Bedste øl", 1, 0);
 		p.setPris(priskat0, 21);
 		Controller.addPrisToProdukt(p1, priskat0, 21);
 
@@ -156,12 +187,12 @@ public class ControllerProduktTest {
 		Storage.addPrisKategori(priskat0);
 		Storage.addProdukt(p1);
 		Storage.addProdukt(p3);
-		Storage.addProduktKategori(produktkat0);
+		Storage.addProduktKategori(k1);
 
 		ArrayList<Produkt> produkter = new ArrayList<>();
 		produkter.add(p1);
 		produkter.add(p3);
-		assertEquals(produkter, Controller.getProdukterIKategori(produktkat0));
+		assertEquals(produkter, Controller.getProdukterIKategori(k1));
 	}
 
 	// -------------------------------------------------------------------------------------------------------------------------
@@ -182,13 +213,13 @@ public class ControllerProduktTest {
 		Storage.addPrisKategori(priskat0);
 		Storage.addProdukt(p1);
 		Storage.addProdukt(p3);
-		Storage.addProduktKategori(produktkat0);
+		Storage.addProduktKategori(k1);
 
 		ArrayList<Produkt> produkter = new ArrayList<>();
 		produkter.add(p1);
 		produkter.add(p3);
 
-		assertEquals(produkter, Controller.getProdukterIKategori(produktkat0));
+		assertEquals(produkter, Controller.getProdukterIKategori(k1));
 	}
 
 }
