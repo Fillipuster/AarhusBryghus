@@ -19,14 +19,12 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 	private ListView<Salg> lvwSalg;
 	private ListView<ProduktLinje> lvwProduktLinjer;
 	private Button btnUdregnStatestik;
-	private Label lblKlipBrugt, lblKlipSolgt, lblError, lblSalg, lblProduktLinje;
+	private Label lblKlipBrugt, lblKlipSolgt, lblError;
 	private DatePicker dpStart, dpSlut;
 
 	@Override
 	public void reload() {
-		// updateCboxPrisKategrorier();
-		// updateCboxBetalingsMetoder();
-		setErrorText("");
+		clearErrorText();
 	}
 
 	private void setUpPane() {
@@ -45,50 +43,54 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 
 	public StatestikTab() {
 		setUpPane();
-		this.setGridLinesVisible(false);
 
 		// Column 0
+		Label lblStart = new Label("Periode start:");
+		this.add(lblStart, 0, 0, 2, 1);
 		dpStart = new DatePicker();
-		this.add(dpStart, 0, 0);
+		this.add(dpStart, 0, 1, 2, 1);
 
+		Label lblSlut = new Label("Periode slut:");
+		this.add(lblSlut, 0, 2, 2, 1);
 		dpSlut = new DatePicker();
-		this.add(dpSlut, 0, 1);
+		this.add(dpSlut, 0, 3, 2, 1);
 
 		btnUdregnStatestik = new Button("Hent Statestik");
 		btnUdregnStatestik.setOnAction(e -> btnUdregnStatestikAction());
-		this.add(btnUdregnStatestik, 0, 2);
-
-		lblKlipBrugt = ViewHelper.label(this, 0, 6, "Klip Brugt:");
-		lblKlipBrugt.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
-		//
-		lblKlipSolgt = ViewHelper.label(this, 0, 7, "Klip Solgt:");
-		lblKlipSolgt.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
-
+		this.add(btnUdregnStatestik, 0, 4, 2, 1);
+	
+		ViewHelper.label(this, 0, 5, "Klip solgt:");
+		lblKlipSolgt = ViewHelper.label(this, 0, 6, "0");
+		lblKlipSolgt.setStyle("-fx-font-size: 24;\n-fx-font-family: monospace;");
+		
 		lblError = new Label("");
 		lblError.setTextFill(Color.RED);
 		this.add(lblError, 0, 9);
-
+		
 		// Column 1
-		lblSalg = ViewHelper.label(this, 1, 0, "Salg i valgte periode:");
-
-		lvwSalg = new ListView<>();
-		lvwSalg.setOnMouseClicked(e -> lvwSalgAction());
-		this.add(lvwSalg, 1, 1, 1, 10);
+		ViewHelper.label(this, 1, 5, "Klip brugt:");
+		lblKlipBrugt = ViewHelper.label(this, 1, 6, "0");
+		lblKlipBrugt.setStyle("-fx-font-size: 24;\n-fx-font-family: monospace;");
 
 		// Column 2
-		lblProduktLinje = ViewHelper.label(this, 3, 0, "Produktlinjer:");
+		ViewHelper.label(this, 2, 0, "Salg i valgte periode:");
+		lvwSalg = new ListView<>();
+		lvwSalg.setOnMouseClicked(e -> lvwSalgAction());
+		this.add(lvwSalg, 2, 1, 1, 10);
 
+		// Column 3
+		ViewHelper.label(this, 3, 0, "Produkter i salg:");
 		lvwProduktLinjer = new ListView<>();
 		this.add(lvwProduktLinjer, 3, 1, 1, 10);
-
+	}
+	
+	private void updateLblKlip() {
+		lblKlipSolgt.setText(Integer.toString(StatisticsController.getKlipSolgtIPeriode()));
+		lblKlipBrugt.setText(Integer.toString(StatisticsController.getKlipBrugtIPeriode()));
 	}
 
 	private void updateLvwSalg() {
-		int klipBrugt = StatisticsController.getKlipBrugtIPeriode();
-		int klipSolgt = StatisticsController.getKlipSolgtIPeriode();
-		
-		lblKlipBrugt.setText(String.format("Klip Brugt: %d", klipBrugt));
-		lblKlipSolgt.setText(String.format("Klip Solgt: %d", klipSolgt));
+		updateLblKlip();
 		lvwSalg.getItems().setAll(StatisticsController.getSalgIPeriode());
 	}
 
