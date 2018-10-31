@@ -256,7 +256,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 			} else {
 
 				Controller.updateProdukt(selected, cboxProduktKategorier.getValue(), txfProduktNavn.getText(),
-						txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()));
+						txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()), Integer.parseInt(txfUdstedteKlip.getText()));
 				updateLvwProdukter();
 
 			}
