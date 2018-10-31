@@ -76,24 +76,6 @@ public class ControllerProduktKategoriTest {
 		} catch (IllegalArgumentException iae) {
 			assertEquals(iae.getMessage(), "Navn må ikke være null");
 		}
-	}
-
-	// -------------------------------------------------------------------------------------------------------------------------
-	// Test cases for getUdlejligeProduktKategorier
-	//	TODO: Check at denner er rigtig
-	@Test
-	public void getUdlejligeProduktKategorier() {
-		ArrayList<ProduktKategori> expected = new ArrayList<>();
-		for (ProduktKategori pk : Storage.getProduktKategorier()) {
-			for (Produkt p : Controller.getProdukterIKategori(pk)) {
-				if (p instanceof UdlejningsProdukt) {
-					if (!expected.contains(pk)) {
-						expected.add(pk);
-					}
-				}
-			}
-		}
-		assertEquals(expected, Controller.getUdlejligeProduktKategorier());
-	}
+	}	
 
 }
