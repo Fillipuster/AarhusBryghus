@@ -76,11 +76,13 @@ public class Controller {
 	}
 
 	public static void updateProdukt(Produkt produkt, ProduktKategori produktKategori, String navn, String beskrivelse,
-			int klipPris) {
+			int klipPris, int udstedteKlip) {
 		validateArgNull(produkt, "Produkt");
 		validateArgNull(produktKategori, "ProduktKategori");
 		validateArgNull(navn, "Navn");
 		validateArgNull(beskrivelse, "Beskrivelse");
+		validateArgPositiveZeroInt(klipPris, "KlipPris");
+		validateArgPositiveZeroInt(udstedteKlip, "UdstedteKlip");
 
 		// Implementation;
 		produkt.setProduktKategori(produktKategori);
