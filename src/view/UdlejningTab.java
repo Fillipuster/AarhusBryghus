@@ -217,5 +217,4 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	private void clearErrorText() {
 		lblError.setText("");
 	}
-
 }
