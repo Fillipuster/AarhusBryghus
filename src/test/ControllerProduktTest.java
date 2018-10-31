@@ -2,13 +2,8 @@ package test;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.net.httpserver.Authenticator.Success;
-
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-
 import controller.Controller;
 import model.PrisKategori;
 import model.Produkt;
@@ -54,6 +49,11 @@ public class ControllerProduktTest {
 		Produkt p2 = Controller.createProdukt(produktkat0, "IPA", "Bedste øl", 1, 0);
 		assertEquals(p2, actual);
 	}
+	
+	@Test
+	public void TestCreateProduktTC4() {
+		
+	}
 
 	// -------------------------------------------------------------------------------------------------------------------------
 	// Test cases for updateProdukt
@@ -64,7 +64,7 @@ public class ControllerProduktTest {
 			Controller.updateProdukt(null, produktkat0, "IPA", "Bedre end bedste", 1);
 			fail();
 		} catch (IllegalArgumentException iae) {
-			assertEquals(iae.getMessage(), "Produkt kan ikke være null");
+			assertEquals(iae.getMessage(), "Produkt må ikke være null.");
 		}
 	}
 
@@ -74,7 +74,7 @@ public class ControllerProduktTest {
 			Controller.updateProdukt(p1, null, "IPA", "Bedre end bedste", 1);
 			fail();
 		} catch (IllegalArgumentException iae) {
-			assertEquals(iae.getMessage(), "ProduktKategori kan ikke være null");
+			assertEquals(iae.getMessage(), "ProduktKategori må ikke være null.");
 		}
 	}
 
@@ -95,7 +95,7 @@ public class ControllerProduktTest {
 			Controller.addPrisToProdukt(p1, null, 21);
 			fail();
 		} catch (IllegalArgumentException iae) {
-			assertEquals(iae.getMessage(), "Priskategori kan ikke være null");
+			assertEquals(iae.getMessage(), "PrisKategori må ikke være null.");
 		}
 	}
 
@@ -105,7 +105,7 @@ public class ControllerProduktTest {
 			Controller.addPrisToProdukt(null, priskat0, 21);
 			fail();
 		} catch (IllegalArgumentException iae) {
-			assertEquals(iae.getMessage(), "Produkt kan ikke være null");
+			assertEquals(iae.getMessage(), "Produkt må ikke være null.");
 		}
 	}
 
@@ -125,7 +125,7 @@ public class ControllerProduktTest {
 			Controller.addPrisToProdukt(p1, priskat0, -21);
 			fail();
 		} catch (IllegalArgumentException iae) {
-			assertEquals(iae.getMessage(), "pris kan ikke være negativt");
+			assertEquals(iae.getMessage(), "Pris skal være > 0.");
 		}
 	}
 
@@ -135,7 +135,7 @@ public class ControllerProduktTest {
 			Controller.addPrisToProdukt(p1, priskat0, 0);
 			fail();
 		} catch (IllegalArgumentException iae) {
-			assertEquals(iae.getMessage(), "Prisen kan ikke være 0");
+			assertEquals(iae.getMessage(), "Pris skal være > 0.");
 		}
 	}
 	// -------------------------------------------------------------------------------------------------------------------------
@@ -147,7 +147,7 @@ public class ControllerProduktTest {
 			Controller.getProdukterIKategori(null);
 			fail();
 		} catch (IllegalArgumentException iae) {
-			assertEquals(iae.getMessage(), "Produktkategori kan ikke være null");
+			assertEquals(iae.getMessage(), "ProduktKategori må ikke være null.");
 		}
 	}
 
@@ -173,7 +173,7 @@ public class ControllerProduktTest {
 			Controller.getProdukterIPrisKategori(null);
 			fail();
 		} catch (IllegalArgumentException iae) {
-			assertEquals(iae.getMessage(), "Produktkategori kan ikke være null");
+			assertEquals(iae.getMessage(), "PrisKategori må ikke være null.");
 		}
 	}
 
