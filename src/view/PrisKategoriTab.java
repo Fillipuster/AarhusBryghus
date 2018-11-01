@@ -102,8 +102,13 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void btnSletKategoriAction() {
-		if (ViewHelper.listViewHasSelected(lvwKategorier)) {
-			Storage.removePrisKategori(lvwKategorier.getSelectionModel().getSelectedItem());
+		PrisKategori selected = lvwKategorier.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			if (selected.equals(Storage.getButikPrisKategori())) {
+				setErrorText("Butik priskategorien kan ikke slettes.");
+				return;
+			}
+			Storage.removePrisKategori(selected);
 			updateLvwKategorier();			
 		} else {
 			setErrorText("Kategori skal vælges.");

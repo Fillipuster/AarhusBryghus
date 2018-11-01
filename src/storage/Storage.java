@@ -149,6 +149,10 @@ public class Storage {
 	}
 	
 	public static void removeProduktKategori(ProduktKategori pk) {
+		if (pk.equals(flaskeølProduktKategori) || pk.equals(glasProduktKategori)) {
+			return;
+		}
+		
 		produktKategorier.remove(pk);
 	}
 	
@@ -162,6 +166,10 @@ public class Storage {
 	}
 	
 	public static void removePrisKategori(PrisKategori pk) {
+		if (pk.equals(butikPrisKategori)) {
+			return;
+		}
+		
 		prisKategorier.remove(pk);
 	}
 	
