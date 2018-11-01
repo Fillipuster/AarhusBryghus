@@ -3,6 +3,7 @@ package view;
 import controller.Controller;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -33,6 +34,7 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
+		this.setAlignment(Pos.CENTER);
 		
 		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 			@Override
@@ -79,15 +81,14 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		btnSætUbrugt.setOnAction(e -> txfAntalUbrugtAction());
 		this.add(btnSætUbrugt, 3, 2);
 		
-		lblPant = ViewHelper.label(this, 3, 4, "PANT TILBAGE: 00.00 kr.");
+		lblPant = ViewHelper.label(this, 3, 4, "PANT: 0.00 kr.");
 		lblPant.setStyle("-fx-font-size: 12;\n-fx-font-family: monospace;");
 
 		lblTotal = ViewHelper.label(this, 3, 5, "TOTAL: 0.00 kr.");
 		lblTotal.setStyle("-fx-font-size: 12;\n-fx-font-family: monospace;");
 
-		lblAtBetale = ViewHelper.label(this, 3, 6, "TOTAL BETALING: 0.00 kr");
+		lblAtBetale = ViewHelper.label(this, 3, 6, "AT BETALE: 0.00 kr");
 		lblAtBetale.setStyle("-fx-font-size: 16;\n-fx-font-family: monospace;");
-
 		
 		btnTilbagelever = new Button("Tilbagelever varer");
 		btnTilbagelever.setOnAction(e -> btnTilbageleverAction());
@@ -109,7 +110,7 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 	private void updateLblAction() {
 		UdlejningsSalg selected = lvwUdlejningsSalg.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			lblPant.setText(String.format("PANT: %.2f kr.", selected.getTotalPant()));
+			lblPant.setText(String.format("PANT: -%.2f kr.", selected.getTotalPant()));
 			lblTotal.setText(String.format("TOTAL: %.2f kr.", selected.getTotalPris()));
 			lblAtBetale.setText(String.format("AT BETALE: %.2f kr.", selected.getTilbageleveringsTotal()));			
 		}
@@ -149,6 +150,8 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 			} catch (NumberFormatException e) {
 				return;
 			}
+		} else {
+			setErrorText("Produkt linje skal vælges.");
 		}
 	}
 	
@@ -160,8 +163,12 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 			updateLvwProduktLinjer();
 			lvwProduktLinje.getItems().clear();
 		} else {
-			lblError.setText("Vælg venligst en kunde");
+			setErrorText("Kunde skal vælges.");
 		}
+	}
+	
+	private void setErrorText(String txt) {
+		lblError.setText(txt);
 	}
 	
 	private void clearErrorText() {

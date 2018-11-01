@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import controller.StatisticsController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -31,6 +32,7 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(40));
 		this.setHgap(40);
 		this.setVgap(10);
+		this.setAlignment(Pos.CENTER);
 
 		// Clear error label on mouse event;
 		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
@@ -55,7 +57,7 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 		dpSlut = new DatePicker();
 		this.add(dpSlut, 0, 3, 2, 1);
 
-		btnUdregnStatestik = new Button("Hent Statestik");
+		btnUdregnStatestik = new Button("Hent Statistik");
 		btnUdregnStatestik.setOnAction(e -> btnUdregnStatestikAction());
 		this.add(btnUdregnStatestik, 0, 4, 2, 1);
 	

@@ -73,7 +73,7 @@ public class MainApp extends Application {
 		tabKunder.setContent(new KundeTab());
 		tabPane.getTabs().add(tabKunder);
 		
-		Tab tabStatestik = new Tab("Statestik");
+		Tab tabStatestik = new Tab("Statistik");
 		tabStatestik.setContent(new StatestikTab());
 		tabPane.getTabs().add(tabStatestik);
 	}

@@ -13,6 +13,7 @@ import storage.Storage;
 import controller.Controller;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 
 public class PrisKategoriTab extends GridPane implements ReloadableTab {
 
@@ -29,6 +30,7 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
+		this.setAlignment(Pos.CENTER);
 		
 		// Clear error label on mouse event;
 		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {

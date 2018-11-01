@@ -14,6 +14,7 @@ import storage.Storage;
 import controller.Controller;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 
 public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 
@@ -32,7 +33,7 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
-		this.setGridLinesVisible(false);
+		this.setAlignment(Pos.CENTER);
 		
 		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 			@Override

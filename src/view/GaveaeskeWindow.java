@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import controller.Controller;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -50,6 +51,7 @@ public class GaveaeskeWindow extends Stage {
 		pane.setPadding(new Insets(20));
 		pane.setHgap(20);
 		pane.setVgap(10);
+		pane.setAlignment(Pos.CENTER);
 		
 		// Clear error label on mouse event;
 		this.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
