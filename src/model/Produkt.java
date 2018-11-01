@@ -70,9 +70,6 @@ public class Produkt {
 		return (priser.containsKey(kategori)) ? priser.get(kategori) : Double.NaN;
 	}
 
-	// ProduktKategori produktKategori, String navn, String beskrivelse, int
-	// klipPris
-
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Produkt) {

@@ -1,7 +1,7 @@
 package model;
 
 public class ProduktLinje {
-	
+
 	private Produkt produkt;
 	private PrisKategori prisKategori;
 	private int antal, antalUbrugt;
@@ -45,16 +45,16 @@ public class ProduktLinje {
 	public void setProdukt(Produkt produkt) {
 		this.produkt = produkt;
 	}
-	
+
 	public double getPris() {
 		if (produkt instanceof UdlejningsProdukt) {
 			return (antal - antalUbrugt) * ((UdlejningsProdukt) produkt).getPris() * (1 - rabat);
 		} else {
 			if (prisKategori != null) {
-				return antal * produkt.getPris(prisKategori) * (1 - rabat);				
+				return antal * produkt.getPris(prisKategori) * (1 - rabat);
 			}
 		}
-		
+
 		return Double.NaN;
 	}
 
@@ -73,30 +73,39 @@ public class ProduktLinje {
 			return getProdukt().getKlipPris() * getAntal();
 		}
 	}
-	
-	
-	
+
 	@Override
-	public String toString() {		
+	public boolean equals(Object obj) {
+		if (obj instanceof ProduktLinje) {
+			ProduktLinje comp = (ProduktLinje) obj;
+			if (getProdukt().equals(comp.getProdukt()) && getAntal() == comp.getAntal() && getRabat() == comp.getRabat()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
 		String rabatStr = "";
 		if (rabat > 0d) {
 			rabatStr = String.format("(%.2f%)", rabat * 100d);
 		}
-		
+
 		String prisStr = "";
 		if (produkt instanceof UdlejningsProdukt) {
-			prisStr = Double.toString(((UdlejningsProdukt)produkt).getPris());
+			prisStr = Double.toString(((UdlejningsProdukt) produkt).getPris());
 		} else {
 			prisStr = Double.toString(produkt.getPris(prisKategori));
 		}
-		
+
 		String ubrugtStr = "";
 		if (antalUbrugt > 0) {
 			ubrugtStr = String.format("(%d ubrugt)", antalUbrugt);
 		}
-		
-		return String.format("%s x %d af %s kr.%n = %.2f kr. %s %s", produkt.getNavn(), antal, prisStr, getPris(), rabatStr, ubrugtStr);
+
+		return String.format("%s x %d af %s kr.%n = %.2f kr. %s %s", produkt.getNavn(), antal, prisStr, getPris(),
+				rabatStr, ubrugtStr);
 	}
-	
-	
+
 }
