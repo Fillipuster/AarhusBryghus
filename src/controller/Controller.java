@@ -92,6 +92,7 @@ public class Controller {
 		produkt.setNavn(navn);
 		produkt.setBeskrivelse(beskrivelse);
 		produkt.setKlipPris(klipPris);
+		produkt.setUdstedteKlip(udstedteKlip);
 	}
 
 	public static void addPrisToProdukt(Produkt produkt, PrisKategori prisKategori, double pris) {

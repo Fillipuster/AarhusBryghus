@@ -60,9 +60,6 @@ public class Produkt {
 	}
 
 	public void setPris(PrisKategori kategori, double pris) {
-		if(kategori == null) {
-			throw new IllegalArgumentException("Priskategori må ikke være null");
-		}
 		priser.put(kategori, pris);
 	}
 
