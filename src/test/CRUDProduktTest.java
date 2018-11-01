@@ -17,7 +17,8 @@ import controller.Controller;
 
 public class CRUDProduktTest {
 	
-	private static ProduktKategori pk0; 
+	private static ProduktKategori pk0;
+	private static ProduktKategori pk1; 
 	private static PrisKategori PrisK0;
 	private static PrisKategori PrisK1; 
 	private static Produkt p0; 
@@ -28,6 +29,7 @@ public class CRUDProduktTest {
 	@BeforeClass
 	public static void setUp() {
 		pk0 = Controller.createProduktKategori("fadøl");
+		pk1 = Controller.createProduktKategori("flaske øl");
 		PrisK0 = Controller.createPrisKategori("bar");
 		PrisK1 = Controller.createPrisKategori("butik");
 		p0 = Controller.createProdukt(pk0, "pilsner", "dejlig fra fad", 1, 0);
@@ -150,12 +152,68 @@ public class CRUDProduktTest {
 	
 	@Test
 	public void setPrisTC1(){
-		p0.setPris(PrisK0, 2);
 		Produkt expected = new Produkt(pk0, "pilsner", "dejlig fra fad", 1, 0);
 		Controller.addPrisToProdukt(expected, PrisK0, 2);
 		
+		p0.setPris(PrisK0, 2);
+		
 		assertEquals(expected, p0);
 	}
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for setNavn
+	
+	@Test
+	public void setNavnTC1() {
+		Produkt p4 = new Produkt(pk0, "pilsner", "dejlig fra fad", 1, 0);
+		p4.setNavn("julebryg");
+		
+		assertEquals("julebryg", p4.getNavn());
+	}
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for setProduktKategori
+	
+	@Test 
+	public void setProduktKategoriTC1() {
+		Produkt p4 = new Produkt(pk0, "pilsner", "dejlig fra fad", 1, 0);
+		p4.setProduktKategori(pk1);
+		
+		assertEquals(pk1, p4.getProduktKategori());
+	}
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for setBeskrivelse
+	
+	@Test
+	public void setBeskrivelseTC1() {
+		Produkt p4 = new Produkt(pk0, "pilsner", "dejlig fra fad", 1, 0);
+		p4.setBeskrivelse("test");
+		
+		assertEquals("test", p4.getBeskrivelse());
+	}
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for setKlipPris
+	
+	@Test
+	public void setKlipPrisTC1() {
+		Produkt p4 = new Produkt(pk0, "pilsner", "dejlig fra fad", 1, 0);
+		p4.setKlipPris(2);
+		
+		assertEquals(2, p4.getKlipPris());
+	}
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for setKlipPris
+	
+	@Test
+	public void setUdstedteKlipTC1() {
+		Produkt p4 = new Produkt(pk0, "pilsner", "dejlig fra fad", 0, 1);
+		p4.setUdstedteKlip(2);
+		
+		assertEquals(2, p4.getUdstedteKlip());
+	}
+
+	
+	
+	
+	
 
 	// -------------------------------------------------------------------------------------------------------------------------
 	// Test cases for createProdukt
