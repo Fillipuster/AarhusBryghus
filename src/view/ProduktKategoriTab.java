@@ -109,8 +109,9 @@ public class ProduktKategoriTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void btnOpdaterKategoriAction() {
-		if (ViewHelper.listViewHasSelected(lvwKategorier)) {
-			Controller.updateProduktKategori(lvwKategorier.getSelectionModel().getSelectedItem(), txfKategoriNavn.getText());
+		ProduktKategori selected = lvwKategorier.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			Controller.updateProduktKategori(selected, txfKategoriNavn.getText());
 			updateLvwKategorier();			
 		} else {
 			setErrorText("Kategori skal vælges.");
@@ -118,8 +119,17 @@ public class ProduktKategoriTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void btnSletKategoriAction() {
-		if (ViewHelper.listViewHasSelected(lvwKategorier)) {
-			Storage.removeProduktKategori(lvwKategorier.getSelectionModel().getSelectedItem());
+		ProduktKategori selected = lvwKategorier.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			if (selected.equals(Storage.getFlaskeølProduktKategori())) {
+				setErrorText("Flaskeøl produktkategori må ikke slettes.");
+				return;
+			}
+			if (selected.equals(Storage.getGlasProduktKategori())) {
+				setErrorText("Glas produktkategori må ikke slettes.");
+				return;
+			}
+			Storage.removeProduktKategori(selected);
 			updateLvwKategorier();			
 		} else {
 			setErrorText("Kategori skal vælges.");
@@ -128,7 +138,7 @@ public class ProduktKategoriTab extends GridPane implements ReloadableTab {
 	
 	private void btnOpretKategoriAction() {
 		try {
-		Controller.createProduktKategori(txfKategoriNavn.getText());
+			Controller.createProduktKategori(txfKategoriNavn.getText());
 		} catch (DataFindesAlleredeException e) {
 			lblError.setText("Produkt findes allered");
 		}
