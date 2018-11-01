@@ -4,12 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
+import storage.Storage;
 import controller.Controller;
 
 public class CRUDProduktTest {
@@ -18,6 +21,9 @@ public class CRUDProduktTest {
 	private static PrisKategori PrisK0;
 	private static PrisKategori PrisK1; 
 	private static Produkt p0; 
+	private static Produkt p1; 
+	private static Produkt p2;
+	private static Produkt p3;
 	
 	@BeforeClass
 	public static void setUp() {
@@ -25,7 +31,12 @@ public class CRUDProduktTest {
 		PrisK0 = Controller.createPrisKategori("bar");
 		PrisK1 = Controller.createPrisKategori("butik");
 		p0 = Controller.createProdukt(pk0, "pilsner", "dejlig fra fad", 1, 0);
+		p1 = Controller.createProdukt(pk0, "IPA", "god øl", 1, 0);
+		p2 = Controller.createProdukt(pk0, "blondie", "lys øl", 1, 0);
+
 	}
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for addPrisToProdukt
 	
 	@Test
 	public void addPrisToProduktTC1() {
@@ -81,10 +92,70 @@ public class CRUDProduktTest {
 			assertEquals(e.getMessage(), "Produkt må ikke være null.");
 		}
 	}
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for getProdukter
 	
+	@Test
+	public void getProdukterTC1() {
+		ArrayList<Produkt> expected = new ArrayList<>();
+		
+		expected.add(p0);
+		expected.add(p1);
+		expected.add(p2);
+		
+		assertEquals(expected, Storage.getProdukter());
+	}
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for removeProdukt
 	
+	@Test
+	public void removeProduktTC1() {
+		ArrayList<Produkt> expected = new ArrayList<>();
+		
+		Produkt pt = new Produkt(pk0, "", "", 1, 0);
+		
+		expected.add(p0);
+		expected.add(p1);
+		expected.add(p2);
+		
+		Storage.addProdukt(pt);
+		
+		if (!Storage.getProdukter().contains(pt)) {
+			fail();
+		}
+		
+		Storage.removeProdukt(pt);
+		
+		assertEquals(expected, Storage.getProdukter());
+	}
 	
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for addPrisToProdukt
 	
+	@Test
+	public void addProduktTC1() {
+		p3 = Controller.createProdukt(pk0, "brownie", "mærk øl", 1, 0);
+		
+		ArrayList<Produkt> expected = new ArrayList<>();
+		
+		expected.add(p0);
+		expected.add(p1);
+		expected.add(p2);
+		expected.add(p3);
+		
+		assertEquals(expected, Storage.getProdukter());
+	}
+	// -------------------------------------------------------------------------------------------------------------------------
+	// Test cases for setPris
+	
+	@Test
+	public void setPrisTC1(){
+		p0.setPris(PrisK0, 2);
+		Produkt expected = new Produkt(pk0, "pilsner", "dejlig fra fad", 1, 0);
+		Controller.addPrisToProdukt(expected, PrisK0, 2);
+		
+		assertEquals(expected, p0);
+	}
 
 	// -------------------------------------------------------------------------------------------------------------------------
 	// Test cases for createProdukt
