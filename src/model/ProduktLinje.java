@@ -77,12 +77,10 @@ public class ProduktLinje {
 	
 	
 	@Override
-	public String toString() {
-		String total = String.format("%.2f", getPris());
-		
+	public String toString() {		
 		String rabatStr = "";
 		if (rabat > 0d) {
-			rabatStr = "(" + String.format("%.2f", rabat * 100d) + "%)";
+			rabatStr = String.format("(%.2f%)", rabat * 100d);
 		}
 		
 		String prisStr = "";
@@ -94,10 +92,10 @@ public class ProduktLinje {
 		
 		String ubrugtStr = "";
 		if (antalUbrugt > 0) {
-			ubrugtStr = "(" + antalUbrugt + " ubrugt)";
+			ubrugtStr = String.format("(%d ubrugt)", antalUbrugt);
 		}
 		
-		return String.format("%s x %d af %s kr.%n = %s kr. %s %s", produkt.getNavn(), antal, prisStr, total, rabatStr, ubrugtStr);
+		return String.format("%s x %d af %s kr.%n = %.2f kr. %s %s", produkt.getNavn(), antal, prisStr, getPris(), rabatStr, ubrugtStr);
 	}
 	
 	
