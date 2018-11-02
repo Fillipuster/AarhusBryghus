@@ -1,32 +1,32 @@
 package model;
 
 public class GaveaeskePreset {
-	
-	private int øl, glas;
+
+	private int antalØl, antalGlas;
 	private double pris;
 	private GaveaeskeEmballage emballage;
-	
-	public GaveaeskePreset(int øl, int glas, double pris, GaveaeskeEmballage emballage) {
-		setØl(øl);
-		setGlas(glas);
+
+	public GaveaeskePreset(int antalØl, int antalGlas, double pris, GaveaeskeEmballage emballage) {
+		setAntalØl(antalØl);
+		setAntalGlas(antalGlas);
 		setPris(pris);
 		setEmballage(emballage);
 	}
 
-	public int getØl() {
-		return øl;
+	public int getAntalØl() {
+		return antalØl;
 	}
 
-	public void setØl(int øl) {
-		this.øl = øl;
+	public void setAntalØl(int antalØl) {
+		this.antalØl = antalØl;
 	}
 
-	public int getGlas() {
-		return glas;
+	public int getAntalGlas() {
+		return antalGlas;
 	}
 
-	public void setGlas(int glas) {
-		this.glas = glas;
+	public void setAntalGlas(int antalGlas) {
+		this.antalGlas = antalGlas;
 	}
 
 	public double getPris() {
@@ -36,30 +36,30 @@ public class GaveaeskePreset {
 	public void setPris(double pris) {
 		this.pris = pris;
 	}
-	
+
 	public GaveaeskeEmballage getEmballage() {
 		return emballage;
 	}
-	
+
 	public void setEmballage(GaveaeskeEmballage emballage) {
 		this.emballage = emballage;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof GaveaeskePreset) {
 			GaveaeskePreset comp = (GaveaeskePreset) obj;
-			if (getØl() == comp.getØl() && getGlas() == comp.getGlas() && getEmballage() == comp.getEmballage()) {
+			if (getAntalØl() == comp.getAntalØl() && getAntalGlas() == comp.getAntalGlas() && getEmballage() == comp.getEmballage()) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	@Override
 	public String toString() {
-		return getEmballage() + " (" + øl + "/" + glas + ")";
+		return getEmballage() + " (" + antalØl + "/" + antalGlas + ")";
 	}
 
 }

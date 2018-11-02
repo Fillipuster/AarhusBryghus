@@ -97,14 +97,14 @@ public class ControllerGaveaeskeTest {
 	public void updateGaveaeskePresetTC1() {
 		GaveaeskePreset g1 = Controller.createGaveaeskePreset(5, 2, 50, ge1);
 		Controller.updateGaveaeskePreset(g1, 2, 2, 50, ge1);
-		assertEquals(2, g1.getØl(), 0.0);
+		assertEquals(2, g1.getAntalØl(), 0.0);
 	}
 	
 	@Test
 	public void updateGaveaeskePresetTC2() {
 		GaveaeskePreset g1 = Controller.createGaveaeskePreset(5, 2, 50, ge1);
 		Controller.updateGaveaeskePreset(g1, 5, 10, 50, ge1);
-		assertEquals(10, g1.getGlas(), 0.0);
+		assertEquals(10, g1.getAntalGlas(), 0.0);
 	}
 	
 	@Test

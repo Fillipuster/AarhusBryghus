@@ -115,8 +115,8 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 	private void updateTextFields() {
 		GaveaeskePreset selected = lvwGaveaeskePresets.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			txfØl.setText(Integer.toString(selected.getØl()));
-			txfGlas.setText(Integer.toString(selected.getGlas()));
+			txfØl.setText(Integer.toString(selected.getAntalØl()));
+			txfGlas.setText(Integer.toString(selected.getAntalGlas()));
 			txfPris.setText(Double.toString(selected.getPris()));
 
 			lvwEmballage.getSelectionModel().select(selected.getEmballage());
