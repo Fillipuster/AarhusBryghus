@@ -17,10 +17,10 @@ navn varchar(10) primary key
 
 create table Produkter
 (
+id int primary key identity,
 navn varchar(20),
 beskrivelse varchar(255),
 produktKategori varchar(10) foreign key references ProduktKategorier(navn),
-constraint navnKategori primary key (navn, produktKategori)
 )
 
 create table PrisKategorier
@@ -30,11 +30,13 @@ navn varchar(20) primary key
 
 create table ProduktPriser
 (
+id int primary key identity,
 pris decimal,
 rabat decimal,
-produkt varchar(20) foreign key references Produkter(navnKategori),
 prisKategori varchar(20) foreign key references PrisKategorier(navn),
-produktPrisKategori varchar(20) primary key (produkt, prisKategori)
+produkt int foreign key references Produkter(id),
+
+produktPrisKategori varchar(20) unique (produkt, prisKategori)
 )
 
 create table Salg
@@ -48,5 +50,5 @@ create table ProduktLinjer
 antal int,
 aftaltPris decimal,
 salg int foreign key references Salg(id),
-produktPris varchar(20) foreign key references ProduktPriser(produktPrisKategori)
+produktPris int foreign key references ProduktPriser(id)
 )
