@@ -411,7 +411,7 @@ public class Controller {
 			throw new IllegalArgumentException("Der skal være et produkt i gaveæske");
 		}
 		for (GaveaeskePreset g : Storage.getGaveaeskePresets()) {
-			if (g.getEmballage().equals(emballage) && g.getØl() == øl && g.getGlas() == glas) {
+			if (g.getEmballage().equals(emballage) && g.getAntalØl() == øl && g.getAntalGlas() == glas) {
 				throw new DataFindesAlleredeException("Produkt Findes Allerede");
 			}
 		}
@@ -426,19 +426,19 @@ public class Controller {
 		return gp;
 	}
 
-	public static void updateGaveaeskePreset(GaveaeskePreset preset, int øl, int glas, double pris,
+	public static void updateGaveaeskePreset(GaveaeskePreset preset, int antalØl, int antalGlas, double pris,
 			GaveaeskeEmballage emballage) {
-		if (glas <= 0 && øl <= 0) {
+		if (antalGlas <= 0 && antalØl <= 0) {
 			throw new IllegalArgumentException("Der skal være et produkt i gaveæske");
 		}
-		validateArgPositiveZeroInt(øl, "Øl");
-		validateArgPositiveZeroInt(glas, "Glas");
+		validateArgPositiveZeroInt(antalØl, "Øl");
+		validateArgPositiveZeroInt(antalGlas, "Glas");
 		validateArgNull(preset, "GaveaeskePreset");
 		validateArgNull(emballage, "Emballage");
 
 		// Implementation;
-		preset.setØl(øl);
-		preset.setGlas(glas);
+		preset.setAntalØl(antalØl);
+		preset.setAntalGlas(antalGlas);
 		preset.setPris(pris);
 		preset.setEmballage(emballage);
 	}

@@ -10,7 +10,7 @@ import controller.Controller;
 import model.Produkt;
 import model.ProduktKategori;
 
-public class controllerProduktAsKlippekortTest {
+public class ControllerProduktAsKlippekortTest {
 	
 	ProduktKategori pk; 
 	Produkt p; 
