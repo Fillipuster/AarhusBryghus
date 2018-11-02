@@ -128,7 +128,7 @@ insert into ProduktLinjer values (3, 1, 6, 0) -- God kunde;
 insert into ProduktLinjer values (4, 1, 11, 20)
 
 -- Reference Example - Use in the future!
-select salg, prisKategori, antal, navn, beskrivelse, pris, aftaltPris, produktKategori, rabat from ProduktLinjer pl
+select salg, prisKategori, antal, navn, beskrivelse, pris, produktKategori, rabat, (antal * pris) as total, aftaltPris from ProduktLinjer pl
 join ProduktPriser pp on pl.produktPris = pp.id
 join Produkter p on pp.produkt = p.id
-where salg = 4
+where salg = 3
