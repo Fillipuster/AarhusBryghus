@@ -37,7 +37,7 @@ navn varchar(20) primary key
 create table ProduktPriser
 (
 id int primary key identity,
-pris decimal(10,2),
+pris decimal(10,2) not null,
 rabat decimal(4,3),
 prisKategori varchar(20) foreign key references PrisKategorier(navn) not null,
 produkt int foreign key references Produkter(id) not null,
@@ -93,7 +93,7 @@ insert into ProduktPriser values (50.0, null, 'butik', 4) -- 4
 
 insert into PrisKategorier values ('bar')
 
-insert into ProduktPriser values (null, null, 'bar', 1) -- 5
+insert into ProduktPriser values (50.0, null, 'bar', 1) -- 5
 insert into ProduktPriser values (50.0, null, 'bar', 2) -- 6
 insert into ProduktPriser values (50.0, null, 'bar', 3) -- 7
 insert into ProduktPriser values (50.0, null, 'bar', 4) -- 8
@@ -172,7 +172,32 @@ where pk.navn in ('bar') and pp.pris is null
 
 -- Opgave 2.f
 --TODO
-select AVG(pris) as Pris
-from ProduktPriser pp join ProduktLinjer pl on pp.pris = pl.produktPris
+select AVG(pris) as PrisAVG
+from ProduktPriser pp join ProduktLinjer pl on pp.id = pl.produktPris
 join Salg s on pl.salg = s.id
 GROUP BY s.id
+
+-- Dette er er fra hjælp af Alexander - husk at man skal også tage aftalt pris med i regnskabet
+select avg(TotalPrice)
+from (
+select sum(pris) as TotalPrice
+from ProduktLinjer pl join ProduktPriser pp on pl.produktPris = pp.id
+join Salg s on s.id = pl.salg
+) as T
+
+
+
+
+-- Opgave 3
+select pk.navn as ProduktKategori, p.navn as Produkt, COUNT(s.id) as id
+from Produkter p join ProduktPriser pp on p.id = pp.produkt
+left join ProduktLinjer pl on pp.id = pl.produktPris
+left join ProduktKategorier pk on pk.navn = p.produktKategori
+left join Salg s on pl.salg = s.id
+GROUP BY p.navn, pk.navn
+
+-- Opgave 4
+Create procedure PrislisteForProdukter
+as
+select * from Produkter
+go
