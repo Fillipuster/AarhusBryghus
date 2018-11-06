@@ -62,7 +62,12 @@ go
 select * from ProduktInfo
 
 -- Opgave 4
-Create procedure PrislisteForProdukter
-as
-select * from Produkter
+drop procedure if exists PrisListeForProdukter
 go
+create procedure PrisListeForProdukter (@event varchar) as
+	select pk.navn,	p.navn, pp.pris - pp.rabat as pris, event.navn
+	from PrisKategorier pk, Produkter p
+	join ProduktPriser pp on p.id = pp.id
+	where pk.navn = event.navn
+go
+EXEC PrisListeForProdukter

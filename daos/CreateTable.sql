@@ -126,3 +126,4 @@ insert into ProduktLinjer values (3, 2, 7, 80.5)
 insert into ProduktLinjer values (3, 1, 6, 0) -- God kunde;
 
 insert into ProduktLinjer values (4, 1, 11, 20)
+
