@@ -1,4 +1,4 @@
--- Reference Example - Use in the future!
+-- Reference Example - Use in the future! 
 -- TODO: Remove me before submitting report;
 select salg, prisKategori, antal, navn, beskrivelse, pris, produktKategori, rabat, (antal * pris) as total, aftaltPris from ProduktLinjer pl
 join ProduktPriser pp on pl.produktPris = pp.id
