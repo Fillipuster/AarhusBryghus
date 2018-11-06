@@ -83,3 +83,24 @@ create procedure PrisListeForProdukter (@eventet varchar) as
 	where pk.navn = p.navn and pk.navn = 'bar'
 go
 EXEC PrisListeForProdukter
+
+-- Opgave 5
+drop trigger if exists sletProdukt
+go
+create trigger sletProdukt on Produkter after delete as
+    print('1')
+    if ((select count (*) from Produkter where Produkter.produktKategori = (select produktKategori from deleted)) = 0) begin
+        print('2')
+        delete from ProduktKategorier where navn = (select produktKategori from deleted)
+    end
+go
+
+insert into ProduktKategorier values ('test')
+insert into Produkter values ('test øl', '7cl, frugtig', 'test') -- Produkter.id starter på 1; 1
+select * from ProduktKategorier
+select * from Produkter 
+delete from Produkter where navn = 'test øl'
+
+select * from ProduktKategorier
+
+select * from Produkter
