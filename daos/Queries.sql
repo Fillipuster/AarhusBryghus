@@ -49,12 +49,17 @@ select avg(totalPrice) as averagePrice from
 ) as t
 
 -- Opgave 3
-select pk.navn as ProduktKategori, p.navn as Produkt, COUNT(s.id) as id
-from Produkter p join ProduktPriser pp on p.id = pp.produkt
-left join ProduktLinjer pl on pp.id = pl.produktPris
-left join ProduktKategorier pk on pk.navn = p.produktKategori
-left join Salg s on pl.salg = s.id
-GROUP BY p.navn, pk.navn
+drop view if exists ProduktInfo
+go
+create view ProduktInfo as
+	select pk.navn as productCategory, p.navn as productName, count(s.id) as partOfOrders
+	from Produkter p join ProduktPriser pp on p.id = pp.produkt
+	left join ProduktLinjer pl on pp.id = pl.produktPris
+	left join ProduktKategorier pk on pk.navn = p.produktKategori
+	left join Salg s on pl.salg = s.id
+	group by p.navn, pk.navn
+go
+select * from ProduktInfo
 
 -- Opgave 4
 drop procedure if exists PrisListeForProdukter
