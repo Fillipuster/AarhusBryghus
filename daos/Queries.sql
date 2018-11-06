@@ -59,10 +59,22 @@ GROUP BY p.navn, pk.navn
 -- Opgave 4
 drop procedure if exists PrisListeForProdukter
 go
-create procedure PrisListeForProdukter (@event varchar) as
-	select pk.navn,	p.navn, pp.pris - pp.rabat as pris, event.navn
+create procedure PrisListeForProdukter 
+as
+select pk.navn as ProduktKatebori, p.navn as Produkt, sum(pp.pris - (pp.pris * pp.rabat)) as ReellePris
+from PrisKategorier pk, Produkter p
+join ProduktPriser pp on p.id = pp.id
+where pk.navn = p.navn 
+and pk.navn = 'bar'
+group by pk.navn
+go
+
+drop procedure if exists PrisListeForProdukter
+go
+create procedure PrisListeForProdukter (@eventet varchar) as
+	select pk.navn,	p.navn, pp.pris - pp.rabat as pris
 	from PrisKategorier pk, Produkter p
 	join ProduktPriser pp on p.id = pp.id
-	where pk.navn = event.navn
+	where pk.navn = p.navn and pk.navn = 'bar'
 go
 EXEC PrisListeForProdukter
