@@ -1,4 +1,3 @@
-
 -- Reference Example - Use in the future!
 select salg, prisKategori, antal, navn, beskrivelse, pris, produktKategori, rabat, (antal * pris) as total, aftaltPris from ProduktLinjer pl
 join ProduktPriser pp on pl.produktPris = pp.id
@@ -13,7 +12,7 @@ where p.id = 1
 
 
 -- opgave 2.b
-select sum(pris) * 0.05 as 'Rabat'
+select sum(pris) as 'Rabat'
 from ProduktLinjer pl join ProduktPriser pp on pl.produktPris = pp.id
 join Salg s on s.id = pl.salg
 where s.id = 1
@@ -69,7 +68,12 @@ left join Salg s on pl.salg = s.id
 GROUP BY p.navn, pk.navn
 
 -- Opgave 4
-Create procedure PrislisteForProdukter
-as
-select * from Produkter
+drop procedure if exists PrisListeForProdukter
 go
+create procedure PrisListeForProdukter (@event varchar) as
+	select pk.navn,	p.navn, pp.pris - pp.rabat as pris, event.navn
+	from PrisKategorier pk, Produkter p
+	join ProduktPriser pp on p.id = pp.id
+	where pk.navn = event.navn
+go
+EXEC PrisListeForProdukter
