@@ -1,11 +1,5 @@
 use AarhusBryghus
-
--- Reference Example - Use in the future!
--- TODO: Remove me before submitting report;
-select salg, prisKategori, antal, navn, beskrivelse, pris, produktKategori, rabat, (antal * pris) as total, aftaltPris from ProduktLinjer pl
-join ProduktPriser pp on pl.produktPris = pp.id
-join Produkter p on pp.produkt = p.id
-where salg = 3
+go
 
 -- Opgave 2.a 
 select navn, produktKategori, pris, rabat, prisKategori from Produkter p
@@ -34,11 +28,12 @@ group by pp.id
 having sum(antal) > 5
  
 -- Opgave 2.e
--- TODO: Tjek op på om ikke der menes de produkter som ikke er med i en ProduktPris record i PrisKategori 'bar'.
-select p.navn, pris
-from Produkter p join ProduktPriser pp on p.id = pp.produkt
-join PrisKategorier pk on pp.prisKategori = pk.navn
-where pk.navn in ('bar') and pp.pris is null
+select p.navn, pris, p.produktKategori
+from ProduktPriser pp join Produkter p on pp.produkt = p.id
+where p.id not in (select Produkter.id from Produkter join 
+ProduktPriser on Produkter.id = ProduktPriser.produkt 
+where prisKategori = 'bar')
+
 
 -- Opgave 2.f
 select avg(totalPrice) as averagePrice from
