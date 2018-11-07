@@ -1,3 +1,5 @@
+use AarhusBryghus
+
 -- Reference Example - Use in the future!
 -- TODO: Remove me before submitting report;
 select salg, prisKategori, antal, navn, beskrivelse, pris, produktKategori, rabat, (antal * pris) as total, aftaltPris from ProduktLinjer pl
@@ -61,28 +63,34 @@ create view ProduktInfo as
 go
 select * from ProduktInfo
 
--- Opgave 4
-drop procedure if exists PrisListeForProdukter
-go
-create procedure PrisListeForProdukter 
-as
-select pk.navn as ProduktKatebori, p.navn as Produkt, sum(pp.pris - (pp.pris * pp.rabat)) as ReellePris
-from PrisKategorier pk, Produkter p
-join ProduktPriser pp on p.id = pp.id
-where pk.navn = p.navn 
-and pk.navn = 'bar'
-group by pk.navn
-go
 
+-- Opgave 4.a
 drop procedure if exists PrisListeForProdukter
 go
-create procedure PrisListeForProdukter (@eventet varchar) as
-	select pk.navn,	p.navn, pp.pris - pp.rabat as pris
-	from PrisKategorier pk, Produkter p
-	join ProduktPriser pp on p.id = pp.id
-	where pk.navn = p.navn and pk.navn = 'bar'
+create procedure PrisListeForProdukter (@eventet varchar(20)) as
+	select p.navn, pp.pris * (1 - ISNULL(pp.rabat, 0)) as pris
+	from ProduktPriser pp
+	join Produkter p on pp.produkt = p.id
+	where pp.prisKategori = @eventet
 go
-EXEC PrisListeForProdukter
+EXEC PrisListeForProdukter 'bar'
+
+
+-- Opgave 4.b
+drop procedure if exists AddRabat
+go
+create procedure AddRabat (@produktKategori varchar(10), @rabat decimal(4,3)) as
+	update ProduktPriser set rabat = @rabat
+	where id in (select pp.id from ProduktPriser pp join Produkter p on pp.produkt = p.id where p.produktKategori = @produktKategori)
+go
+select p.navn, p.produktKategori, pp.rabat
+from Produkter p join ProduktPriser pp on p.id = pp.produkt
+go
+EXEC AddRabat 'fadøl', 0.05
+go
+select p.navn, p.produktKategori, pp.rabat
+from Produkter p join ProduktPriser pp on p.id = pp.produkt
+
 
 -- Opgave 5
 drop trigger if exists sletProdukt
