@@ -19,11 +19,11 @@ select * from ProduktInfo
 -- Opgave 4.a
 drop procedure if exists PrisListeForProdukter
 go
-create procedure PrisListeForProdukter (@eventet varchar(20)) as
+create procedure PrisListeForProdukter (@prisKategori varchar(20)) as
 	select p.navn, pp.pris * (1 - isnull(pp.rabat, 0)) as pris
 	from ProduktPriser pp
 	join Produkter p on pp.produkt = p.id
-	where pp.prisKategori = @eventet
+	where pp.prisKategori = @prisKategori
 go
 	-- Test
 exec PrisListeForProdukter 'bar'
