@@ -78,7 +78,8 @@ public class ProduktLinje {
 	public boolean equals(Object obj) {
 		if (obj instanceof ProduktLinje) {
 			ProduktLinje comp = (ProduktLinje) obj;
-			if (getProdukt().equals(comp.getProdukt()) && getAntal() == comp.getAntal() && getRabat() == comp.getRabat()) {
+			if (getProdukt().equals(comp.getProdukt()) && getAntal() == comp.getAntal()
+					&& getRabat() == comp.getRabat()) {
 				return true;
 			}
 		}

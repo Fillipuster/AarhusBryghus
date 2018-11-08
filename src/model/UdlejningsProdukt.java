@@ -1,10 +1,11 @@
 package model;
 
 public class UdlejningsProdukt extends Produkt {
-	
+
 	private double pris, pant;
 
-	public UdlejningsProdukt(ProduktKategori produktKategori, String navn, String beskrivelse, double pris, double pant) {
+	public UdlejningsProdukt(ProduktKategori produktKategori, String navn, String beskrivelse, double pris,
+			double pant) {
 		super(produktKategori, navn, beskrivelse, 0, 0);
 		setPris(pris);
 		setPant(pant);
