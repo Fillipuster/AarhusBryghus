@@ -127,11 +127,11 @@ public class ProduktKategoriTab extends GridPane implements ReloadableTab {
 		ProduktKategori selected = lvwKategorier.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			if (selected.equals(Storage.getFlaskeølProduktKategori())) {
-				setErrorText("Flaskeøl produktkategori må ikke slettes.");
+				setErrorText(selected.getNavn() + " produktkategori må ikke slettes.");
 				return;
 			}
 			if (selected.equals(Storage.getGlasProduktKategori())) {
-				setErrorText("Glas produktkategori må ikke slettes.");
+				setErrorText(selected.getNavn() + " produktkategori må ikke slettes.");
 				return;
 			}
 			Storage.removeProduktKategori(selected);
