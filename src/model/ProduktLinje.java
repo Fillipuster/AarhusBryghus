@@ -90,7 +90,7 @@ public class ProduktLinje {
 	public String toString() {
 		String rabatStr = "";
 		if (rabat > 0d) {
-			rabatStr = String.format("(%.2f%)", rabat * 100d);
+			rabatStr = String.format("(%.2f%s)", rabat * 100d, "%");
 		}
 
 		String prisStr = "";

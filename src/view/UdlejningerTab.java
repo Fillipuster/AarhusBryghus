@@ -145,7 +145,12 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		ProduktLinje selected = lvwProduktLinje.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			try {
-				Controller.setProduktLinjeAntalUbrugt(selected, Integer.parseInt(txfAntalUbrugt.getText()));
+				int ubrugt = Integer.parseInt(txfAntalUbrugt.getText());
+				if (ubrugt > selected.getAntal()) {
+					setErrorText("Antal ubrugte må ikke overstige produktmængde.");
+					return;
+				}
+				Controller.setProduktLinjeAntalUbrugt(selected, ubrugt);
 				updateLblAction();
 				updateLvwProduktLinjer();
 			} catch (NumberFormatException e) {
