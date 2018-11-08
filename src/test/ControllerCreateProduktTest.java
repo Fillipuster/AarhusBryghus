@@ -83,7 +83,7 @@ public class ControllerCreateProduktTest {
 	@Test
 	public void testCreateProduktTC6() {
 		try {
-			Controller.createProdukt(k1, null, "frugtig", 0, 0);
+			Controller.createProdukt(k1, null, "frugtig", 0, 1);
 			fail();
 		}catch (IllegalArgumentException iae) {
 			assertEquals(iae.getMessage(), "Navn må ikke være null.");
@@ -93,7 +93,7 @@ public class ControllerCreateProduktTest {
 	@Test
 	public void testCreateProduktTC7() {
 		try {
-			Controller.createProdukt(k1, "IPA", null, 0, 0);
+			Controller.createProdukt(k1, "IPA", null, 1, 0);
 			fail();
 		}catch (IllegalArgumentException iae) {
 			assertEquals(iae.getMessage(), "Beskrivelse må ikke være null.");

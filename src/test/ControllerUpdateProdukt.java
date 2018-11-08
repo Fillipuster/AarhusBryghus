@@ -35,7 +35,7 @@ public class ControllerUpdateProdukt {
 	@Test
 	public void testUpdateProduktTC2() {
 		try {
-			Controller.updateProdukt(null, pk0, "EEPA", "saftig", 0, 1);
+			Controller.updateProdukt(null, pk1, "EEPA", "saftig", 0, 1);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertEquals(e.getMessage(), "Produkt må ikke være null.");

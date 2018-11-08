@@ -7,6 +7,8 @@ import org.junit.Test;
 import controller.Controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import model.Produkt;
 import model.ProduktKategori;
 
@@ -52,9 +54,19 @@ public class ControllerGetProdukterIKategoriTest {
 	
 	@Test
 	public void testGetProdukterIKategoriTC3() {
-		ArrayList<ProduktKategori> expected = new ArrayList<>();
+		ArrayList<Produkt> expected = new ArrayList<>();
 	
 		assertEquals(expected, Controller.getProdukterIKategori(pk2));
+	}
+	
+	@Test
+	public void testGetProdukterIKategoriTC4() {
+		try {
+			Controller.getProdukterIKategori(null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "ProduktKategori må ikke være null.");
+		}
 	}
 	
 }
