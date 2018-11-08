@@ -290,9 +290,14 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 			return;
 		}
 
-		Controller.addPrisToProdukt(lvwProdukter.getSelectionModel().getSelectedItem(),
-				lvwPriser.getSelectionModel().getSelectedItem().prisKategori, Double.parseDouble(txfPris.getText()));
-		updateLvwPriser();
+		double pris = Double.parseDouble(txfPris.getText());
+		if (pris > 0) {
+			Controller.addPrisToProdukt(lvwProdukter.getSelectionModel().getSelectedItem(),
+					lvwPriser.getSelectionModel().getSelectedItem().prisKategori, pris);
+			updateLvwPriser();			
+		} else {
+			setErrorText("Produktpris skal være over 0.");
+		}
 	}
 
 	private void cbUdlejligAction() {
