@@ -145,7 +145,7 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 						Integer.parseInt(txfGlas.getText()), Double.parseDouble(txfPris.getText()),
 						lvwEmballage.getSelectionModel().getSelectedItem());
 			} catch (NumberFormatException e) {
-				setErrorText("Pris skal være et tal.");
+				setErrorText("Øl, glas og pris skal udfyldes.");
 			}
 			updateLvwGaveaeskePresets();
 		} else {
@@ -160,7 +160,7 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 				Controller.createGaveaeskePreset(Integer.parseInt(txfØl.getText()), Integer.parseInt(txfGlas.getText()),
 						Double.parseDouble(txfPris.getText()), selected);
 			} catch (NumberFormatException e) {
-				setErrorText("Pris skal være et tal.");
+				setErrorText("Øl, glas og pris skal udfyldes.");
 			} catch (DataFindesAlleredeException e) {
 				setErrorText("Gaveæske findes allerede.");
 			} catch (IllegalArgumentException e) {
@@ -182,6 +182,11 @@ public class GaveaeskePresetTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnOpretEmballageAction() {
+		if (txfEmballageNavn.getText().trim().isEmpty()) {
+			setErrorText("Emballage skal have navn.");
+			return;
+		}
+		
 		try {
 			Controller.createGaveaeskeEmballage(txfEmballageNavn.getText());
 		} catch (DataFindesAlleredeException e) {

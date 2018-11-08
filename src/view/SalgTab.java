@@ -10,9 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import model.BetalingsMetode;
 import model.Gaveaeske;
@@ -67,6 +65,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		ViewHelper.label(this, 0, 0, "Vælg priskategori (salgssituation):");
 		cboxPrisKategorier = new ComboBox<>();
 		cboxPrisKategorier.setOnAction(e -> cboxPrisKategorierAction());
+		cboxPrisKategorier.setPromptText("Priskategori...");
 		this.add(cboxPrisKategorier, 0, 1);
 
 		lvwProdukter = new ListView<>();
@@ -120,6 +119,7 @@ public class SalgTab extends GridPane implements ReloadableTab {
 
 		ViewHelper.label(this, 6, 8, "Vælg betalingsmetode:");
 		cboxBetalingsMetoder = new ComboBox<>();
+		cboxBetalingsMetoder.setPromptText("Betalingsmetode...");
 		this.add(cboxBetalingsMetoder, 6, 10);
 
 		btnAnuller = new Button("Anuller");

@@ -17,6 +17,7 @@ import model.ProduktLinje;
 import model.Salg;
 
 public class StatestikTab extends GridPane implements ReloadableTab {
+	
 	private ListView<Salg> lvwSalg;
 	private ListView<ProduktLinje> lvwProduktLinjer;
 	private Button btnUdregnStatestik;

@@ -29,7 +29,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	private TextField txfAntal;
 	private Label lblTotal, lblError;
 	private Button btnAdd, btnDelete, btnAnnuller, btnGennemførSalg;
-	private ComboBox<ProduktKategori> cboxProduktKategori;
+	private ComboBox<ProduktKategori> cboxProduktKategorier;
 
 	public void reload() {
 		updateLvwKunder();
@@ -67,9 +67,10 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 		
 		// Column 1
 		ViewHelper.label(this, 1, 0, "Vælg produktkategori:");
-		cboxProduktKategori = new ComboBox<>();
-		cboxProduktKategori.setOnAction(e -> cboxProduktKategoriAction());
-		this.add(cboxProduktKategori, 1, 1);
+		cboxProduktKategorier = new ComboBox<>();
+		cboxProduktKategorier.setOnAction(e -> cboxProduktKategoriAction());
+		cboxProduktKategorier.setPromptText("Produktkategori...");
+		this.add(cboxProduktKategorier, 1, 1);
 
 		lvwUdlejligeProdukter = new ListView<UdlejningsProdukt>();
 		lvwUdlejligeProdukter.setOnMouseClicked((MouseEvent) -> lvwUdlejligeProdukterAction(MouseEvent));
@@ -119,7 +120,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	}
 
 	private void updateCboxProduktKategori() {
-		cboxProduktKategori.getItems().setAll(Controller.getUdlejligeProduktKategorier());
+		cboxProduktKategorier.getItems().setAll(Controller.getUdlejligeProduktKategorier());
 	}
 
 	private void updateLvwProduktLinjer() {
@@ -128,7 +129,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 	}
 
 	private void updateLvwUdlejligeProdukter() {
-		ProduktKategori selected = cboxProduktKategori.getSelectionModel().getSelectedItem();
+		ProduktKategori selected = cboxProduktKategorier.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			lvwUdlejligeProdukter.getItems().setAll(Controller.getUdlejningsProdukterIProduktKategori(selected));
 
@@ -137,7 +138,7 @@ public class UdlejningTab extends GridPane implements ReloadableTab {
 
 	// Node action methods;
 	private void cboxProduktKategoriAction() {
-		if (cboxProduktKategori.getSelectionModel().getSelectedItem() != null) {
+		if (cboxProduktKategorier.getSelectionModel().getSelectedItem() != null) {
 			updateLvwUdlejligeProdukter();
 		}
 	}

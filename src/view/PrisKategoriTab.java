@@ -93,6 +93,11 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void btnOpdaterKategoriAction() {
+		if (txfKategoriNavn.getText().trim().isEmpty()) {
+			setErrorText("Produktkategori skal have et navn.");
+			return;
+		}
+		
 		if (ViewHelper.listViewHasSelected(lvwKategorier)) {
 			Controller.updatePrisKategori(lvwKategorier.getSelectionModel().getSelectedItem(), txfKategoriNavn.getText());
 			updateLvwKategorier();			
@@ -116,6 +121,11 @@ public class PrisKategoriTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void btnOpretKategoriAction() {
+		if (txfKategoriNavn.getText().trim().isEmpty()) {
+			setErrorText("Produktkategori skal have et navn.");
+			return;
+		}
+		
 		try {
 			Controller.createPrisKategori(txfKategoriNavn.getText());
 		} catch (DataFindesAlleredeException e) {

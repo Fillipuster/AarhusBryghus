@@ -60,6 +60,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		cboxProduktKategorier.getItems().addAll(Storage.getProduktKategorier());
 		cboxProduktKategorier.setOnAction(e -> cboxProduktKategoriAction());
 		cboxProduktKategorier.setPrefWidth(250);
+		cboxProduktKategorier.setPromptText("Produktkategori...");
 		this.add(cboxProduktKategorier, 0, 1);
 
 		lvwProdukter = new ListView<Produkt>();
@@ -232,6 +233,11 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnOpretProduktAction() {
+		if (txfProduktNavn.getText().trim().isEmpty()) {
+			setErrorText("Produkt skal have et navn.");
+			return;
+		}
+		
 		ProduktKategori selected = cboxProduktKategorier.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			if (cbUdlejlig.isSelected()) {
@@ -245,6 +251,11 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnOpdaterProduktAction() {
+		if (txfProduktNavn.getText().trim().isEmpty()) {
+			setErrorText("Produkt skal have et navn.");
+			return;
+		}
+		
 		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			if (cbUdlejlig.isSelected()
