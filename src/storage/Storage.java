@@ -11,6 +11,7 @@ import model.PrisKategori;
 import model.Produkt;
 import model.ProduktKategori;
 import model.Salg;
+import model.UdlejningsSalg;
 
 public class Storage {
 	
@@ -159,11 +160,11 @@ public class Storage {
 		Controller.addPrisToProdukt(p40, butikPrisKategori, 30);
 		
 		
-		Produkt p41 = Controller.createUdlejningsProdukt(anlæg, "2-hane Anlæg", "Fadølsanlæg med 2 haner.", 500d, 0d);
+		Produkt p41 = Controller.createUdlejningsProdukt(anlæg, "2-hane Anlæg", "Fadølsanlæg med 2 haner.", 500d, 100d);
 		Controller.addPrisToProdukt(p41, butikPrisKategori, 150);
-		Produkt p42 = Controller.createUdlejningsProdukt(anlæg, "4-hane Anlæg", "Fadølsanlæg med 4 haner.", 800d, 0d);
+		Produkt p42 = Controller.createUdlejningsProdukt(anlæg, "4-hane Anlæg", "Fadølsanlæg med 4 haner.", 800d, 100d);
 		Controller.addPrisToProdukt(p42, butikPrisKategori, 150);
-		Produkt p43 = Controller.createUdlejningsProdukt(anlæg, "Bar med flere haner", "Til den store fest", 500d, 0d);
+		Produkt p43 = Controller.createUdlejningsProdukt(anlæg, "Bar med flere haner", "Til den store fest", 500d, 100d);
 		Controller.addPrisToProdukt(p43, butikPrisKategori, 150);
 		
 		Produkt p44 = Controller.createProdukt(glasProduktKategori, "Gennemsigtig", "Alle glas 15 kr.", 0, 0);
@@ -181,9 +182,9 @@ public class Storage {
 		BetalingsMetode b2 = Controller.createBetalingsMetode("MobilePay", false);
 		BetalingsMetode b3 = Controller.createBetalingsMetode("Klippekort", true);
 		
-		Controller.createKunde("Jonas Præstegaard", "Inger Christensens Gade 24, 8220 Brabrand", "50523263");
-		Controller.createKunde("Frederik Stræde", "Tordenkjoldsgade 21, 8200 Aarhus N", "25465501");
-		Controller.createKunde("Morten Faber", "Pottemagertoften 115, 8270 Højbjerg", "91554511");
+		Kunde k0 = Controller.createKunde("Jonas Præstegaard", "Inger Christensens Gade 24, 8220 Brabrand", "50523263");
+		Kunde k1 = Controller.createKunde("Frederik Stræde", "Tordenkjoldsgade 21, 8200 Aarhus N", "25465501");
+		Kunde k2 = Controller.createKunde("Morten Faber", "Pottemagertoften 115, 8270 Højbjerg", "91554511");
 		
 		Salg s0 = Controller.createSalg();
 		Controller.setSalgBetalingsMetode(s0, b0);
@@ -207,6 +208,22 @@ public class Storage {
 		s3.opretProduktLinje(p7, bar, 2, 0d);
 		s3.opretProduktLinje(p10, bar, 3, 0.125d);
 		Controller.saveSalg(s3);
+		
+		UdlejningsSalg s4 = Controller.createUdlejningsSalg();
+		Controller.setSalgBetalingsMetode(s4, b2);
+		s4.opretProduktLinje(p41, butikPrisKategori, 1, 0);
+		s4.opretProduktLinje(p42, butikPrisKategori, 2, 0);
+		s4.opretProduktLinje(p43, butikPrisKategori, 1, 0);
+		Controller.setUdlejningsSalgKunde(s4, k2);
+		Controller.saveSalg(s4);
+		
+		UdlejningsSalg s5 = Controller.createUdlejningsSalg();
+		Controller.setSalgBetalingsMetode(s5, b2);
+		s5.opretProduktLinje(p31, butikPrisKategori, 2, 0d);
+		s5.opretProduktLinje(p35, butikPrisKategori, 11, 25d);
+		s5.opretProduktLinje(p34, butikPrisKategori, 6, 0d);
+		Controller.setUdlejningsSalgKunde(s5, k0);
+		Controller.saveSalg(s5);
 		
 	}
 	
