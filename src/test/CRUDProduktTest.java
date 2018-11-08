@@ -135,15 +135,12 @@ public class CRUDProduktTest {
 	// Test cases for addPrisToProdukt
 	
 	@Test
-	public void addProduktTC1() {
-		p3 = Controller.createProdukt(pk0, "brownie", "mærk øl", 1, 0);
-		
+	public void addProduktTC1() {		
 		ArrayList<Produkt> expected = new ArrayList<>();
 		
 		expected.add(p0);
 		expected.add(p1);
 		expected.add(p2);
-		expected.add(p3);
 		
 		assertEquals(expected, Storage.getProdukter());
 	}
@@ -152,12 +149,12 @@ public class CRUDProduktTest {
 	
 	@Test
 	public void setPrisTC1(){
-		Produkt expected = new Produkt(pk0, "pilsner", "dejlig fra fad", 1, 0);
-		Controller.addPrisToProdukt(expected, PrisK0, 2);
+		double expected = 2;
 		
 		p0.setPris(PrisK0, 2);
 		
-		assertEquals(expected, p0);
+		assertEquals(2, p0.getPris(PrisK0), 0.01);
+		
 	}
 	// -------------------------------------------------------------------------------------------------------------------------
 	// Test cases for setNavn

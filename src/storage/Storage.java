@@ -220,7 +220,7 @@ public class Storage {
 		UdlejningsSalg s5 = Controller.createUdlejningsSalg();
 		Controller.setSalgBetalingsMetode(s5, b2);
 		s5.opretProduktLinje(p31, butikPrisKategori, 2, 0d);
-		s5.opretProduktLinje(p35, butikPrisKategori, 11, 25d);
+		s5.opretProduktLinje(p35, butikPrisKategori, 11, 0d);
 		s5.opretProduktLinje(p34, butikPrisKategori, 6, 0d);
 		Controller.setUdlejningsSalgKunde(s5, k0);
 		Controller.saveSalg(s5);
