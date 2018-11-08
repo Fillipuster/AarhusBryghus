@@ -128,6 +128,7 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 	// Node action methods;
 	private void lvwKunderAction() {
 		updateLvwUdlejningsSalg();
+		updateLvwProduktLinjer();
 	}
 	
 	private void lvwUdlejningsSalgAction() {
