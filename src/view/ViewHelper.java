@@ -34,7 +34,10 @@ public class ViewHelper {
 	private static void textFieldIntListener(TextField txf, String oldValue, String newValue) {		
 		if (!newValue.isEmpty()) {
 			try {
-				Integer.parseInt(newValue);
+				int num = Integer.parseInt(newValue);
+				if (num < 0) {
+					txf.setText(oldValue);
+				}
 			} catch (NumberFormatException e) {
 				txf.setText(oldValue);
 			}
@@ -44,7 +47,10 @@ public class ViewHelper {
 	private static void textFieldDoubleListener(TextField txf, String oldValue, String newValue) {		
 		if (!newValue.isEmpty()) {
 			try {
-				Double.parseDouble(newValue);
+				double num = Double.parseDouble(newValue);
+				if (num < 0) {
+					txf.setText(oldValue);
+				}
 			} catch (NumberFormatException e) {
 				txf.setText(oldValue);
 			}
