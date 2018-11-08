@@ -20,7 +20,7 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 
 	private ListView<Kunde> lvwKunder;
 	private ListView<UdlejningsSalg> lvwUdlejningsSalg;
-	private ListView<ProduktLinje> lvwProduktLinje;
+	private ListView<ProduktLinje> lvwProduktLinjer;
 	private TextField txfAntalUbrugt;
 	private Button btnSætUbrugt, btnTilbagelever;
 	private Label lblTotal, lblPant, lblAtBetale, lblError;
@@ -65,9 +65,9 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		
 		// Column 2
 		ViewHelper.label(this, 2, 0, "Produkter i udlejning:");
-		lvwProduktLinje = new ListView<ProduktLinje>();
-		lvwProduktLinje.setOnMouseClicked(e -> lvwProduktLinjeAction());
-		this.add(lvwProduktLinje, 2, 1, 1, 10);
+		lvwProduktLinjer = new ListView<ProduktLinje>();
+		lvwProduktLinjer.setOnMouseClicked(e -> lvwProduktLinjeAction());
+		this.add(lvwProduktLinjer, 2, 1, 1, 10);
 		
 		// Column 3
 		ViewHelper.label(this, 3, 0, "Antal ubrugt produkter:");
@@ -108,7 +108,7 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		}
 	}
 	
-	private void updateLblAction() {
+	private void updateLabels() {
 		UdlejningsSalg selected = lvwUdlejningsSalg.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			lblPant.setText(String.format("PANT: -%.2f kr.", selected.getTotalPant()));
@@ -120,9 +120,11 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 	private void updateLvwProduktLinjer() {
 		UdlejningsSalg selected = lvwUdlejningsSalg.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			lvwProduktLinje.getItems().setAll(selected.getProduktLinjer());
+			lvwProduktLinjer.getItems().setAll(selected.getProduktLinjer());
+		} else {
+			lvwProduktLinjer.getItems().clear();
 		}
-		updateLblAction();
+		updateLabels();
 	}
 	
 	// Node action methods;
@@ -136,14 +138,14 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void lvwProduktLinjeAction() {
-		ProduktLinje selected = lvwProduktLinje.getSelectionModel().getSelectedItem();
+		ProduktLinje selected = lvwProduktLinjer.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			txfAntalUbrugt.setText(Integer.toString(selected.getAntalUbrugt()));
 		}
 	}
 	
 	private void txfAntalUbrugtAction() {
-		ProduktLinje selected = lvwProduktLinje.getSelectionModel().getSelectedItem();
+		ProduktLinje selected = lvwProduktLinjer.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			try {
 				int ubrugt = Integer.parseInt(txfAntalUbrugt.getText());
@@ -152,7 +154,7 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 					return;
 				}
 				Controller.setProduktLinjeAntalUbrugt(selected, ubrugt);
-				updateLblAction();
+				updateLabels();
 				updateLvwProduktLinjer();
 			} catch (NumberFormatException e) {
 				return;
@@ -168,7 +170,7 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 			Controller.saveUdlejningsSalg(selected);
 			updateLvwUdlejningsSalg();
 			updateLvwProduktLinjer();
-			lvwProduktLinje.getItems().clear();
+			lvwProduktLinjer.getItems().clear();
 		} else {
 			setErrorText("Kunde skal vælges.");
 		}
