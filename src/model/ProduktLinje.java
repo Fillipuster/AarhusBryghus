@@ -99,14 +99,19 @@ public class ProduktLinje {
 		} else {
 			prisStr = Double.toString(produkt.getPris(prisKategori));
 		}
+		
+		String klipStr = "";
+		if (produkt.getKlipPris() > 0) {
+			klipStr = String.format("(%d klip)", getKlipPris());
+		}
 
 		String ubrugtStr = "";
 		if (antalUbrugt > 0) {
 			ubrugtStr = String.format("(%d ubrugt)", antalUbrugt);
 		}
 
-		return String.format("%s x %d af %s kr.%n = %.2f kr. %s %s", produkt.getNavn(), antal, prisStr, getPris(),
-				rabatStr, ubrugtStr);
+		return String.format("%s x %d af %s kr.%n = %.2f kr. %s %s %s", produkt.getNavn(), antal, prisStr, getPris(),
+				rabatStr, klipStr, ubrugtStr);
 	}
 
 }
