@@ -260,17 +260,9 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		if (selected != null) {
 			if (cbUdlejlig.isSelected()
 					&& lvwProdukter.getSelectionModel().getSelectedItem() instanceof UdlejningsProdukt) {
-
-				Controller.updateUdlejningsProdukt((UdlejningsProdukt) selected, cboxProduktKategorier.getValue(),
-						txfProduktNavn.getText(), txaProduktBeskrivelse.getText(),
-						Double.parseDouble(txfUdlejligPris.getText()), Double.parseDouble(txfUdlejligPant.getText()));
-
+				updateUdlejningsProdukt(selected);
 			} else {
-
-				Controller.updateProdukt(selected, cboxProduktKategorier.getValue(), txfProduktNavn.getText(),
-						txaProduktBeskrivelse.getText(), Integer.parseInt(txfKlipPris.getText()), Integer.parseInt(txfUdstedteKlip.getText()));
-				updateLvwProdukter();
-
+				updateProdukt(selected);
 			}
 		} else {
 			setErrorText("Produkt skal være valgt.");
@@ -373,6 +365,22 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 			setErrorText("Produkt findes allerede.");
 		}
 	}
+	
+	private void updateUdlejningsProdukt(Produkt selected) {
+		Controller.updateUdlejningsProdukt((UdlejningsProdukt) selected, cboxProduktKategorier.getValue(),
+				txfProduktNavn.getText(), txaProduktBeskrivelse.getText(),
+				Double.parseDouble(txfUdlejligPris.getText()), Double.parseDouble(txfUdlejligPant.getText()));
+	}
+
+	private void updateProdukt(Produkt selected) {
+		int klipPris = (cbKanKøbesMedKlippekort.isSelected() ? Integer.parseInt(txfKlipPris.getText()) : 0);
+		int klipUdstedt = (cbIsKlippekort.isSelected()) ? Integer.parseInt(txfUdstedteKlip.getText()) : 0;
+		
+		Controller.updateProdukt(selected, cboxProduktKategorier.getValue(), txfProduktNavn.getText(),
+				txaProduktBeskrivelse.getText(), klipPris, klipUdstedt);
+		updateLvwProdukter();
+	}
+	
 
 
 	// ListView formatting classes;

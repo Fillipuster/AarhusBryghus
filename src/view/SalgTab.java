@@ -239,8 +239,13 @@ public class SalgTab extends GridPane implements ReloadableTab {
 		ProduktLinje selected = lvwProduktLinjer.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			try {
+				double rabat = Double.parseDouble(txfRabat.getText()) / 100d;
+				if (rabat > 1d) {
+					setErrorText("Rabat må ikke overstige 100%.");
+					return;
+				}
 				Controller.updateProduktLinje(selected, selected.getAntal(),
-						Double.parseDouble(txfRabat.getText()) / 100d);
+						rabat);
 			} catch (NumberFormatException e) {
 				setErrorText("Rabat skal være et tal.");
 			}
