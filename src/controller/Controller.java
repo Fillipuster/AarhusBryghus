@@ -106,7 +106,7 @@ public class Controller {
 
 	public static ArrayList<Produkt> getProdukterIKategori(ProduktKategori kategori) {
 		validateArgNull(kategori, "ProduktKategori");
-
+		
 		// Implementation;
 		ArrayList<Produkt> result = new ArrayList<>();
 		for (Produkt p : Storage.getProdukter()) {
@@ -196,7 +196,6 @@ public class Controller {
 				}
 			}
 		}
-
 		return result;
 	}
 

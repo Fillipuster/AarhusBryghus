@@ -10,7 +10,7 @@ import model.ProduktKategori;
 import model.UdlejningsProdukt;
 import storage.Storage;
 
-public class ControllerGetUdlejningsProduktKategorier {
+public class ControllerGetUdlejligeProduktKategorier {
 
 	ProduktKategori pk0;
 	UdlejningsProdukt up0;

@@ -157,7 +157,7 @@ public class CRUDProduktTest {
 		
 		p0.setPris(PrisK0, 2);
 		
-		assertEquals(expected, p0);
+		assertEquals(expected, 5);
 	}
 	// -------------------------------------------------------------------------------------------------------------------------
 	// Test cases for setNavn
