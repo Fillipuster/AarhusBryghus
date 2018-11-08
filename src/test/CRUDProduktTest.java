@@ -24,7 +24,6 @@ public class CRUDProduktTest {
 	private static Produkt p0; 
 	private static Produkt p1; 
 	private static Produkt p2;
-	private static Produkt p3;
 	
 	@BeforeClass
 	public static void setUp() {
@@ -148,9 +147,7 @@ public class CRUDProduktTest {
 	// Test cases for setPris
 	
 	@Test
-	public void setPrisTC1(){
-		double expected = 2;
-		
+	public void setPrisTC1(){		
 		p0.setPris(PrisK0, 2);
 		
 		assertEquals(2, p0.getPris(PrisK0), 0.01);

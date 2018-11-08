@@ -462,13 +462,13 @@ public class Controller {
 		validateArgNull(navn, "Navn");
 		validateArgNull(addresse, "Addresse");
 		validateArgNull(tlf, "Tlf");
-
-		// Implementation;
 		for (Kunde k : Storage.getKunder()) {
 			if (k.getAddresse().equals(addresse) || k.getTelefonNr().equals(tlf)) {
-				throw new DataFindesAlleredeException("");
+				throw new DataFindesAlleredeException("Kunde findes allerede.");
 			}
 		}
+
+		// Implementation;
 		Kunde k = new Kunde(navn, addresse, tlf);
 		Storage.addKunde(k);
 

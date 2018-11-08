@@ -168,7 +168,7 @@ public class Storage {
 		Controller.addPrisToProdukt(p43, butikPrisKategori, 150);
 		
 		Produkt p44 = Controller.createProdukt(glasProduktKategori, "Gennemsigtig", "Alle glas 15 kr.", 0, 0);
-		Controller.addPrisToProdukt(p43, butikPrisKategori, 150);
+		Controller.addPrisToProdukt(p44, butikPrisKategori, 150);
 		
 		Produkt p45 = Controller.createProdukt(klippekort, "5x Klippekort", "Klippekort med 5 klip.", 0, 5);
 		Controller.addPrisToProdukt(p45, bar, 100);
@@ -183,7 +183,7 @@ public class Storage {
 		BetalingsMetode b3 = Controller.createBetalingsMetode("Klippekort", true);
 		
 		Kunde k0 = Controller.createKunde("Jonas Præstegaard", "Inger Christensens Gade 24, 8220 Brabrand", "50523263");
-		Kunde k1 = Controller.createKunde("Frederik Stræde", "Tordenkjoldsgade 21, 8200 Aarhus N", "25465501");
+		Controller.createKunde("Frederik Stræde", "Tordenkjoldsgade 21, 8200 Aarhus N", "25465501");
 		Kunde k2 = Controller.createKunde("Morten Faber", "Pottemagertoften 115, 8270 Højbjerg", "91554511");
 		
 		Salg s0 = Controller.createSalg();

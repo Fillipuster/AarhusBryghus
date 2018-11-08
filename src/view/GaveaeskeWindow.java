@@ -161,6 +161,11 @@ public class GaveaeskeWindow extends Stage {
 	}
 	
 	private void btnAccepterAction() {
+		if (lvwProdukter.getItems().isEmpty()) {
+			setErrorText("Gaveæske må ikke være tom.");
+			return;
+		}
+		
 		if (ViewHelper.listViewHasSelected(lvwEmballage)) {
 			this.close();			
 		} else {
