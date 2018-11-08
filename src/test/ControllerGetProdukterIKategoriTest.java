@@ -1,7 +1,6 @@
 package test;
 
 import java.util.ArrayList;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -10,7 +9,6 @@ import controller.Controller;
 import static org.junit.Assert.assertEquals;
 import model.Produkt;
 import model.ProduktKategori;
-import storage.Storage;
 
 public class ControllerGetProdukterIKategoriTest {
 
@@ -20,7 +18,6 @@ public class ControllerGetProdukterIKategoriTest {
 	private static Produkt p0;
 	private static Produkt p1;
 	private static Produkt p2;
-	private static Produkt p3;
 	
 	
 	@BeforeClass

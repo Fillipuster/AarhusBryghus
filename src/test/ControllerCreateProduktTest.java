@@ -63,7 +63,7 @@ public class ControllerCreateProduktTest {
 	@Test
 	public void testCreateProduktTC4() {
 		try {
-			Produkt p = Controller.createProdukt(k1, "IPA", "frugtig", 1, 1);
+			Controller.createProdukt(k1, "IPA", "frugtig", 1, 1);
 			fail();
 		}catch (IllegalArgumentException iae) {
 			assertEquals(iae.getMessage(), "Klippris for klippekort skal være 0.");
@@ -73,7 +73,7 @@ public class ControllerCreateProduktTest {
 	@Test
 	public void testCreateProduktTC5() {
 		try {
-			Produkt p = Controller.createProdukt(null, "IPA", "frugtig", 0, 0);
+			Controller.createProdukt(null, "IPA", "frugtig", 0, 0);
 			fail();
 		}catch (IllegalArgumentException iae) {
 			assertEquals(iae.getMessage(), "ProduktKategori må ikke være null.");
@@ -83,7 +83,7 @@ public class ControllerCreateProduktTest {
 	@Test
 	public void testCreateProduktTC6() {
 		try {
-			Produkt p = Controller.createProdukt(k1, null, "frugtig", 0, 0);
+			Controller.createProdukt(k1, null, "frugtig", 0, 0);
 			fail();
 		}catch (IllegalArgumentException iae) {
 			assertEquals(iae.getMessage(), "Navn må ikke være null.");
@@ -93,7 +93,7 @@ public class ControllerCreateProduktTest {
 	@Test
 	public void testCreateProduktTC7() {
 		try {
-			Produkt p = Controller.createProdukt(k1, "IPA", null, 0, 0);
+			Controller.createProdukt(k1, "IPA", null, 0, 0);
 			fail();
 		}catch (IllegalArgumentException iae) {
 			assertEquals(iae.getMessage(), "Beskrivelse må ikke være null.");
@@ -103,7 +103,7 @@ public class ControllerCreateProduktTest {
 	@Test
 	public void testCreateProduktTC8() {
 		try {
-			Produkt p = Controller.createProdukt(k1, "IPA", "frugtig", -1, 0);
+			Controller.createProdukt(k1, "IPA", "frugtig", -1, 0);
 			fail();
 		}catch (IllegalArgumentException iae) {
 			assertEquals(iae.getMessage(), "KlipPris skal være >= 0.");
@@ -113,7 +113,7 @@ public class ControllerCreateProduktTest {
 	@Test
 	public void testCreateProduktTC9() {
 		try {
-			Produkt p = Controller.createProdukt(k1, "IPA", "frugtig", 0, -1);
+			Controller.createProdukt(k1, "IPA", "frugtig", 0, -1);
 			fail();
 		}catch (IllegalArgumentException iae) {
 			assertEquals(iae.getMessage(), "UdstedteKlip skal være >= 0.");

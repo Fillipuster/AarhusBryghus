@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import controller.Controller;
 import model.Produkt;
 import model.ProduktKategori;
 import model.PrisKategori;
