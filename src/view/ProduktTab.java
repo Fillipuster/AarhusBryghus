@@ -341,7 +341,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		lblError.setText("");
 	}
 	
-	// helper methods
+	// Helper methods;
 	private void createUdlejligtProdukt(ProduktKategori selected) {
 		try {
 			Controller.createUdlejningsProdukt(selected, txfProduktNavn.getText(),
@@ -356,6 +356,11 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	}
 	
 	private void createProdukt(ProduktKategori selected) {
+		if (cbIsKlippekort.isSelected() && cbKanKøbesMedKlippekort.isSelected()) {
+			setErrorText("Klippekort kan ikke købes med klip.");
+			return;
+		}
+		
 		try {
 			int klipPris = (cbKanKøbesMedKlippekort.isSelected()) ? Integer.parseInt(txfKlipPris.getText()) : 0;
 			int klipUdstedt = (cbIsKlippekort.isSelected()) ? Integer.parseInt(txfUdstedteKlip.getText()) : 0;
