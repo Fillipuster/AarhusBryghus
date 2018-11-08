@@ -60,6 +60,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		cboxProduktKategorier.getItems().addAll(Storage.getProduktKategorier());
 		cboxProduktKategorier.setOnAction(e -> cboxProduktKategoriAction());
 		cboxProduktKategorier.setPrefWidth(250);
+		cboxProduktKategorier.setPromptText("Produktkategori...");
 		this.add(cboxProduktKategorier, 0, 1);
 
 		lvwProdukter = new ListView<Produkt>();
@@ -232,6 +233,11 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnOpretProduktAction() {
+		if (txfProduktNavn.getText().trim().isEmpty()) {
+			setErrorText("Produkt skal have et navn.");
+			return;
+		}
+		
 		ProduktKategori selected = cboxProduktKategorier.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			if (cbUdlejlig.isSelected()) {
@@ -245,6 +251,11 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 	}
 
 	private void btnOpdaterProduktAction() {
+		if (txfProduktNavn.getText().trim().isEmpty()) {
+			setErrorText("Produkt skal have et navn.");
+			return;
+		}
+		
 		Produkt selected = lvwProdukter.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			if (cbUdlejlig.isSelected()
@@ -330,19 +341,26 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 		lblError.setText("");
 	}
 	
-	// helper methods
+	// Helper methods;
 	private void createUdlejligtProdukt(ProduktKategori selected) {
 		try {
 			Controller.createUdlejningsProdukt(selected, txfProduktNavn.getText(),
 					txaProduktBeskrivelse.getText(), Double.parseDouble(txfUdlejligPris.getText()),
 					Double.parseDouble(txfUdlejligPant.getText()));
 			updateLvwProdukter();
+		} catch (NumberFormatException e) {
+			setErrorText("Pris og pant skal udfyldes.");
 		} catch (DataFindesAlleredeException e) {
 			setErrorText("Produkt findes allerede.");
 		}
 	}
 	
 	private void createProdukt(ProduktKategori selected) {
+		if (cbIsKlippekort.isSelected() && cbKanKøbesMedKlippekort.isSelected()) {
+			setErrorText("Klippekort kan ikke købes med klip.");
+			return;
+		}
+		
 		try {
 			int klipPris = (cbKanKøbesMedKlippekort.isSelected()) ? Integer.parseInt(txfKlipPris.getText()) : 0;
 			int klipUdstedt = (cbIsKlippekort.isSelected()) ? Integer.parseInt(txfUdstedteKlip.getText()) : 0;
@@ -350,7 +368,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 			Controller.createProdukt(selected, txfProduktNavn.getText(), txaProduktBeskrivelse.getText(), klipPris, klipUdstedt);
 			updateLvwProdukter();
 		} catch (NumberFormatException e) {
-			setErrorText("Kun tal er accepteret.");
+			setErrorText("Klippris og udstedte klip skal udfyldes.");
 		} catch (DataFindesAlleredeException e) {
 			setErrorText("Produkt findes allerede.");
 		}

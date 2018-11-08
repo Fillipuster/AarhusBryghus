@@ -79,6 +79,7 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 		
 		btnSætUbrugt = new Button("Sæt Ubrugt");
 		btnSætUbrugt.setOnAction(e -> txfAntalUbrugtAction());
+		btnSætUbrugt.setPrefWidth(200d);
 		this.add(btnSætUbrugt, 3, 2);
 		
 		lblPant = ViewHelper.label(this, 3, 4, "PANT: 0.00 kr.");

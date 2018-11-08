@@ -17,6 +17,7 @@ import model.ProduktLinje;
 import model.Salg;
 
 public class StatestikTab extends GridPane implements ReloadableTab {
+	
 	private ListView<Salg> lvwSalg;
 	private ListView<ProduktLinje> lvwProduktLinjer;
 	private Button btnUdregnStatestik;
@@ -67,7 +68,7 @@ public class StatestikTab extends GridPane implements ReloadableTab {
 		
 		lblError = new Label("");
 		lblError.setTextFill(Color.RED);
-		this.add(lblError, 0, 9);
+		this.add(lblError, 0, 9, 2, 1);
 		
 		// Column 1
 		ViewHelper.label(this, 1, 5, "Klip brugt:");
