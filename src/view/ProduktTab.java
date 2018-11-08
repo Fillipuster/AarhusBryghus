@@ -348,6 +348,8 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 					txaProduktBeskrivelse.getText(), Double.parseDouble(txfUdlejligPris.getText()),
 					Double.parseDouble(txfUdlejligPant.getText()));
 			updateLvwProdukter();
+		} catch (NumberFormatException e) {
+			setErrorText("Pris og pant skal udfyldes.");
 		} catch (DataFindesAlleredeException e) {
 			setErrorText("Produkt findes allerede.");
 		}
@@ -361,7 +363,7 @@ public class ProduktTab extends GridPane implements ReloadableTab {
 			Controller.createProdukt(selected, txfProduktNavn.getText(), txaProduktBeskrivelse.getText(), klipPris, klipUdstedt);
 			updateLvwProdukter();
 		} catch (NumberFormatException e) {
-			setErrorText("Kun tal er accepteret.");
+			setErrorText("Klippris og udstedte klip skal udfyldes.");
 		} catch (DataFindesAlleredeException e) {
 			setErrorText("Produkt findes allerede.");
 		}
