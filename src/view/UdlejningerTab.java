@@ -150,7 +150,7 @@ public class UdlejningerTab extends GridPane implements ReloadableTab {
 			try {
 				int ubrugt = Integer.parseInt(txfAntalUbrugt.getText());
 				if (ubrugt > selected.getAntal()) {
-					setErrorText("Antal ubrugte må ikke overstige produktmængde.");
+					setErrorText("Antal ubrugte må ikke\noverstige produktmængde.");
 					return;
 				}
 				Controller.setProduktLinjeAntalUbrugt(selected, ubrugt);
